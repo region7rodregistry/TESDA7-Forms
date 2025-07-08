@@ -1694,14 +1694,14 @@ async function sendToProvincialOffice() {
         // Initialize Firebase app if not already initialized
         if (!window.firebaseApp) {
             const firebaseConfig = {
-                apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
-                authDomain: "r7nttconaf.firebaseapp.com",
-                projectId: "r7nttconaf",
-                storageBucket: "r7nttconaf.firebasestorage.app",
-                messagingSenderId: "521822609098",
-                appId: "1:521822609098:web:e8ee10f63098924bb35e33",
-                measurementId: "G-0VPXC641LT"
-            };
+  apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
+  authDomain: "r7nttconaf.firebaseapp.com",
+  projectId: "r7nttconaf",
+  storageBucket: "r7nttconaf.firebasestorage.app",
+  messagingSenderId: "521822609098",
+  appId: "1:521822609098:web:e8ee10f63098924bb35e33",
+  measurementId: "G-0VPXC641LT"
+};
             window.firebaseApp = initializeApp(firebaseConfig);
         }
 
@@ -1709,30 +1709,6 @@ async function sendToProvincialOffice() {
         if (!window.firestore) {
             window.firestore = getFirestore(window.firebaseApp);
         }
-
-        // Initialize Storage if not already initialized
-        if (!window.storage) {
-            window.storage = getStorage(window.firebaseApp);
-        }
-
-        // Generate PDF
-        const element = document.getElementById('tesdaForm');
-        const opt = {
-            margin: 1,
-            filename: `application_${ticketNumber}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
-        
-        // Convert blob to base64
-        const base64PDF = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(pdfBlob);
-        });
 
         // Collect educational background data directly from the table
         const educationTable = document.querySelector('.form-section:nth-of-type(4) table');
@@ -1827,7 +1803,7 @@ async function sendToProvincialOffice() {
             }
         }
 
-        // Create application data object
+        // Create application data object (no pdfDocument)
         const applicationData = {
             ticketNumber: ticketNumber,
             timestamp: `${formattedDate} ${formattedTime}`,
@@ -1966,15 +1942,8 @@ async function sendToProvincialOffice() {
                 assessor1: getValue('assessor1'),
                 assessor2: getValue('assessor2'),
                 assessor3: getValue('assessor3')
-            },
-            pdfDocument: base64PDF
+            }
         };
-
-        // Upload PDF to Firebase Storage
-        const storage = window.storage;
-        const pdfStorageRef = storageRef(storage, `applications/${ticketNumber}.pdf`);
-        await uploadBytes(pdfStorageRef, pdfBlob);
-        const pdfURL = await getDownloadURL(pdfStorageRef);
 
         // Save to Firestore
         const applicationsCollection = collection(window.firestore, 'applications');
