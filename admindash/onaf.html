@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/nttcmis.png">
+    <title>ONAF Database</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #000428, #004e92);
+            --card-gradient: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --text-color: #ffffff;
+            --accent-color: #00a8ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 2000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--accent-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title span {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 4px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .header-btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        .header-btn.logout {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+        }
+
+        .header-btn.logout:hover {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        .search-section {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 0 0 10px 10px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+            align-items: left;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .logout-btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 0, 0, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        input[type="search"] {
+            max-width: 400px;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        input[type="search"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+        }
+
+        input[type="search"]::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .application-card {
+            background: var(--card-gradient);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ticket-number {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-group {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: white;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(24, 226, 72, 0.678);
+            color: #f0f8f2fd;
+        }
+
+        .status-rejected {
+            background: rgba(220, 53, 70, 0.384);
+            color: #dc3545;
+        }
+
+        .status-spam {
+            background: rgba(243, 0, 0, 0.644);
+            color: #ffffff;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .receive-btn {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .receive-btn:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .receive-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .view-btn {
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .receive-btn {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-left {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .search-section {
+                padding: 1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .filter-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            input[type="search"] {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .application-card {
+                padding: 1.2rem;
+            }
+
+            .info-group {
+                margin-bottom: 0.8rem;
+            }
+
+            .info-label {
+                font-size: 0.8rem;
+            }
+
+            .info-value {
+                font-size: 0.9rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .view-btn, .receive-btn {
+                width: 100%;
+                padding: 0.8rem;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+
+            .pagination-btn, .page-number {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .page-numbers {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .completion-modal-content {
+                width: 90%;
+                max-width: 300px;
+                padding: 1.5rem;
+            }
+
+            .completion-modal h2 {
+                font-size: 1.5rem;
+            }
+
+            .completion-modal p {
+                font-size: 1rem;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-btn {
+                width: 100%;
+                padding: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1rem;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .filter-buttons {
+                gap: 0.3rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .application-card {
+                padding: 1rem;
+            }
+
+            .ticket-number {
+                font-size: 1rem;
+            }
+
+            .status-badge {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.8rem;
+            }
+
+            .timestamp {
+                font-size: 0.7rem;
+            }
+        }
+
+        .completion-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .completion-modal.show {
+            opacity: 1;
+        }
+
+        .completion-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: linear-gradient(135deg, #000428, #004e92);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            min-width: 300px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .completion-modal.show .completion-modal-content {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .completion-modal h2 {
+            color: var(--accent-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .completion-modal p {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-confirm {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .modal-btn-confirm:hover {
+            background: #0088cc;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .completion-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Add pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-number {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-number.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .page-number:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .notification-badge {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+            min-width: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <img src="../icons/tlogo.png" alt="Company Logo" class="logo">
+                <div class="header-title">
+                    <h1>ONAF Database</h1>
+                    <span>National TVET Trainers Certification</span>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="#" class="header-btn">
+                    <i>📊</i>
+                    Dashboard
+                </a>
+                <a href="#" class="header-btn">
+                    <i>📈</i>
+                    Reports
+                </a>
+                <a href="#" class="header-btn">
+                    <i>⚙️</i>
+                    Settings
+                </a>
+                <a href="index.html?logout=true" class="header-btn logout">
+                    <i>🚪</i>
+                    Logout
+                </a>
+            </div>
+        </header>
+        
+        <div class="search-section">
+            <div class="search-container">
+                <input type="search" id="searchInput" placeholder="Search by ticket number or applicant name...">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="pending">Pending <span class="notification-badge" id="pendingCount">0</span></button>              
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="spam">Spam</button>
+                    <button class="filter-btn" data-filter="all">All</button>  
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingSpinner" class="loading-spinner"></div>
+        <div id="applicationsGrid" class="applications-grid"></div>
+        <div class="pagination" id="pagination">
+            <button class="pagination-btn" id="prevPage">Previous</button>
+            <div class="page-numbers" id="pageNumbers"></div>
+            <button class="pagination-btn" id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <div class="completion-modal" id="completionModal">
+        <div class="completion-modal-content">
+            <div class="completion-icon">✨</div>
+            <h2>Great Job!</h2>
+            <p>Application has been marked as completed.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-confirm" id="modalConfirm">Okay</button>
+                <button class="modal-btn modal-btn-cancel" id="modalCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
+            authDomain: "r7nttconaf.firebaseapp.com",
+            projectId: "r7nttconaf",
+            storageBucket: "r7nttconaf.firebasestorage.app",
+            messagingSenderId: "521822609098",
+            appId: "1:521822609098:web:e8ee10f63098924bb35e33",
+            measurementId: "G-0VPXC641LT"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const applicationsCol = collection(db, 'applications');
+
+        // DOM elements
+        const applicationsGrid = document.getElementById('applicationsGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const searchInput = document.getElementById('searchInput');
+        let currentFilter = 'pending';
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let lastSnapshot = null;
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let totalPages = 1;
+
+        // Fetch and listen to Firestore data
+        function fetchApplications() {
+            loadingSpinner.style.display = 'block';
+            onSnapshot(applicationsCol, (snapshot) => {
+                loadingSpinner.style.display = 'none';
+                const data = {};
+                snapshot.forEach(docSnap => {
+                    data[docSnap.id] = docSnap.data();
+                });
+                lastSnapshot = {
+                    val: () => data,
+                    exists: () => Object.keys(data).length > 0
+                };
+                updateNotificationBadges(data);
+                const filteredApplications = filterApplications(data, searchInput.value);
+                renderApplications(filteredApplications);
+            }, (error) => {
+                console.error('Error fetching data:', error);
+                loadingSpinner.style.display = 'none';
+                applicationsGrid.innerHTML = '<div class="no-results">Error loading applications</div>';
+            });
+        }
+        fetchApplications();
+
+        function updateNotificationBadges(applications) {
+            // Count applications by status
+            const counts = {
+                pending: 0,
+                completed: 0,
+                spam: 0,
+                all: 0
+            };
+            Object.values(applications).forEach(app => {
+                const status = app.status || 'pending';
+                counts[status]++;
+                counts.all++;
+            });
+            // Update notification badges
+            document.getElementById('pendingCount').textContent = counts.pending;
+            // Add similar lines if you have badges for completed, spam, etc.
+        }
+
+        function filterApplications(applications, searchTerm) {
+            return Object.entries(applications).filter(([key, data]) => {
+                const searchString = searchTerm.toLowerCase();
+                const firstName = data.manpowerProfile?.firstName || '';
+                const lastName = data.manpowerProfile?.lastName || '';
+                const fullName = `${firstName} ${lastName}`.toLowerCase();
+                const ticketNumber = (data.ticketNumber || '').toLowerCase();
+                const status = (data.status || 'pending').toLowerCase();
+
+                // First check if it matches the current filter
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'spam' && status !== 'spam') return false;
+                    if (currentFilter === 'pending' && status !== 'pending') return false;
+                    if (currentFilter === 'completed' && status !== 'completed') return false;
+                }
+                // Then check if it matches the search term
+                return fullName.includes(searchString) || ticketNumber.includes(searchString);
+            });
+        }
+
+        function renderApplications(applications) {
+            applicationsGrid.innerHTML = '';
+
+            if (applications.length === 0) {
+                applicationsGrid.innerHTML = '<div class="no-results">No matching applications found</div>';
+                updatePaginationControls(0);
+                return;
+            }
+
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedApplications = applications.slice(startIndex, endIndex);
+
+            paginatedApplications.forEach(([key, data]) => {
+                const card = createApplicationCard(data, key);
+                applicationsGrid.appendChild(card);
+            });
+
+            // Update pagination controls
+            updatePaginationControls(applications.length);
+        }
+
+        function updatePaginationControls(totalItems) {
+            totalPages = Math.ceil(totalItems / itemsPerPage);
+            const pageNumbers = document.getElementById('pageNumbers');
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+
+            // Update page numbers
+            pageNumbers.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-number ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                    renderApplications(filteredApplications);
+                });
+                pageNumbers.appendChild(pageBtn);
+            }
+
+            // Update button states
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        // Update delete and update logic to use Firestore
+        function createApplicationCard(data, key) {
+            console.log(data); // Debug: see the actual data structure
+            const card = document.createElement('div');
+            card.className = 'application-card';
+
+            // Defensive: fallback to N/A if fields are missing
+            const firstName = data.manpowerProfile?.firstName || 'N/A';
+            const lastName = data.manpowerProfile?.lastName || 'N/A';
+            const contact = data.manpowerProfile?.contact || 'N/A';
+            const email = data.manpowerProfile?.email || 'N/A';
+            const sector = data.nttcApplication?.sector || 'N/A';
+            const qualification = data.nttcApplication?.qualification || 'N/A';
+            const ticketNumber = data.ticketNumber || 'No Ticket Number';
+            const status = data.status || 'pending';
+
+            let buttonHTML = '';
+            if (status === 'spam' || status === 'completed') {
+                buttonHTML = `<button class="receive-btn" data-key="${key}">Delete Application 🗑️</button>`;
+            } else if (status === 'pending') {
+                buttonHTML = `<button class="receive-btn" data-key="${key}">Mark as Completed ✅</button>`;
+            }
+
+            card.innerHTML = `
+                <div class="ticket-number">${ticketNumber}</div>
+                <div class="info-group">
+                    <div class="info-label">Applicant Name</div>
+                    <div class="info-value">${firstName} ${lastName}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Contact</div>
+                    <div class="info-value">${contact}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">${email}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Sector</div>
+                    <div class="info-value">${sector}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Qualification</div>
+                    <div class="info-value">${qualification}</div>
+                </div>
+                <div class="status-badge status-${status}">
+                    ${status.toUpperCase()}
+                </div>
+                <div class="button-group">
+                    ${buttonHTML}
+                </div>
+            `;
+            // (Add your event listeners here as before)
+            return card;
+        }
+        // ... rest of your code ...
+    </script>
+</body>
+</html>
