@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TESDA - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .animate-fade-in-scale {
+            animation: fadeInScale 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-400 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-600 {
+            animation-delay: 0.6s;
+        }
+        
+        /* Initially hide elements that will animate in */
+        .animate-fade-in-scale {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-black via-blue-900 to-white flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Login Form Container -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20 animate-fade-in-scale">
+            <!-- Title -->
+            <div class="text-center mb-8 animate-fade-in-scale animate-delay-200">
+                <img src="icons/t7ilogo.png" alt="TESDA Logo" class="w-24 h-24 mx-auto mb-4">
+                <h1 class="text-3xl font-bold text-white mb-2">Welcome</h1>
+                <h2 class="text-xl font-semibold text-blue-200">NTTC PO Focal</h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-white mx-auto mt-4 rounded-full"></div>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="space-y-6" onsubmit="handleLogin(event)">
+                <!-- Email Input -->
+                <div class="animate-fade-in-scale animate-delay-400">
+                    <label for="email" class="block text-sm font-medium text-blue-100 mb-2">
+                        Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                        class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm hover:bg-white/15"
+                    >
+                </div>
+                
+                <!-- Password Input -->
+                <div class="animate-fade-in-scale animate-delay-400">
+                    <label for="password" class="block text-sm font-medium text-blue-100 mb-2">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                            class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm hover:bg-white/15 pr-12"
+                        >
+                        <button type="button" id="togglePassword" tabindex="-1" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-200 hover:text-white focus:outline-none">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between text-sm animate-fade-in-scale animate-delay-500">
+                    <label class="flex items-center text-blue-200">
+                        <input type="checkbox" class="mr-2 rounded border-white/30 bg-white/10 text-blue-400 focus:ring-blue-400">
+                        Remember me
+                    </label>
+                    <a href="#" class="text-blue-300 hover:text-white transition-colors duration-200">
+                        Forgot password?
+                    </a>
+                </div>
+                
+                <!-- Login Button -->
+                <div class="animate-fade-in-scale animate-delay-600">
+                    <button 
+                        type="submit"
+                        class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-transparent transform hover:scale-105 transition-all duration-300 active:scale-95"
+                    >
+                        <span class="flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                            </svg>
+                            Sign In
+                        </span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Additional Links -->
+            <div class="mt-8 text-center animate-fade-in-scale animate-delay-600">
+                <p class="text-blue-200 text-sm">
+                    Don't have an account? 
+                    <a href="#" class="text-white font-semibold hover:text-blue-300 transition-colors duration-200">
+                        Contact Administrator
+                    </a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-8 animate-fade-in-scale animate-delay-600">
+            <p class="text-white/70 text-sm">
+                © 2024 NTTC PO Focal. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Handle form submission
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Add loading state to button
+            const button = event.target.querySelector('button[type="submit"]');
+            const originalContent = button.innerHTML;
+            
+            button.innerHTML = `
+                <span class="flex items-center justify-center">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Signing In...
+                </span>
+            `;
+            button.disabled = true;
+            
+            // Simulate login process
+            setTimeout(() => {
+                alert(`Login attempted with:\nEmail: ${email}\nPassword: ${'*'.repeat(password.length)}`);
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            }, 2000);
+        }
+        
+        // Add subtle floating animation to the form
+        const form = document.querySelector('.bg-white\\/10');
+        let floatDirection = 1;
+        
+        setInterval(() => {
+            form.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 3}px)`;
+        }, 16);
+
+        // Show/hide password functionality
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        let passwordVisible = false;
+        togglePassword.addEventListener('click', function() {
+            passwordVisible = !passwordVisible;
+            passwordInput.type = passwordVisible ? 'text' : 'password';
+            eyeIcon.innerHTML = passwordVisible
+                ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.042-3.368m2.987-2.987A9.956 9.956 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.956 9.956 0 01-4.043 5.132M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />`
+                : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />\n<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z\" />`;
+        });
+    </script>
+</body>
+</html>
