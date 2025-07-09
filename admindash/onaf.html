@@ -1055,6 +1055,7 @@
         // Import Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         // Make functions globally accessible for onclick attributes
         window.markAsCompleted = function(key) {
@@ -1116,7 +1117,15 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
         const applicationsCol = collection(db, 'applications');
+
+        // Auth check: redirect to login if not authenticated
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "../login.html";
+            }
+        });
 
         // DOM elements
         const applicationsGrid = document.getElementById('applicationsGrid');
@@ -1880,6 +1889,16 @@ console.log('Formatted timestamp:', receivedAt);
                 const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
                 renderApplications(filteredApplications);
             }
+        });
+
+        // (Optional) Make logout button sign out the user
+        document.querySelectorAll('.logout').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signOut(auth).then(() => {
+                    window.location.href = "../login.html";
+                });
+            });
         });
     </script>
 </body>
