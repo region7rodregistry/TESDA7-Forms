@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TESDA - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script>
+      // TODO: Replace with your Firebase project config
+      const firebaseConfig = {
+        apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
+  authDomain: "r7nttconaf.firebaseapp.com",
+  projectId: "r7nttconaf",
+  storageBucket: "r7nttconaf.firebasestorage.app",
+  messagingSenderId: "521822609098",
+  appId: "1:521822609098:web:e8ee10f63098924bb35e33",
+  measurementId: "G-0VPXC641LT"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
     <style>
         @keyframes fadeInScale {
             0% {
@@ -160,12 +175,18 @@
             `;
             button.disabled = true;
             
-            // Simulate login process
-            setTimeout(() => {
-                alert(`Login attempted with:\nEmail: ${email}\nPassword: ${'*'.repeat(password.length)}`);
-                button.innerHTML = originalContent;
-                button.disabled = false;
-            }, 2000);
+            // Firebase authentication
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Login successful, redirect
+                    window.location.href = "admindash/onaf.html";
+                })
+                .catch((error) => {
+                    // Show error message
+                    alert("Login failed: " + error.message);
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                });
         }
         
         // Add subtle floating animation to the form
