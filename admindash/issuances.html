@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expandable Table</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'slide-in-from-top': 'slideInFromTop 0.3s ease-out',
+                    },
+                    keyframes: {
+                        slideInFromTop: {
+                            '0%': { transform: 'translateY(-10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="w-full space-y-4 p-4">
+        <!-- Header Section -->
+        <div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 px-8 py-12 mb-8 shadow-xl">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-transparent to-blue-800/20"></div>
+            <div class="relative">
+                <div class="flex items-center justify-center">
+                    <div class="text-center">
+                        <h1 class="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
+                            NTTC Issuances Registry
+                        </h1>
+                        <p class="text-blue-100 text-lg md:text-xl font-medium">
+                            National Technical Training Certification Database
+                        </p>
+                        <div class="mt-4 flex items-center justify-center space-x-2">
+                            <div class="h-1 w-12 bg-blue-300 rounded-full"></div>
+                            <div class="h-1 w-8 bg-blue-400 rounded-full"></div>
+                            <div class="h-1 w-12 bg-blue-300 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Decorative elements -->
+            <div class="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full -translate-x-16 -translate-y-16"></div>
+            <div class="absolute bottom-0 right-0 w-40 h-40 bg-white/5 rounded-full translate-x-20 translate-y-20"></div>
+            <div class="absolute top-1/2 right-10 w-24 h-24 bg-white/10 rounded-full"></div>
+        </div>
+
+        <!-- Search and Controls -->
+        <div class="flex items-center gap-4 mb-6">
+            <div class="relative flex-1 max-w-sm">
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="Search by name, institution, sector, or qualification..."
+                    class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+            </div>
+            <button id="exportBtn" class="px-4 py-2 bg-green-600 text-white rounded-md shadow hover:bg-green-700 transition-colors">Export</button>
+            <button id="copyBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition-colors">Copy</button>
+            <div id="recordCount" class="text-sm text-gray-500">
+                0 records
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="rounded-md border border-gray-200 overflow-hidden bg-white shadow-sm">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-50 border-b border-gray-200">
+                        <th class="w-12 px-4 py-3"></th>
+                        <th class="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 transition-colors" data-sort="fullName">
+                            <div class="flex items-center gap-2">
+                                Full Name
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 transition-colors" data-sort="trainingInstitution">
+                            <div class="flex items-center gap-2">
+                                Training Institution
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 transition-colors" data-sort="sector">
+                            <div class="flex items-center gap-2">
+                                Sector
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 transition-colors" data-sort="qualification">
+                            <div class="flex items-center gap-2">
+                                Qualification
+                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Table rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="text-center py-8 text-gray-500 hidden">
+            No records found matching your search criteria.
+        </div>
+    </div>
+
+    <script src="issuancescript.js"></script>
+</body>
+</html>

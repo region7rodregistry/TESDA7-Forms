@@ -7,7 +7,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getFirestore, collection, addDoc, setDoc, doc, query, orderBy, where, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
         
         // Make Firebase functions globally available
@@ -23,12 +23,6 @@
         window.storageRef = storageRef;
         window.uploadBytes = uploadBytes;
         window.getDownloadURL = getDownloadURL;
-        // Add Firestore query helpers
-        window.query = query;
-        window.orderBy = orderBy;
-        window.where = where;
-        window.limit = limit;
-        window.getDocs = getDocs;
     </script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="icons/t7logo.png">
@@ -1525,7 +1519,7 @@ document.getElementById('importButton').addEventListener('click', async function
             cancelButtonText: 'Stay Here'
         }).then((result) => {
             if (result.isConfirmed) {
-    window.location.href = 'admindash/nttcregistry.html';
+    window.location.href = '../admindash/nttcregistry.html';
             } else {
                 // Reset button state if staying on page
                 importButton.disabled = false;
@@ -1680,9 +1674,21 @@ async function sendToProvincialOffice() {
         };
 
         const now = new Date();
-        const year = now.getFullYear();
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const yearMonth = `${year}${month}`;
+        const timestamp = now.toISOString(); // e.g., "2024-05-30T12:34:56.789Z"
+        const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+        const ticketNumber = `PO-${now.getTime()}-${random}`;
+
+        // For display
+        const formattedDate = now.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        });
+        const formattedTime = now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
 
         // Initialize Firebase app if not already initialized
         if (!window.firebaseApp) {
@@ -1702,50 +1708,6 @@ async function sendToProvincialOffice() {
         if (!window.firestore) {
             window.firestore = getFirestore(window.firebaseApp);
         }
-
-        // --- Ticket Number Generation ---
-        // Query for all ticket numbers for the current month, then find the max series in JS
-        const applicationsCollection = collection(window.firestore, 'applications');
-        const ticketPrefix = `PO-${yearMonth}-`;
-        // Calculate next month's prefix for upper bound
-        let nextMonth = now.getMonth() + 2;
-        let nextYear = year;
-        if (nextMonth > 12) { nextMonth = 1; nextYear++; }
-        const nextMonthStr = nextMonth.toString().padStart(2, '0');
-        const nextMonthPrefix = `PO-${nextYear}${nextMonthStr}-`;
-        const ticketQuery = query(
-            applicationsCollection,
-            where('ticketNumber', '>=', ticketPrefix),
-            where('ticketNumber', '<', nextMonthPrefix)
-        );
-        let nextSeries = 1;
-        try {
-            const snapshot = await getDocs(ticketQuery);
-            let maxSeries = 0;
-            snapshot.forEach(docSnap => {
-                const ticket = docSnap.data().ticketNumber;
-                const match = ticket && ticket.match(/-(\d{3})$/);
-                const series = match ? parseInt(match[1], 10) : 0;
-                if (series > maxSeries) maxSeries = series;
-            });
-            nextSeries = maxSeries + 1;
-        } catch (err) {
-            nextSeries = 1;
-        }
-        const seriesStr = nextSeries.toString().padStart(3, '0');
-        const ticketNumber = `PO-${yearMonth}-${seriesStr}`;
-
-        // For display
-        const formattedDate = now.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        });
-        const formattedTime = now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        });
 
         // Collect educational background data directly from the table
         const educationTable = document.querySelector('.form-section:nth-of-type(4) table');
@@ -1983,6 +1945,7 @@ async function sendToProvincialOffice() {
         };
 
         // Save to Firestore
+        const applicationsCollection = collection(window.firestore, 'applications');
         await addDoc(applicationsCollection, applicationData);
 
         // Hide loading modal

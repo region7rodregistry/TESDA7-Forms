@@ -1165,12 +1165,6 @@
                 return; // Prevent submission if there are missing fields
             }
 
-            const tmCertNumberInput = form.querySelector('[name="tm_cert_number"]');
-            if (tmCertNumberInput) {
-                const tmCertNumberWithPrefix = 'TMC-' + tmCertNumberInput.value.padStart(14, '0'); // Ensure it is 14 digits
-                tmCertNumberInput.value = tmCertNumberWithPrefix; // Update the input value
-            }
-
             const formData = new URLSearchParams(new FormData(form)).toString();
             window.location.href = 'preview.html?' + formData; // Redirect to preview.html with form data
         }

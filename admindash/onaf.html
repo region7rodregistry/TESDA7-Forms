@@ -356,6 +356,38 @@
             flex: 1;
         }
 
+        .delete-btn {
+            background: rgba(220, 53, 70, 0.2);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .complete-btn {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .complete-btn:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .view-btn, .complete-btn {
+            padding: 0.5rem 1rem;
+            min-height: 40px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -529,94 +561,281 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .completion-modal.show {
+            display: flex;
             opacity: 1;
+            align-items: center;
+            justify-content: center;
         }
 
         .completion-modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            background: linear-gradient(135deg, #000428, #004e92);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 2.5rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             text-align: center;
-            min-width: 300px;
+            min-width: 350px;
+            max-width: 450px;
             opacity: 0;
-            transition: all 0.3s ease;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .completion-modal.show .completion-modal-content {
-            transform: translate(-50%, -50%) scale(1);
+            transform: translateY(0) scale(1);
             opacity: 1;
         }
 
         .completion-modal h2 {
-            color: var(--accent-color);
-            font-size: 2rem;
+            color: #ffffff;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .completion-modal p {
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 400;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .modal-btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
+            padding: 1rem 2rem;
+            border-radius: 50px;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+        }
+
+        .modal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .modal-btn:hover::before {
+            left: 100%;
         }
 
         .modal-btn-confirm {
-            background: var(--accent-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
 
         .modal-btn-confirm:hover {
-            background: #0088cc;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
         }
 
         .modal-btn-cancel {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .modal-btn-cancel:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
         }
 
         .completion-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: bounce 1s ease infinite;
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: celebration 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes celebration {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1);
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            }
+            25% { 
+                transform: translateY(-15px) rotate(-5deg) scale(1.1);
+                filter: drop-shadow(0 8px 16px rgba(255, 215, 0, 0.4));
+            }
+            50% { 
+                transform: translateY(-20px) rotate(0deg) scale(1.2);
+                filter: drop-shadow(0 12px 24px rgba(255, 215, 0, 0.6));
+            }
+            75% { 
+                transform: translateY(-15px) rotate(5deg) scale(1.1);
+                filter: drop-shadow(0 8px 16px rgba(255, 215, 0, 0.4));
+            }
+        }
+
+        /* Success checkmark animation */
+        .success-checkmark {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            animation: checkmarkAppear 0.6s ease-out 0.3s both;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        @keyframes checkmarkAppear {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* Delete warning modal styles */
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .delete-modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 3rem 2.5rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 25px 50px rgba(220, 53, 69, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-align: center;
+            min-width: 350px;
+            max-width: 450px;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .delete-modal.show .delete-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .delete-modal h2 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #ffe6e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .delete-modal p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .delete-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: warningShake 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes warningShake {
+            0%, 100% { 
+                transform: translateX(0) rotate(0deg) scale(1);
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            }
+            25% { 
+                transform: translateX(-5px) rotate(-2deg) scale(1.05);
+                filter: drop-shadow(0 8px 16px rgba(220, 53, 69, 0.4));
+            }
+            50% { 
+                transform: translateX(5px) rotate(2deg) scale(1.1);
+                filter: drop-shadow(0 12px 24px rgba(220, 53, 69, 0.6));
+            }
+            75% { 
+                transform: translateX(-3px) rotate(-1deg) scale(1.05);
+                filter: drop-shadow(0 8px 16px rgba(220, 53, 69, 0.4));
+            }
+        }
+
+        .modal-btn-delete {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+
+        .modal-btn-delete:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(220, 53, 69, 0.6);
         }
 
         /* Add pagination styles */
@@ -684,6 +903,76 @@
             text-align: center;
             font-weight: bold;
         }
+
+        /* Modal base: always flex, but hidden by opacity and pointer-events */
+        .completion-modal,
+        .delete-modal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Show state: fade in */
+        .completion-modal.show,
+        .delete-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal content: pop in/out animation */
+        .completion-modal-content,
+        .delete-modal-content {
+            opacity: 0;
+            transform: scale(0.85) translateY(30px);
+            transition: opacity 0.4s, transform 0.4s;
+            will-change: opacity, transform;
+        }
+
+        /* When modal is shown, pop in */
+        .completion-modal.show .completion-modal-content,
+        .delete-modal.show .delete-modal-content {
+            animation: modalPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* When modal is hiding, pop out */
+        .completion-modal.hide .completion-modal-content,
+        .delete-modal.hide .delete-modal-content {
+            animation: modalPopOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes modalPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.85) translateY(30px);
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes modalPopOut {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.85) translateY(30px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -703,7 +992,7 @@
                 </a>
                 <a href="#" class="header-btn">
                     <i>📈</i>
-                    Reports
+                    Issuances
                 </a>
                 <a href="#" class="header-btn">
                     <i>⚙️</i>
@@ -739,12 +1028,25 @@
 
     <div class="completion-modal" id="completionModal">
         <div class="completion-modal-content">
-            <div class="completion-icon">✨</div>
+            <div class="success-checkmark">✓</div>
+            <div class="completion-icon">🎉</div>
             <h2>Great Job!</h2>
-            <p>Application has been marked as completed.</p>
+            <p>Application has been successfully marked as completed.</p>
             <div class="modal-buttons">
-                <button class="modal-btn modal-btn-confirm" id="modalConfirm">Okay</button>
+                <button class="modal-btn modal-btn-confirm" id="modalConfirm">Continue</button>
                 <button class="modal-btn modal-btn-cancel" id="modalCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-modal-content">
+            <div class="delete-icon">⚠️</div>
+            <h2>Warning!</h2>
+            <p>Are you sure you want to delete this application? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-delete" id="deleteConfirm">Delete</button>
+                <button class="modal-btn modal-btn-cancel" id="deleteCancel">Cancel</button>
             </div>
         </div>
     </div>
@@ -752,7 +1054,54 @@
     <script type="module">
         // Import Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Make functions globally accessible for onclick attributes
+        window.markAsCompleted = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+        
+        window.deleteApplication = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+        
+        window.viewPDF = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+
+        // Utility to show modal with pop-in
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hide');
+                modal.classList.add('show');
+                return true;
+            }
+            return false;
+        }
+
+        // Utility to hide modal with pop-out
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hide');
+                modal.classList.remove('show');
+                // Remove 'hide' after animation completes
+                setTimeout(() => {
+                    modal.classList.remove('hide');
+                }, 350); // match popOut duration
+                return true;
+            }
+            return false;
+        }
+
+        // Modal utility functions with safeguards
+        function showDeleteModal() { return showModal('deleteModal'); }
+        function hideDeleteModal() { return hideModal('deleteModal'); }
+
+        // Modal utility functions with safeguards
+        function showCompletionModal() { return showModal('completionModal'); }
+        function hideCompletionModal() { return hideModal('completionModal'); }
 
         // Firebase configuration
         const firebaseConfig = {
@@ -783,7 +1132,7 @@
         // Fetch and listen to Firestore data
         function fetchApplications() {
             loadingSpinner.style.display = 'block';
-            onSnapshot(applicationsCol, (snapshot) => {
+            onSnapshot(applicationsCol, async (snapshot) => {
                 loadingSpinner.style.display = 'none';
                 const data = {};
                 snapshot.forEach(docSnap => {
@@ -793,6 +1142,40 @@
                     val: () => data,
                     exists: () => Object.keys(data).length > 0
                 };
+
+                // --- Duplicate detection and spam marking logic ---
+                // Group applications by the specified fields
+                const groups = {};
+                Object.entries(data).forEach(([key, app]) => {
+                    const firstName = app.manpowerProfile?.firstName || '';
+                    const lastName = app.manpowerProfile?.lastName || '';
+                    const contact = app.manpowerProfile?.contact || '';
+                    const email = app.manpowerProfile?.email || '';
+                    const sector = app.nttcApplication?.sector || '';
+                    const qualification = app.nttcApplication?.qualification || '';
+                    const groupKey = `${firstName}||${lastName}||${contact}||${email}||${sector}||${qualification}`;
+                    if (!groups[groupKey]) groups[groupKey] = [];
+                    groups[groupKey].push(key);
+                });
+                // For each group with more than one application, mark all as spam
+                for (const group of Object.values(groups)) {
+                    if (group.length > 1) {
+                        for (const key of group) {
+                            const app = data[key];
+                            if (app.status !== 'spam') {
+                                // Update status to spam in Firestore
+                                try {
+                                    const docRef = doc(db, 'applications', key);
+                                    await updateDoc(docRef, { status: 'spam' });
+                                } catch (err) {
+                                    console.error('Error updating status to spam:', err);
+                                }
+                            }
+                        }
+                    }
+                }
+                // --- End duplicate detection ---
+
                 updateNotificationBadges(data);
                 const filteredApplications = filterApplications(data, searchInput.value);
                 renderApplications(filteredApplications);
@@ -892,7 +1275,9 @@
 
         // Update delete and update logic to use Firestore
         function createApplicationCard(data, key) {
-            console.log(data); // Debug: see the actual data structure
+            console.log('data for key', key, ':', data);
+            console.log('tesdaInfo:', data.tesdaInfo);
+            console.log('timestamp:', data.tesdaInfo?.timestamp);
             const card = document.createElement('div');
             card.className = 'application-card';
 
@@ -906,15 +1291,73 @@
             const ticketNumber = data.ticketNumber || 'No Ticket Number';
             const status = data.status || 'pending';
 
+          // Extract and format received timestamp
+          const receivedAtRaw = data?.tesdaInfo?.timestamp ?? data?.timestamp ?? null;
+
+let receivedAt = '';
+
+try {
+    const timestampField = receivedAtRaw;
+    if (timestampField) {
+        let dateObj = null;
+        if (typeof timestampField === 'string') {
+            dateObj = new Date(timestampField);
+        } else if (typeof timestampField === 'object' && typeof timestampField.toDate === 'function') {
+            dateObj = timestampField.toDate();
+        }
+        if (dateObj && !isNaN(dateObj.getTime())) {
+            // Format as 'Month D, YYYY HH:MM AM/PM'
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = dateObj.toLocaleDateString('en-US', options);
+            let hours = dateObj.getHours();
+            const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            receivedAt = `${dateStr} ${hours}:${minutes} ${ampm}`;
+        } else {
+            receivedAt = '';
+        }
+    } else {
+        receivedAt = '';
+    }
+} catch (e) {
+    console.error('Error parsing timestamp:', e);
+    receivedAt = '';
+}
+
+console.log('Formatted timestamp:', receivedAt);
+
+            // Create button HTML based on status
             let buttonHTML = '';
             if (status === 'spam' || status === 'completed') {
-                buttonHTML = `<button class="receive-btn" data-key="${key}">Delete Application 🗑️</button>`;
+                buttonHTML = `
+                    <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
+                        🧿 View PDF
+                    </button>
+                    <button class="receive-btn delete-btn" data-key="${key}" onclick="deleteApplication('${key}')">
+                        🗑️ Delete
+                    </button>
+                `;
             } else if (status === 'pending') {
-                buttonHTML = `<button class="receive-btn" data-key="${key}">Mark as Completed ✅</button>`;
+                buttonHTML = `
+                    <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
+                        🧿 View PDF
+                    </button>
+                    <button class="receive-btn complete-btn" data-key="${key}" onclick="markAsCompleted('${key}')">
+                        ✅ Mark as Complete
+                    </button>
+                `;
             }
 
             card.innerHTML = `
-                <div class="ticket-number">${ticketNumber}</div>
+                <div class="ticket-number" style="display: flex; align-items: center; gap: 0.5rem;">
+                    ${ticketNumber}
+                     <div class="status-badge status-${status}">
+                    ${status.toUpperCase()}
+                </div>
+                 
+                </div>
                 <div class="info-group">
                     <div class="info-label">Applicant Name</div>
                     <div class="info-value">${firstName} ${lastName}</div>
@@ -929,23 +1372,515 @@
                 </div>
                 <div class="info-group">
                     <div class="info-label">Sector</div>
-                    <div class="info-value">${sector}</div>
+                    <div class="info-value">${sector.toUpperCase()}</div>
                 </div>
                 <div class="info-group">
                     <div class="info-label">Qualification</div>
-                    <div class="info-value">${qualification}</div>
+                    <div class="info-value">${qualification.toUpperCase()}</div>
                 </div>
-                <div class="status-badge status-${status}">
-                    ${status.toUpperCase()}
-                </div>
+               
                 <div class="button-group">
                     ${buttonHTML}
                 </div>
+                <div class="timestamp">Received: ${receivedAt}</div>
             `;
-            // (Add your event listeners here as before)
+
+            // Add event listener for the plus button
+            setTimeout(() => {
+                const addBtn = card.querySelector('.add-po-btn');
+                if (addBtn) {
+                    addBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        addBtn.disabled = true;
+                        addBtn.style.opacity = 0.5;
+                        try {
+                            // Get the application data from lastSnapshot
+                            const appData = lastSnapshot.val()[key];
+                            if (!appData) throw new Error('Application data not found');
+                            // Add to 'issuances' collection
+                            const issuancesCol = collection(db, 'issuances');
+                            await updateDoc(doc(db, 'applications', key), { issued: true }); // Optionally mark as issued
+                            await setDoc(doc(issuancesCol, key), appData); // Use the same key for easy lookup
+                            addBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 22 22"><rect x="2" y="2" width="18" height="18" rx="4" fill="#28a745"/><path d="M6 11l4 4 6-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                        } catch (err) {
+                            addBtn.disabled = false;
+                            addBtn.style.opacity = 1;
+                            alert('Failed to add to issuances: ' + err.message);
+                        }
+                    });
+                }
+            }, 0);
+
             return card;
         }
-        // ... rest of your code ...
+
+        // Function to view PDF
+        window.viewPDF = function(key) {
+            // Get the application data from the current snapshot
+            if (lastSnapshot && lastSnapshot.exists()) {
+                const applications = lastSnapshot.val();
+                const applicationData = applications[key];
+                
+                if (applicationData) {
+                    // Debug: Log the application data structure
+                    console.log('Application data structure:', applicationData);
+                    
+                    // Build URL parameters from the application data
+                    const params = new URLSearchParams();
+                    
+                    // TESDA Info
+                    if (applicationData.tesdaInfo) {
+                        params.set('nmis-code', applicationData.tesdaInfo.nmisCode || '');
+                        params.set('nmis-date', applicationData.tesdaInfo.nmisDate || '');
+                    }
+                    
+                    // Manpower Profile
+                    if (applicationData.manpowerProfile) {
+                        const mp = applicationData.manpowerProfile;
+                        params.set('last-name', mp.lastName || '');
+                        params.set('first-name', mp.firstName || '');
+                        params.set('middle-name', mp.middleName || '');
+                        params.set('extension', mp.extension || '');
+                        params.set('address', mp.address || '');
+                        params.set('city', mp.city || '');
+                        params.set('province', mp.province || '');
+                        params.set('region', mp.region || '');
+                        params.set('zip-code', mp.zipCode || '');
+                        params.set('po-box', mp.poBox || '');
+                        params.set('sex', mp.sex || '');
+                        params.set('civil-status', mp.civilStatus || '');
+                        params.set('contact', mp.contact || '');
+                        params.set('telephone', mp.telephone || '');
+                        params.set('email', mp.email || '');
+                        params.set('fax', mp.fax || '');
+                        params.set('employment-type', mp.employmentType || '');
+                        params.set('employment-status', mp.employmentStatus || '');
+                    }
+                    
+                    // Personal Information
+                    if (applicationData.personalInfo) {
+                        const pi = applicationData.personalInfo;
+                        params.set('birthdate', pi.birthdate || '');
+                        params.set('birthplace', pi.birthplace || '');
+                        params.set('citizenship', pi.citizenship || '');
+                        params.set('religion', pi.religion || '');
+                        params.set('height', pi.height || '');
+                        params.set('weight', pi.weight || '');
+                        params.set('blood-type', pi.bloodType || '');
+                        params.set('sss', pi.sss || '');
+                        params.set('gsis', pi.gsis || '');
+                        params.set('tin', pi.tin || '');
+                        params.set('distinguishing-marks', pi.distinguishingMarks || '');
+                    }
+                    
+                    // Educational Background
+                    if (applicationData.educationalBackground && Array.isArray(applicationData.educationalBackground)) {
+                        applicationData.educationalBackground.forEach((edu, index) => {
+                            params.append('school[]', edu.school || '');
+                            params.append('educational-level[]', edu.educationalLevel || '');
+                            params.append('school-year[]', edu.schoolYear || '');
+                            params.append('degree[]', edu.degree || '');
+                        });
+                    }
+                    
+                    // Course Title
+                    if (applicationData.courseTitle) {
+                        const ct = applicationData.courseTitle;
+                        params.set('course-title', ct.courseTitle || '');
+                        params.set('training-duration', ct.trainingDuration || '');
+                        params.set('schedule-from', ct.scheduleFrom || '');
+                        params.set('schedule-to', ct.scheduleTo || '');
+                        params.set('aptitude-exam-date', ct.aptitudeExamDate || '');
+                        params.set('aptitude-exam-time', ct.aptitudeExamTime || '');
+                    }
+                    
+                    // Competency Assessment
+                    if (applicationData.competencyAssessment) {
+                        const ca = applicationData.competencyAssessment;
+                        params.set('application-date', ca.applicationDate || '');
+                        params.set('sector-component', ca.sectorComponent || '');
+                        params.set('trade-area', ca.tradeArea || '');
+                        params.set('occupation', ca.occupation || '');
+                        params.set('classification', ca.classification || '');
+                        params.set('competency', ca.competency || '');
+                        params.set('training-program', ca.trainingProgram || '');
+                        params.set('program-sector', ca.programSector || '');
+                        params.set('client-type', ca.clientType || '');
+                    }
+                    
+                    // Working Experience
+                    if (applicationData.workingExperience && Array.isArray(applicationData.workingExperience)) {
+                        applicationData.workingExperience.forEach((exp, index) => {
+                            params.append('company[]', exp.company || '');
+                            params.append('position[]', exp.position || '');
+                            params.append('dates[]', exp.dates || '');
+                            params.append('salary[]', exp.salary || '');
+                            params.append('years-of-experience[]', exp.yearsOfExperience || '');
+                        });
+                    }
+                    
+                    // Training Hours
+                    if (applicationData.trainingHours) {
+                        params.set('training_hours', applicationData.trainingHours);
+                    }
+                    
+                    // Other Training/Seminars
+                    if (applicationData.otherTraining && Array.isArray(applicationData.otherTraining)) {
+                        applicationData.otherTraining.forEach((training, index) => {
+                            params.append('training-title[]', training.trainingTitle || '');
+                            params.append('training-venue[]', training.trainingVenue || '');
+                            params.append('training-dates[]', training.trainingDates || '');
+                            params.append('training-hours[]', training.trainingHours || '');
+                        });
+                    }
+                    
+                    // Licenses/Examinations
+                    if (applicationData.licenses && Array.isArray(applicationData.licenses)) {
+                        applicationData.licenses.forEach((license, index) => {
+                            params.append('license-title[]', license.licenseTitle || '');
+                            params.append('license-year[]', license.licenseYear || '');
+                            params.append('license-rating[]', license.licenseRating || '');
+                            params.append('license-expiry[]', license.licenseExpiry || '');
+                        });
+                    }
+                    
+                    // Competency Assessment Passed
+                    if (applicationData.competencyAssessmentPassed && Array.isArray(applicationData.competencyAssessmentPassed)) {
+                        applicationData.competencyAssessmentPassed.forEach((comp, index) => {
+                            params.append('competency-sector[]', comp.competencySector || '');
+                            params.append('competency-trade[]', comp.competencyTrade || '');
+                            params.append('competency-occupation[]', comp.competencyOccupation || '');
+                            params.append('classification-level[]', comp.classificationLevel || '');
+                            params.append('competency[]', comp.competency || '');
+                            params.append('specialization-description[]', comp.specializationDescription || '');
+                        });
+                    }
+                    
+                    // Family Background
+                    if (applicationData.familyBackground) {
+                        const fb = applicationData.familyBackground;
+                        params.set('spouse-name', fb.spouseName || '');
+                        params.set('spouse-education', fb.spouseEducation || '');
+                        params.set('spouse-occupation', fb.spouseOccupation || '');
+                        params.set('spouse-income', fb.spouseIncome || '');
+                        params.set('father-name', fb.fatherName || '');
+                        params.set('father-education', fb.fatherEducation || '');
+                        params.set('father-occupation', fb.fatherOccupation || '');
+                        params.set('father-income', fb.fatherIncome || '');
+                        params.set('mother-name', fb.motherName || '');
+                        params.set('mother-education', fb.motherEducation || '');
+                        params.set('mother-occupation', fb.motherOccupation || '');
+                        params.set('mother-income', fb.motherIncome || '');
+                        params.set('guardian-name', fb.guardianName || '');
+                        params.set('guardian-education', fb.guardianEducation || '');
+                        params.set('guardian-occupation', fb.guardianOccupation || '');
+                        params.set('guardian-income', fb.guardianIncome || '');
+                        params.set('dependents', fb.dependents || '');
+                        params.set('dependent-age', fb.dependentAge || '');
+                    }
+                    
+                    // NTTC Application
+                    if (applicationData.nttcApplication) {
+                        const nttc = applicationData.nttcApplication;
+                        params.set('sector', nttc.sector || '');
+                        params.set('qualification', nttc.qualification || '');
+                        params.set('nttcstatus', nttc.nttcstatus || '');
+                        params.set('nc_cert_number', nttc.ncCertNumber || '');
+                        params.set('nc_date_issuance', nttc.ncDateIssuance || '');
+                        params.set('nc_validity', nttc.ncValidity || '');
+                        params.set('tm_cert_number', nttc.tmCertNumber || '');
+                        params.set('tm_date_issuance', nttc.tmDateIssuance || '');
+                        params.set('tm_validity', nttc.tmValidity || '');
+                        params.set('assessor1', nttc.assessor1 || '');
+                        params.set('assessor2', nttc.assessor2 || '');
+                        params.set('assessor3', nttc.assessor3 || '');
+                        params.set('years_of_experience', nttc.yearsOfExperience || '');
+                        params.set('training_institution', nttc.trainingInstitution || '');
+                        params.set('type_training_institution', nttc.typeTrainingInstitution || '');
+                        params.set('educational_attainment', nttc.educationalAttainment || '');
+                    }
+                    
+                    // Redirect to preview.html with the data
+                    const previewUrl = `../preview.html?${params.toString()}`;
+                    window.open(previewUrl, '_blank');
+                } else {
+                    console.error('Application data not found for key:', key);
+                    alert('Application data not found. Please try again.');
+                }
+            } else {
+                console.error('No application data available');
+                alert('No application data available. Please refresh the page and try again.');
+            }
+        };
+
+        // Function to delete application
+        window.deleteApplication = function(key) {
+            try {
+                // Store the application key for later use
+                window.pendingDeleteKey = key;
+                
+                // Show the delete warning modal
+                const modalShown = showDeleteModal();
+                
+                if (!modalShown) {
+                    // Fallback to confirm if modal fails
+                    if (confirm('Are you sure you want to delete this application? This action cannot be undone.')) {
+                        performDelete(key);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error in deleteApplication function:', error);
+                
+                // Fallback to confirm if there's an error
+                if (confirm('Are you sure you want to delete this application? This action cannot be undone.')) {
+                    performDelete(key);
+                }
+            }
+        };
+
+        // Function to perform the actual deletion
+        function performDelete(key) {
+            const docRef = doc(db, 'applications', key);
+            deleteDoc(docRef)
+                .then(() => {
+                    console.log('Application deleted successfully');
+                    // The onSnapshot listener will automatically update the UI
+                })
+                .catch((error) => {
+                    console.error('Error deleting application:', error);
+                    alert('Error deleting application. Please try again.');
+                });
+        }
+
+        // Function to mark application as completed
+        window.markAsCompleted = function(key) {
+            try {
+                // Show loading state on the button
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '⏳ Processing...';
+                button.disabled = true;
+                
+                // Show modal immediately for better user feedback
+                const modalShown = showCompletionModal();
+                
+                // Store the application key for later use
+                window.pendingCompletionKey = key;
+                
+                // Reset button state immediately since we're waiting for user confirmation
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+            } catch (error) {
+                console.error('Error in markAsCompleted function:', error);
+                
+                // Reset button state if available
+                if (event && event.target) {
+                    event.target.innerHTML = '✅ Mark as Complete';
+                    event.target.disabled = false;
+                }
+                
+                // Hide modal if it was shown
+                hideCompletionModal();
+                
+                // Show error message
+                alert('An unexpected error occurred. Please try again.');
+            }
+        };
+
+        // Modal event listeners with safeguards
+        const modalConfirm = document.getElementById('modalConfirm');
+        const modalCancel = document.getElementById('modalCancel');
+        const completionModal = document.getElementById('completionModal');
+        const deleteConfirm = document.getElementById('deleteConfirm');
+        const deleteCancel = document.getElementById('deleteCancel');
+        const deleteModal = document.getElementById('deleteModal');
+
+        if (modalConfirm) {
+            modalConfirm.addEventListener('click', () => {
+                // Complete the application when user presses Continue
+                if (window.pendingCompletionKey) {
+                    const key = window.pendingCompletionKey;
+                    window.pendingCompletionKey = null; // Clear the pending key
+                    
+                    // Show loading state on the Continue button
+                    const confirmButton = event.target;
+                    const originalText = confirmButton.innerHTML;
+                    confirmButton.innerHTML = '⏳ Processing...';
+                    confirmButton.disabled = true;
+                    
+                    const docRef = doc(db, 'applications', key);
+                    updateDoc(docRef, {
+                        status: 'completed',
+                        completedAt: new Date().toISOString(),
+                        completedBy: 'admin'
+                    })
+                    .then(() => {
+                        console.log('Application marked as completed successfully');
+                        
+                        // Reset button state
+                        confirmButton.innerHTML = originalText;
+                        confirmButton.disabled = false;
+                        
+                        // Close the modal
+                        if (completionModal) {
+                            completionModal.classList.remove('show');
+                        }
+                        
+                        // The onSnapshot listener will automatically update the UI
+                        // and move the application to the completed tab
+                    })
+                    .catch((error) => {
+                        console.error('Error updating application:', error);
+                        
+                        // Reset button state
+                        confirmButton.innerHTML = originalText;
+                        confirmButton.disabled = false;
+                        
+                        // Show error message
+                        alert('Error updating application. Please try again.');
+                    });
+                } else {
+                    // No pending completion, just close modal
+                    if (completionModal) {
+                        completionModal.classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        if (modalCancel) {
+            modalCancel.addEventListener('click', () => {
+                // Clear the pending completion key
+                window.pendingCompletionKey = null;
+                
+                if (completionModal) {
+                    completionModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Delete modal event listeners
+        if (deleteConfirm) {
+            deleteConfirm.addEventListener('click', () => {
+                // Delete the application when user presses Delete
+                if (window.pendingDeleteKey) {
+                    const key = window.pendingDeleteKey;
+                    window.pendingDeleteKey = null; // Clear the pending key
+                    
+                    // Show loading state on the Delete button
+                    const deleteButton = event.target;
+                    const originalText = deleteButton.innerHTML;
+                    deleteButton.innerHTML = '⏳ Processing...';
+                    deleteButton.disabled = true;
+                    
+                    performDelete(key);
+                    
+                    // Reset button state
+                    deleteButton.innerHTML = originalText;
+                    deleteButton.disabled = false;
+                    
+                    // Close the modal
+                    if (deleteModal) {
+                        deleteModal.classList.remove('show');
+                    }
+                } else {
+                    // No pending delete, just close modal
+                    if (deleteModal) {
+                        deleteModal.classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        if (deleteCancel) {
+            deleteCancel.addEventListener('click', () => {
+                // Clear the pending delete key
+                window.pendingDeleteKey = null;
+                
+                if (deleteModal) {
+                    deleteModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        if (completionModal) {
+            completionModal.addEventListener('click', (e) => {
+                if (e.target.id === 'completionModal') {
+                    // Clear the pending completion key
+                    window.pendingCompletionKey = null;
+                    e.target.classList.remove('show');
+                }
+            });
+        }
+
+        if (deleteModal) {
+            deleteModal.addEventListener('click', (e) => {
+                if (e.target.id === 'deleteModal') {
+                    // Clear the pending delete key
+                    window.pendingDeleteKey = null;
+                    e.target.classList.remove('show');
+                }
+            });
+        }
+
+        // Add keyboard support for modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (completionModal && completionModal.classList.contains('show')) {
+                    // Clear the pending completion key
+                    window.pendingCompletionKey = null;
+                    completionModal.classList.remove('show');
+                }
+                if (deleteModal && deleteModal.classList.contains('show')) {
+                    // Clear the pending delete key
+                    window.pendingDeleteKey = null;
+                    deleteModal.classList.remove('show');
+                }
+            }
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            if (lastSnapshot && lastSnapshot.exists()) {
+                const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                currentPage = 1; // Reset to first page when searching
+                renderApplications(filteredApplications);
+            }
+        });
+
+        // Filter button functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentFilter = button.dataset.filter;
+                currentPage = 1; // Reset to first page when filtering
+                if (lastSnapshot && lastSnapshot.exists()) {
+                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                    renderApplications(filteredApplications);
+                }
+            });
+        });
+
+        // Pagination functionality
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                renderApplications(filteredApplications);
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                renderApplications(filteredApplications);
+            }
+        });
     </script>
 </body>
 </html>
