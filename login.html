@@ -147,7 +147,7 @@
         <!-- Footer -->
         <div class="text-center mt-8 animate-fade-in-scale animate-delay-600">
             <p class="text-white/70 text-sm">
-                © 2024 NTTC PO Focal. All rights reserved.
+                © <span id="currentYear"></span> NTTC PO Focal. All rights reserved.
             </p>
         </div>
     </div>
@@ -197,6 +197,9 @@
             form.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 3}px)`;
         }, 16);
 
+        // Update current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
         // Show/hide password functionality
         const passwordInput = document.getElementById('password');
         const togglePassword = document.getElementById('togglePassword');
