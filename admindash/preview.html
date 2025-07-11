@@ -1153,6 +1153,11 @@ function savePDF() {
     
     // Helper function to populate form from URLSearchParams
     function populateFormFromParams(params) {
+        // Debug: Log all URL parameters
+        console.log('All URL parameters:');
+        for (const [key, value] of params.entries()) {
+            console.log(`${key}: ${value}`);
+        }
         
         // 1. TESDA Section
         document.getElementById('nmis-code').value = params.get('nmis-code') || 'N/A';
@@ -1330,16 +1335,27 @@ function savePDF() {
         
         // Properly set select field values
         const typeTrainingValue = params.get('type_training_institution');
+        console.log('URL parameter type_training_institution:', typeTrainingValue);
         if (typeTrainingValue && typeTrainingInstitutionInput) {
             // Handle different possible formats
             const normalizedValue = typeTrainingValue.toLowerCase().trim();
             if (normalizedValue === 'private' || normalizedValue === 'public') {
                 typeTrainingInstitutionInput.value = normalizedValue;
                 console.log('Set type_training_institution to:', normalizedValue);
+            } else {
+                console.log('Invalid type_training_institution value:', typeTrainingValue);
+            }
+        } else {
+            console.log('type_training_institution not found in URL or element not found');
+            // Set default value if not provided
+            if (typeTrainingInstitutionInput) {
+                typeTrainingInstitutionInput.value = 'private';
+                console.log('Set default type_training_institution to: private');
             }
         }
         
         const educationalValue = params.get('educational_attainment');
+        console.log('URL parameter educational_attainment:', educationalValue);
         if (educationalValue && educationalAttainmentInput) {
             // Handle different possible formats
             const normalizedValue = educationalValue.toLowerCase().trim();
@@ -1347,6 +1363,15 @@ function savePDF() {
             if (validOptions.includes(normalizedValue)) {
                 educationalAttainmentInput.value = normalizedValue;
                 console.log('Set educational_attainment to:', normalizedValue);
+            } else {
+                console.log('Invalid educational_attainment value:', educationalValue);
+            }
+        } else {
+            console.log('educational_attainment not found in URL or element not found');
+            // Set default value if not provided
+            if (educationalAttainmentInput) {
+                educationalAttainmentInput.value = 'college';
+                console.log('Set default educational_attainment to: college');
             }
         }
         
@@ -1365,6 +1390,14 @@ function savePDF() {
         // Log for debugging
         console.log('Form populated successfully');
         console.log('Select fields set to readonly:', selects.length);
+        
+        // Test form data collection
+        setTimeout(() => {
+            const typeTrainingValue = document.getElementById('type_training_institution')?.value;
+            const educationalValue = document.getElementById('educational_attainment')?.value;
+            console.log('Current form values - type_training_institution:', typeTrainingValue);
+            console.log('Current form values - educational_attainment:', educationalValue);
+        }, 1000);
     };
 
 function submitForm() {
@@ -1545,7 +1578,7 @@ document.getElementById('importButton').addEventListener('click', async function
             "type_training_institution": getValue('type_training_institution'),
             "email": getValue('email'),
             "contact_number": getValue('contact'),
-            "educational_attainment": getValue('educational_attainment') || "Bachelor's Degree",
+            "educational_attainment": getValue('educational_attainment'),
             "training_hours": getValue('training_hours'),
             "years_of_experience": getValue('years_of_experience'),
             "sector": getValue('sector'),
@@ -1560,8 +1593,7 @@ document.getElementById('importButton').addEventListener('click', async function
             "assessor1": getValue('assessor1'),
             "assessor2": getValue('assessor2'),
             "assessor3": getValue('assessor3'),
-            // Remove the conflicting 'status' field since it's handled by applicationStatus
-            "applicationStatus": getValue('status') || 'Pending', // Renamed from 'status' to 'applicationStatus'
+            "applicationStatus": getValue('status') || 'Pending',
             "importDate": new Date().toISOString(),
             "province": getValue('province'),
             "region": getValue('region'),
