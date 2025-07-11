@@ -111,6 +111,12 @@
             font-size: 16px;
         }
 
+        select[readonly] {
+            background-color: #f0f0f0;
+            color: #666;
+            cursor: not-allowed;
+        }
+
         select[multiple] {
             height: auto;
         }
@@ -203,6 +209,12 @@
             select,
             textarea {
                 font-size: 14px;
+            }
+
+            select[readonly] {
+                background-color: #f0f0f0;
+                color: #666;
+                cursor: not-allowed;
             }
 
             label {
@@ -751,7 +763,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="type_training_institution">Type of Training Institution:</label>
-                                <select id="type_training_institution" name="type_training_institution" required disabled>
+                                <select id="type_training_institution" name="type_training_institution" required readonly>
                                     <option value="">Select</option>
                                     <option value="private">Private</option>
                                     <option value="public">Public</option>
@@ -759,7 +771,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="educational_attainment">Educational Attainment:</label>
-                                <select id="educational_attainment" name="educational_attainment" required disabled>
+                                <select id="educational_attainment" name="educational_attainment" required readonly>
                                     <option value="">Select</option>
                                     <option value="high-school">High School</option>
                                     <option value="college">College</option>
@@ -1117,6 +1129,31 @@ function savePDF() {
     function populateForm() {
         const params = new URLSearchParams(window.location.search);
         
+        // If no URL parameters, try to get from localStorage (for testing)
+        if (params.toString() === '') {
+            console.log('No URL parameters found, checking localStorage...');
+            const storedData = localStorage.getItem('formData');
+            if (storedData) {
+                try {
+                    const parsedData = JSON.parse(storedData);
+                    // Convert stored data to URLSearchParams format for processing
+                    const urlParams = new URLSearchParams();
+                    Object.entries(parsedData).forEach(([key, value]) => {
+                        urlParams.set(key, value);
+                    });
+                    return populateFormFromParams(urlParams);
+                } catch (e) {
+                    console.error('Error parsing stored form data:', e);
+                }
+            }
+        }
+        
+        return populateFormFromParams(params);
+    }
+    
+    // Helper function to populate form from URLSearchParams
+    function populateFormFromParams(params) {
+        
         // 1. TESDA Section
         document.getElementById('nmis-code').value = params.get('nmis-code') || 'N/A';
         document.getElementById('nmis-date').value = params.get('nmis-date') || 'N/A';
@@ -1290,13 +1327,45 @@ function savePDF() {
         
         yearsOfExperienceInput.value = params.get('years_of_experience') || 'N/A';
         trainingInstitutionInput.value = params.get('training_institution') || 'N/A';
-        typeTrainingInstitutionInput.value = params.get('type_training_institution') || '';
-        educationalAttainmentInput.value = params.get('educational_attainment') || '';
+        
+        // Properly set select field values
+        const typeTrainingValue = params.get('type_training_institution');
+        if (typeTrainingValue && typeTrainingInstitutionInput) {
+            // Handle different possible formats
+            const normalizedValue = typeTrainingValue.toLowerCase().trim();
+            if (normalizedValue === 'private' || normalizedValue === 'public') {
+                typeTrainingInstitutionInput.value = normalizedValue;
+                console.log('Set type_training_institution to:', normalizedValue);
+            }
+        }
+        
+        const educationalValue = params.get('educational_attainment');
+        if (educationalValue && educationalAttainmentInput) {
+            // Handle different possible formats
+            const normalizedValue = educationalValue.toLowerCase().trim();
+            const validOptions = ['high-school', 'college', 'vocational', 'post-graduate'];
+            if (validOptions.includes(normalizedValue)) {
+                educationalAttainmentInput.value = normalizedValue;
+                console.log('Set educational_attainment to:', normalizedValue);
+            }
+        }
         
     }
     
     // Call the function when the page loads
-    window.onload = populateForm;
+    window.onload = function() {
+        populateForm();
+        
+        // Ensure select fields are readonly by default
+        const selects = document.querySelectorAll('#tesdaForm select');
+        selects.forEach(select => {
+            select.readOnly = true;
+        });
+        
+        // Log for debugging
+        console.log('Form populated successfully');
+        console.log('Select fields set to readonly:', selects.length);
+    };
 
 function submitForm() {
     const fields = [
@@ -1383,10 +1452,15 @@ let isEditing = false; // Track the editing state
 
 function toggleEdit() {
     const inputs = document.querySelectorAll('#tesdaForm input');
+    const selects = document.querySelectorAll('#tesdaForm select');
     isEditing = !isEditing; // Toggle the editing state
 
     inputs.forEach(input => {
         input.readOnly = !isEditing; // Set readonly based on editing state
+    });
+
+    selects.forEach(select => {
+        select.readOnly = !isEditing; // Set readonly for select fields
     });
 
     // Update button text based on the current state
