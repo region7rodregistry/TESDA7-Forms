@@ -1164,6 +1164,17 @@ function savePDF() {
         return populateFormFromParams(params);
     }
     
+    // Helper function to set field value with fallback and error checking
+    function setFieldValue(id, value, fallback = "") {
+        const el = document.getElementById(id);
+        if (!el) {
+            console.warn(`Element ${id} not found`);
+            return;
+        }
+        el.value = value !== null && value !== "" ? value : fallback;
+        console.log(`${id}:`, el.value);
+    }
+    
     // Helper function to populate form from URLSearchParams
     function populateFormFromParams(params) {
         // Debug: Log all URL parameters
@@ -1242,6 +1253,19 @@ function savePDF() {
         document.getElementById('client-type').value = params.get('client-type') || 'N/A';
     
         // 7. Working Experience
+        // Use helper for these fields
+        setFieldValue("years_of_experience", params.get("years_of_experience"), "");
+        setFieldValue("training_institution", params.get("training_institution"), "");
+        // For selects, set value before disabling
+        const typeTrainingVal = params.get("type_training_institution");
+        setFieldValue("type_training_institution", typeTrainingVal, "private");
+        const typeTrainingEl = document.getElementById("type_training_institution");
+        if (typeTrainingEl) typeTrainingEl.disabled = true;
+        const educationalVal = params.get("educational_attainment");
+        setFieldValue("educational_attainment", educationalVal, "college");
+        const educationalEl = document.getElementById("educational_attainment");
+        if (educationalEl) educationalEl.disabled = true;
+        
         const companyInputs = document.querySelectorAll('input[name="company[]"]');
         const positionInputs = document.querySelectorAll('input[name="position[]"]');
         const datesInputs = document.querySelectorAll('input[name="dates[]"]');
