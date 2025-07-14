@@ -1166,7 +1166,7 @@
             }
 
             const formData = new URLSearchParams(new FormData(form)).toString();
-            window.location.href = 'preview.html?' + formData; // Redirect to preview.html with form data
+            window.location.href = 'preview1.html?' + formData; // Redirect to preview.html with form data
         }
 
         function closeModal() {
@@ -1467,7 +1467,7 @@
 
         // Function to fetch and display content from trainer_profile.html
         async function fetchTrainerProfile() {
-            const response = await fetch('trainer_profile.html');
+            const response = await fetch('preview1.html');
             const text = await response.text();
             const previewContainer = document.getElementById('preview');
             previewContainer.innerHTML = text; // Display the fetched content

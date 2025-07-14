@@ -7,7 +7,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getFirestore, collection, addDoc, setDoc, doc, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, setDoc, doc, query, where, getDocs, updateDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
         
         // Make Firebase functions globally available
@@ -27,6 +27,7 @@
         window.storageRef = storageRef;
         window.uploadBytes = uploadBytes;
         window.getDownloadURL = getDownloadURL;
+        window.runTransaction = runTransaction;
     </script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="icons/t7logo.png">
@@ -1847,12 +1848,29 @@ async function sendToProvincialOffice() {
             return element ? element.value : 'N/A';
         };
 
+        // Get the next ticket number from Firestore using a transaction
+        const countersCollection = collection(window.firestore, 'counters');
+        const ticketCounterDoc = doc(countersCollection, 'ticketNumber');
+        let ticketNumberValue = 1; // Default to 1 if not found
+
+        await window.runTransaction(window.firestore, async (transaction) => {
+            const counterDoc = await transaction.get(ticketCounterDoc);
+            if (!counterDoc.exists()) {
+                // If the counter doc doesn't exist, create it with value 1
+                transaction.set(ticketCounterDoc, { current: 1 });
+                ticketNumberValue = 1;
+            } else {
+                const current = counterDoc.data().current || 0;
+                ticketNumberValue = current + 1;
+                transaction.update(ticketCounterDoc, { current: ticketNumberValue });
+            }
+        });
+
+        // Format the ticket number as PO-1, PO-2, etc.
+        const ticketNumber = `PO-${ticketNumberValue}`;
+
         const now = new Date();
         const timestamp = now.toISOString(); // e.g., "2024-05-30T12:34:56.789Z"
-        const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-        const ticketNumber = `PO-${now.getTime()}-${random}`;
-
-        // For display
         const formattedDate = now.toLocaleDateString('en-US', {
             month: 'long',
             day: 'numeric',
@@ -1864,30 +1882,10 @@ async function sendToProvincialOffice() {
             hour12: true
         });
 
-        // Initialize Firebase app if not already initialized
-        if (!window.firebaseApp) {
-            const firebaseConfig = {
-  apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
-  authDomain: "r7nttconaf.firebaseapp.com",
-  projectId: "r7nttconaf",
-  storageBucket: "r7nttconaf.firebasestorage.app",
-  messagingSenderId: "521822609098",
-  appId: "1:521822609098:web:e8ee10f63098924bb35e33",
-  measurementId: "G-0VPXC641LT"
-};
-            window.firebaseApp = initializeApp(firebaseConfig);
-        }
-
-        // Initialize Firestore if not already initialized
-        if (!window.firestore) {
-            window.firestore = getFirestore(window.firebaseApp);
-        }
-
         // Collect educational background data directly from the table
         const educationTable = document.querySelector('.form-section:nth-of-type(4) table');
         const educationRows = educationTable ? educationTable.querySelectorAll('tbody tr') : [];
         const educationData = [];
-        
         for (let i = 0; i < educationRows.length; i++) {
             const row = educationRows[i];
             const inputs = row.querySelectorAll('input');
@@ -1905,7 +1903,6 @@ async function sendToProvincialOffice() {
         const experienceTable = document.querySelector('.form-section:nth-of-type(7) table');
         const experienceRows = experienceTable ? experienceTable.querySelectorAll('tbody tr') : [];
         const experienceData = [];
-        
         for (let i = 0; i < experienceRows.length; i++) {
             const row = experienceRows[i];
             const inputs = row.querySelectorAll('input');
@@ -1924,7 +1921,6 @@ async function sendToProvincialOffice() {
         const trainingTable = document.querySelector('.form-section:nth-of-type(8) table');
         const trainingRows = trainingTable ? trainingTable.querySelectorAll('tbody tr') : [];
         const trainingData = [];
-        
         for (let i = 0; i < trainingRows.length; i++) {
             const row = trainingRows[i];
             const inputs = row.querySelectorAll('input');
@@ -1942,7 +1938,6 @@ async function sendToProvincialOffice() {
         const licenseTable = document.querySelector('.form-section:nth-of-type(9) table');
         const licenseRows = licenseTable ? licenseTable.querySelectorAll('tbody tr') : [];
         const licenseData = [];
-        
         for (let i = 0; i < licenseRows.length; i++) {
             const row = licenseRows[i];
             const inputs = row.querySelectorAll('input');
@@ -1960,7 +1955,6 @@ async function sendToProvincialOffice() {
         const competencyTable = document.querySelector('.form-section:nth-of-type(10) table');
         const competencyRows = competencyTable ? competencyTable.querySelectorAll('tbody tr') : [];
         const competencyData = [];
-        
         for (let i = 0; i < competencyRows.length; i++) {
             const row = competencyRows[i];
             const inputs = row.querySelectorAll('input');
@@ -1980,14 +1974,10 @@ async function sendToProvincialOffice() {
         const applicationData = {
             ticketNumber: ticketNumber,
             timestamp: `${formattedDate} ${formattedTime}`,
-            
-            // 1. TESDA Section
             tesdaInfo: {
                 nmisCode: getValue('nmis-code'),
                 nmisDate: getValue('nmis-date')
             },
-
-            // 2. Manpower Profile
             manpowerProfile: {
                 lastName: getValue('last_name'),
                 firstName: getValue('first_name'),
@@ -2008,8 +1998,6 @@ async function sendToProvincialOffice() {
                 employmentType: getValue('employment-type'),
                 employmentStatus: getValue('employment-status')
             },
-
-            // 3. Personal Information
             personalInfo: {
                 birthdate: getValue('birthdate'),
                 birthplace: getValue('birthplace'),
@@ -2023,13 +2011,9 @@ async function sendToProvincialOffice() {
                 tinNo: getValue('tin'),
                 distinguishingMarks: getValue('distinguishing-marks')
             },
-
-            // 4. Educational Background
             educationalBackground: {
                 schools: educationData
             },
-
-            // 5. Course Title
             courseInfo: {
                 courseTitle: getValue('course-title'),
                 trainingDuration: getValue('training-duration'),
@@ -2038,8 +2022,6 @@ async function sendToProvincialOffice() {
                 aptitudeExamDate: getValue('aptitude-exam-date'),
                 aptitudeExamTime: getValue('aptitude-exam-time')
             },
-
-            // 6. Competency Assessment
             competencyAssessment: {
                 applicationDate: getValue('application-date'),
                 sectorComponent: getValue('sector-component'),
@@ -2051,8 +2033,6 @@ async function sendToProvincialOffice() {
                 programSector: getValue('program-sector'),
                 clientType: getValue('client-type')
             },
-
-            // 7. Working Experience
             workingExperience: {
                 totalYears: getValue('years_of_experience'),
                 trainingHours: getValue('training_hours'),
@@ -2061,17 +2041,9 @@ async function sendToProvincialOffice() {
                 educationalAttainment: getValue('educational_attainment'),
                 experiences: experienceData
             },
-
-            // 8. Training/Seminars
             trainingSeminars: trainingData,
-
-            // 9. Licenses/Examinations
             licenses: licenseData,
-
-            // 10. Competency Assessment Passed
             competencyAssessmentPassed: competencyData,
-
-            // 11. Family Background
             familyBackground: {
                 spouse: {
                     name: getValue('spouse-name'),
@@ -2100,8 +2072,6 @@ async function sendToProvincialOffice() {
                 dependents: getValue('dependents'),
                 dependentAge: getValue('dependent-age')
             },
-
-            // 12. NTTC Application
             nttcApplication: {
                 sector: getValue('sector'),
                 qualification: getValue('qualification'),
@@ -2118,23 +2088,15 @@ async function sendToProvincialOffice() {
             }
         };
 
-        // Save to Firestore
-        const applicationsCollection = collection(window.firestore, 'applications');
-        await addDoc(applicationsCollection, applicationData);
+        // Store the application data in localStorage
+        localStorage.setItem(`applicationData_${ticketNumber}`, JSON.stringify(applicationData));
+        localStorage.setItem('lastTicketNumber', ticketNumber);
 
         // Hide loading modal
         document.getElementById('loadingModal').style.display = 'none';
 
-        // Show ticket modal
-        const ticketModal = document.getElementById('ticketModal');
-        document.getElementById('ticketNumber').textContent = ticketNumber;
-        ticketModal.style.display = 'block';
-        setTimeout(() => {
-            ticketModal.classList.add('show');
-        }, 10);
-
-        // Save ticket number to localStorage
-        localStorage.setItem('lastTicketNumber', ticketNumber);
+        // Redirect to preview1.html with the ticket number as a URL parameter
+        window.location.href = `../admindash/preview1.html?ticketNumber=${encodeURIComponent(ticketNumber)}`;
     } catch (error) {
         console.error('Error sending application:', error);
         document.getElementById('loadingModal').style.display = 'none';
