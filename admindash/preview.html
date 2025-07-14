@@ -2624,26 +2624,23 @@ function populateFormFromFirebase(data) {
     // 7. Working Experience
     if (data.workingExperience) {
         console.log('Loading working experience data:', data.workingExperience);
-        setValue('years_of_experience', data.workingExperience.totalYears);
-        setValue('training_hours', data.workingExperience.trainingHours);
-        setValue('training_institution', data.workingExperience.trainingInstitution);
-        
-        // Handle select fields properly
-        const typeTrainingInstitutionInput = document.getElementById('type_training_institution');
-        const educationalAttainmentInput = document.getElementById('educational_attainment');
-        
-        if (typeTrainingInstitutionInput && data.workingExperience.typeTrainingInstitution) {
-            typeTrainingInstitutionInput.disabled = false; // Temporarily enable
-            typeTrainingInstitutionInput.value = data.workingExperience.typeTrainingInstitution;
-            typeTrainingInstitutionInput.disabled = true; // Disable again
-        }
-        
-        if (educationalAttainmentInput && data.workingExperience.educationalAttainment) {
-            educationalAttainmentInput.disabled = false; // Temporarily enable
-            educationalAttainmentInput.value = data.workingExperience.educationalAttainment;
-            educationalAttainmentInput.disabled = true; // Disable again
-        }
-
+        // --- PATCH: Load working experience fields from localStorage formData ---
+        const formData = JSON.parse(localStorage.getItem("formData") || "{}");
+        const setField = (id, fallback = "") => {
+            const el = document.getElementById(id);
+            if (el) el.value = formData[id] || fallback;
+        };
+        setField("years_of_experience");
+        setField("training_institution");
+        setField("training_hours");
+        setField("type_training_institution", "private");
+        setField("educational_attainment", "college");
+        // For selects, set .disabled after .value
+        const typeTrainingEl = document.getElementById("type_training_institution");
+        if (typeTrainingEl) typeTrainingEl.disabled = true;
+        const educationalEl = document.getElementById("educational_attainment");
+        if (educationalEl) educationalEl.disabled = true;
+        // --- END PATCH ---
         // Populate experience table
         if (data.workingExperience.experiences) {
             const companyInputs = document.querySelectorAll('input[name="company[]"]');
