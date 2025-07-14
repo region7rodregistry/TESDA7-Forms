@@ -1425,199 +1425,22 @@ console.log('Formatted timestamp:', receivedAt);
 
         // Function to view PDF
         window.viewPDF = function(key) {
-            // Get the application data from the current snapshot
             if (lastSnapshot && lastSnapshot.exists()) {
                 const applications = lastSnapshot.val();
                 const applicationData = applications[key];
-                
                 if (applicationData) {
-                    // Debug: Log the application data structure
-                    console.log('Application data structure:', applicationData);
-                    
-                    // Build URL parameters from the application data
-                    const params = new URLSearchParams();
-                    
-                    // TESDA Info
-                    if (applicationData.tesdaInfo) {
-                        params.set('nmis-code', applicationData.tesdaInfo.nmisCode || '');
-                        params.set('nmis-date', applicationData.tesdaInfo.nmisDate || '');
+                    // Use the ticket number from the document, or fallback to the key
+                    const ticketNumber = applicationData.ticketNumber || key;
+                    if (ticketNumber) {
+                        const previewUrl = `preview.html?ticketNumber=${encodeURIComponent(ticketNumber)}`;
+                        window.open(previewUrl, '_blank');
+                    } else {
+                        alert('No ticket number found for this application.');
                     }
-                    
-                    // Manpower Profile
-                    if (applicationData.manpowerProfile) {
-                        const mp = applicationData.manpowerProfile;
-                        params.set('last-name', mp.lastName || '');
-                        params.set('first-name', mp.firstName || '');
-                        params.set('middle-name', mp.middleName || '');
-                        params.set('extension', mp.extension || '');
-                        params.set('address', mp.address || '');
-                        params.set('city', mp.city || '');
-                        params.set('province', mp.province || '');
-                        params.set('region', mp.region || '');
-                        params.set('zip-code', mp.zipCode || '');
-                        params.set('po-box', mp.poBox || '');
-                        params.set('sex', mp.sex || '');
-                        params.set('civil-status', mp.civilStatus || '');
-                        params.set('contact', mp.contact || '');
-                        params.set('telephone', mp.telephone || '');
-                        params.set('email', mp.email || '');
-                        params.set('fax', mp.fax || '');
-                        params.set('employment-type', mp.employmentType || '');
-                        params.set('employment-status', mp.employmentStatus || '');
-                    }
-                    
-                    // Personal Information
-                    if (applicationData.personalInfo) {
-                        const pi = applicationData.personalInfo;
-                        params.set('birthdate', pi.birthdate || '');
-                        params.set('birthplace', pi.birthplace || '');
-                        params.set('citizenship', pi.citizenship || '');
-                        params.set('religion', pi.religion || '');
-                        params.set('height', pi.height || '');
-                        params.set('weight', pi.weight || '');
-                        params.set('blood-type', pi.bloodType || '');
-                        params.set('sss', pi.sss || '');
-                        params.set('gsis', pi.gsis || '');
-                        params.set('tin', pi.tin || '');
-                        params.set('distinguishing-marks', pi.distinguishingMarks || '');
-                    }
-                    
-                    // Educational Background
-                    if (applicationData.educationalBackground && Array.isArray(applicationData.educationalBackground)) {
-                        applicationData.educationalBackground.forEach((edu, index) => {
-                            params.append('school[]', edu.school || '');
-                            params.append('educational-level[]', edu.educationalLevel || '');
-                            params.append('school-year[]', edu.schoolYear || '');
-                            params.append('degree[]', edu.degree || '');
-                        });
-                    }
-                    
-                    // Course Title
-                    if (applicationData.courseTitle) {
-                        const ct = applicationData.courseTitle;
-                        params.set('course-title', ct.courseTitle || '');
-                        params.set('training-duration', ct.trainingDuration || '');
-                        params.set('schedule-from', ct.scheduleFrom || '');
-                        params.set('schedule-to', ct.scheduleTo || '');
-                        params.set('aptitude-exam-date', ct.aptitudeExamDate || '');
-                        params.set('aptitude-exam-time', ct.aptitudeExamTime || '');
-                    }
-                    
-                    // Competency Assessment
-                    if (applicationData.competencyAssessment) {
-                        const ca = applicationData.competencyAssessment;
-                        params.set('application-date', ca.applicationDate || '');
-                        params.set('sector-component', ca.sectorComponent || '');
-                        params.set('trade-area', ca.tradeArea || '');
-                        params.set('occupation', ca.occupation || '');
-                        params.set('classification', ca.classification || '');
-                        params.set('competency', ca.competency || '');
-                        params.set('training-program', ca.trainingProgram || '');
-                        params.set('program-sector', ca.programSector || '');
-                        params.set('client-type', ca.clientType || '');
-                    }
-                    
-                    // Working Experience
-                    if (applicationData.workingExperience && Array.isArray(applicationData.workingExperience)) {
-                        applicationData.workingExperience.forEach((exp, index) => {
-                            params.append('company[]', exp.company || '');
-                            params.append('position[]', exp.position || '');
-                            params.append('dates[]', exp.dates || '');
-                            params.append('salary[]', exp.salary || '');
-                            params.append('years-of-experience[]', exp.yearsOfExperience || '');
-                        });
-                    }
-                    
-                    // Training Hours
-                    if (applicationData.trainingHours) {
-                        params.set('training_hours', applicationData.trainingHours);
-                    }
-                    
-                    // Other Training/Seminars
-                    if (applicationData.otherTraining && Array.isArray(applicationData.otherTraining)) {
-                        applicationData.otherTraining.forEach((training, index) => {
-                            params.append('training-title[]', training.trainingTitle || '');
-                            params.append('training-venue[]', training.trainingVenue || '');
-                            params.append('training-dates[]', training.trainingDates || '');
-                            params.append('training-hours[]', training.trainingHours || '');
-                        });
-                    }
-                    
-                    // Licenses/Examinations
-                    if (applicationData.licenses && Array.isArray(applicationData.licenses)) {
-                        applicationData.licenses.forEach((license, index) => {
-                            params.append('license-title[]', license.licenseTitle || '');
-                            params.append('license-year[]', license.licenseYear || '');
-                            params.append('license-rating[]', license.licenseRating || '');
-                            params.append('license-expiry[]', license.licenseExpiry || '');
-                        });
-                    }
-                    
-                    // Competency Assessment Passed
-                    if (applicationData.competencyAssessmentPassed && Array.isArray(applicationData.competencyAssessmentPassed)) {
-                        applicationData.competencyAssessmentPassed.forEach((comp, index) => {
-                            params.append('competency-sector[]', comp.competencySector || '');
-                            params.append('competency-trade[]', comp.competencyTrade || '');
-                            params.append('competency-occupation[]', comp.competencyOccupation || '');
-                            params.append('classification-level[]', comp.classificationLevel || '');
-                            params.append('competency[]', comp.competency || '');
-                            params.append('specialization-description[]', comp.specializationDescription || '');
-                        });
-                    }
-                    
-                    // Family Background
-                    if (applicationData.familyBackground) {
-                        const fb = applicationData.familyBackground;
-                        params.set('spouse-name', fb.spouseName || '');
-                        params.set('spouse-education', fb.spouseEducation || '');
-                        params.set('spouse-occupation', fb.spouseOccupation || '');
-                        params.set('spouse-income', fb.spouseIncome || '');
-                        params.set('father-name', fb.fatherName || '');
-                        params.set('father-education', fb.fatherEducation || '');
-                        params.set('father-occupation', fb.fatherOccupation || '');
-                        params.set('father-income', fb.fatherIncome || '');
-                        params.set('mother-name', fb.motherName || '');
-                        params.set('mother-education', fb.motherEducation || '');
-                        params.set('mother-occupation', fb.motherOccupation || '');
-                        params.set('mother-income', fb.motherIncome || '');
-                        params.set('guardian-name', fb.guardianName || '');
-                        params.set('guardian-education', fb.guardianEducation || '');
-                        params.set('guardian-occupation', fb.guardianOccupation || '');
-                        params.set('guardian-income', fb.guardianIncome || '');
-                        params.set('dependents', fb.dependents || '');
-                        params.set('dependent-age', fb.dependentAge || '');
-                    }
-                    
-                    // NTTC Application
-                    if (applicationData.nttcApplication) {
-                        const nttc = applicationData.nttcApplication;
-                        params.set('sector', nttc.sector || '');
-                        params.set('qualification', nttc.qualification || '');
-                        params.set('nttcstatus', nttc.nttcstatus || '');
-                        params.set('nc_cert_number', nttc.ncCertNumber || '');
-                        params.set('nc_date_issuance', nttc.ncDateIssuance || '');
-                        params.set('nc_validity', nttc.ncValidity || '');
-                        params.set('tm_cert_number', nttc.tmCertNumber || '');
-                        params.set('tm_date_issuance', nttc.tmDateIssuance || '');
-                        params.set('tm_validity', nttc.tmValidity || '');
-                        params.set('assessor1', nttc.assessor1 || '');
-                        params.set('assessor2', nttc.assessor2 || '');
-                        params.set('assessor3', nttc.assessor3 || '');
-                        params.set('years_of_experience', nttc.yearsOfExperience || '');
-                        params.set('training_institution', nttc.trainingInstitution || '');
-                        params.set('type_training_institution', nttc.typeTrainingInstitution || '');
-                        params.set('educational_attainment', nttc.educationalAttainment || '');
-                    }
-                    
-                    // Redirect to preview.html with the data
-                    const previewUrl = `preview.html?${params.toString()}`;
-                    window.open(previewUrl, '_blank');
                 } else {
-                    console.error('Application data not found for key:', key);
                     alert('Application data not found. Please try again.');
                 }
             } else {
-                console.error('No application data available');
                 alert('No application data available. Please refresh the page and try again.');
             }
         };

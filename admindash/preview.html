@@ -1428,38 +1428,35 @@ function savePDF() {
     
     // Call the function when the page loads
     window.onload = async function() {
-        // First try to load from Firebase if we have a ticket number
-        const ticketNumber = localStorage.getItem('lastTicketNumber') || 
-                           new URLSearchParams(window.location.search).get('ticketNumber');
-        
+        // Always load from Firestore using ticket number from URL
+        const params = new URLSearchParams(window.location.search);
+        const ticketNumber = params.get('ticketNumber');
         if (ticketNumber) {
             try {
                 await loadDataFromFirebase(ticketNumber);
             } catch (error) {
-                console.log('Could not load from Firebase, falling back to URL parameters:', error);
-                populateForm();
+                console.error('Could not load from Firebase:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Could not load application data from Firestore.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         } else {
-            populateForm();
+            Swal.fire({
+                title: 'Error!',
+                text: 'No ticket number provided in URL.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
-        
         // Ensure select fields are disabled by default
         const selects = document.querySelectorAll('#tesdaForm select');
         selects.forEach(select => {
             select.disabled = true;
         });
-        
-        // Log for debugging
-        console.log('Form populated successfully');
-        console.log('Select fields set to disabled:', selects.length);
-        
-        // Test form data collection
-        setTimeout(() => {
-            const typeTrainingValue = document.getElementById('type_training_institution')?.value;
-            const educationalValue = document.getElementById('educational_attainment')?.value;
-            console.log('Current form values - type_training_institution:', typeTrainingValue);
-            console.log('Current form values - educational_attainment:', educationalValue);
-        }, 1000);
+        console.log('Form populated from Firestore');
     };
 
 function submitForm() {
@@ -2524,8 +2521,7 @@ function populateFormFromFirebase(data) {
     // Helper function to safely set element value
     const setValue = (id, value) => {
         const element = document.getElementById(id);
-        if (element && value) {
-            console.log(`Setting ${id} to:`, value);
+        if (element && value !== undefined) {
             element.value = value;
             // For select elements, ensure they're properly enabled/disabled
             if (element.tagName === 'SELECT') {
@@ -2533,10 +2529,6 @@ function populateFormFromFirebase(data) {
                 element.value = value;
                 element.disabled = true; // Disable again for readonly mode
             }
-        } else if (!element) {
-            console.warn(`Element with id '${id}' not found`);
-        } else if (!value) {
-            console.log(`No value provided for ${id}`);
         }
     };
 
@@ -2623,38 +2615,29 @@ function populateFormFromFirebase(data) {
 
     // 7. Working Experience
     if (data.workingExperience) {
-        console.log('Loading working experience data:', data.workingExperience);
-        // --- PATCH: Load working experience fields from localStorage formData ---
-        const formData = JSON.parse(localStorage.getItem("formData") || "{}");
-        const setField = (id, fallback = "") => {
-            const el = document.getElementById(id);
-            if (el) el.value = formData[id] || fallback;
-        };
-        setField("years_of_experience");
-        setField("training_institution");
-        setField("training_hours");
-        setField("type_training_institution", "private");
-        setField("educational_attainment", "college");
-        // For selects, set .disabled after .value
-        const typeTrainingEl = document.getElementById("type_training_institution");
+        setValue('years_of_experience', data.workingExperience.totalYears || '');
+        setValue('training_hours', data.workingExperience.trainingHours || '');
+        setValue('training_institution', data.workingExperience.trainingInstitution || '');
+        setValue('type_training_institution', data.workingExperience.typeTrainingInstitution || 'private');
+        setValue('educational_attainment', data.workingExperience.educationalAttainment || 'college');
+        // After assigning values, disable selects
+        const typeTrainingEl = document.getElementById('type_training_institution');
         if (typeTrainingEl) typeTrainingEl.disabled = true;
-        const educationalEl = document.getElementById("educational_attainment");
+        const educationalEl = document.getElementById('educational_attainment');
         if (educationalEl) educationalEl.disabled = true;
-        // --- END PATCH ---
         // Populate experience table
-        if (data.workingExperience.experiences) {
+        if (Array.isArray(data.workingExperience.experiences)) {
             const companyInputs = document.querySelectorAll('input[name="company[]"]');
             const positionInputs = document.querySelectorAll('input[name="position[]"]');
             const datesInputs = document.querySelectorAll('input[name="dates[]"]');
             const salaryInputs = document.querySelectorAll('input[name="salary[]"]');
             const expYearsInputs = document.querySelectorAll('input[name="years-of-experience[]"]');
-
             data.workingExperience.experiences.forEach((exp, index) => {
-                if (companyInputs[index]) companyInputs[index].value = exp.company || 'N/A';
-                if (positionInputs[index]) positionInputs[index].value = exp.position || 'N/A';
-                if (datesInputs[index]) datesInputs[index].value = exp.dates || 'N/A';
-                if (salaryInputs[index]) salaryInputs[index].value = exp.salary || 'N/A';
-                if (expYearsInputs[index]) expYearsInputs[index].value = exp.yearsOfExperience || 'N/A';
+                if (companyInputs[index]) companyInputs[index].value = exp.company || '';
+                if (positionInputs[index]) positionInputs[index].value = exp.position || '';
+                if (datesInputs[index]) datesInputs[index].value = exp.dates || '';
+                if (salaryInputs[index]) salaryInputs[index].value = exp.salary || '';
+                if (expYearsInputs[index]) expYearsInputs[index].value = exp.yearsOfExperience || '';
             });
         }
     }
