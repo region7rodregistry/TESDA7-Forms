@@ -7,7 +7,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getFirestore, collection, addDoc, setDoc, doc, query, orderBy, where, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, setDoc, doc, query, where, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
         
         // Make Firebase functions globally available
@@ -19,16 +19,14 @@
         window.getFirestore = getFirestore;
         window.collection = collection;
         window.addDoc = addDoc;
+        window.query = query;
+        window.where = where;
+        window.getDocs = getDocs;
+        window.updateDoc = updateDoc;
         window.getStorage = getStorage;
         window.storageRef = storageRef;
         window.uploadBytes = uploadBytes;
         window.getDownloadURL = getDownloadURL;
-        // Add Firestore query helpers
-        window.query = query;
-        window.orderBy = orderBy;
-        window.where = where;
-        window.limit = limit;
-        window.getDocs = getDocs;
     </script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="icons/t7logo.png">
@@ -115,6 +113,12 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 16px;
+        }
+
+        select[disabled] {
+            background-color: #f0f0f0;
+            color: #666;
+            cursor: not-allowed;
         }
 
         select[multiple] {
@@ -209,6 +213,12 @@
             select,
             textarea {
                 font-size: 14px;
+            }
+
+            select[disabled] {
+                background-color: #f0f0f0;
+                color: #666;
+                cursor: not-allowed;
             }
 
             label {
@@ -1051,6 +1061,15 @@
                 <button type="button" class="btn btn-primary" id="sendToPO" onclick="sendToProvincialOffice()" style="border: 2px solid #000000;">
                     Send Application to Provincial Office
                 </button>
+                <button type="button" class="btn btn-secondary" onclick="testWorkingExperienceFields()" style="background-color: #007bff; margin-top: 10px;">
+                    Test Working Experience Fields
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="checkFormValues()" style="background-color: #28a745; margin-top: 10px;">
+                    Check Form Values
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="testFirebaseConnection()" style="background-color: #ffc107; margin-top: 10px;">
+                    Test Firebase Connection
+                </button>
             </div>
         </form>
     </div>
@@ -1122,6 +1141,36 @@ function savePDF() {
     // Function to get query parameters and populate the form
     function populateForm() {
         const params = new URLSearchParams(window.location.search);
+        
+        // If no URL parameters, try to get from localStorage (for testing)
+        if (params.toString() === '') {
+            console.log('No URL parameters found, checking localStorage...');
+            const storedData = localStorage.getItem('formData');
+            if (storedData) {
+                try {
+                    const parsedData = JSON.parse(storedData);
+                    // Convert stored data to URLSearchParams format for processing
+                    const urlParams = new URLSearchParams();
+                    Object.entries(parsedData).forEach(([key, value]) => {
+                        urlParams.set(key, value);
+                    });
+                    return populateFormFromParams(urlParams);
+                } catch (e) {
+                    console.error('Error parsing stored form data:', e);
+                }
+            }
+        }
+        
+        return populateFormFromParams(params);
+    }
+    
+    // Helper function to populate form from URLSearchParams
+    function populateFormFromParams(params) {
+        // Debug: Log all URL parameters
+        console.log('All URL parameters:');
+        for (const [key, value] of params.entries()) {
+            console.log(`${key}: ${value}`);
+        }
         
         // 1. TESDA Section
         document.getElementById('nmis-code').value = params.get('nmis-code') || 'N/A';
@@ -1294,15 +1343,100 @@ function savePDF() {
         const typeTrainingInstitutionInput = document.getElementById('type_training_institution');
         const educationalAttainmentInput = document.getElementById('educational_attainment');
         
-        yearsOfExperienceInput.value = params.get('years_of_experience') || 'N/A';
-        trainingInstitutionInput.value = params.get('training_institution') || 'N/A';
-        typeTrainingInstitutionInput.value = params.get('type_training_institution') || '';
-        educationalAttainmentInput.value = params.get('educational_attainment') || '';
+        if (yearsOfExperienceInput) {
+            yearsOfExperienceInput.value = params.get('years_of_experience') || 'N/A';
+        }
+        if (trainingInstitutionInput) {
+            trainingInstitutionInput.value = params.get('training_institution') || 'N/A';
+        }
+        
+        // Properly set select field values
+        const typeTrainingValue = params.get('type_training_institution');
+        console.log('URL parameter type_training_institution:', typeTrainingValue);
+        if (typeTrainingValue && typeTrainingInstitutionInput) {
+            // Handle different possible formats
+            const normalizedValue = typeTrainingValue.toLowerCase().trim();
+            if (normalizedValue === 'private' || normalizedValue === 'public') {
+                typeTrainingInstitutionInput.disabled = false; // Temporarily enable
+                typeTrainingInstitutionInput.value = normalizedValue;
+                typeTrainingInstitutionInput.disabled = true; // Disable again
+                console.log('Set type_training_institution to:', normalizedValue);
+            } else {
+                console.log('Invalid type_training_institution value:', typeTrainingValue);
+            }
+        } else {
+            console.log('type_training_institution not found in URL or element not found');
+            // Set default value if not provided
+            if (typeTrainingInstitutionInput) {
+                typeTrainingInstitutionInput.disabled = false; // Temporarily enable
+                typeTrainingInstitutionInput.value = 'private';
+                typeTrainingInstitutionInput.disabled = true; // Disable again
+                console.log('Set default type_training_institution to: private');
+            }
+        }
+        
+        const educationalValue = params.get('educational_attainment');
+        console.log('URL parameter educational_attainment:', educationalValue);
+        if (educationalValue && educationalAttainmentInput) {
+            // Handle different possible formats
+            const normalizedValue = educationalValue.toLowerCase().trim();
+            const validOptions = ['high-school', 'college', 'vocational', 'post-graduate'];
+            if (validOptions.includes(normalizedValue)) {
+                educationalAttainmentInput.disabled = false; // Temporarily enable
+                educationalAttainmentInput.value = normalizedValue;
+                educationalAttainmentInput.disabled = true; // Disable again
+                console.log('Set educational_attainment to:', normalizedValue);
+            } else {
+                console.log('Invalid educational_attainment value:', educationalValue);
+            }
+        } else {
+            console.log('educational_attainment not found in URL or element not found');
+            // Set default value if not provided
+            if (educationalAttainmentInput) {
+                educationalAttainmentInput.disabled = false; // Temporarily enable
+                educationalAttainmentInput.value = 'college';
+                educationalAttainmentInput.disabled = true; // Disable again
+                console.log('Set default educational_attainment to: college');
+            }
+        }
         
     }
     
     // Call the function when the page loads
-    window.onload = populateForm;
+    window.onload = async function() {
+        // First try to load from Firebase if we have a ticket number
+        const ticketNumber = localStorage.getItem('lastTicketNumber') || 
+                           new URLSearchParams(window.location.search).get('ticketNumber');
+        
+        if (ticketNumber) {
+            try {
+                await loadDataFromFirebase(ticketNumber);
+            } catch (error) {
+                console.log('Could not load from Firebase, falling back to URL parameters:', error);
+                populateForm();
+            }
+        } else {
+            populateForm();
+        }
+        
+        // Ensure select fields are disabled by default
+        const selects = document.querySelectorAll('#tesdaForm select');
+        selects.forEach(select => {
+            select.disabled = true;
+        });
+        
+        // Log for debugging
+        console.log('Form populated successfully');
+        console.log('Select fields set to disabled:', selects.length);
+        
+        // Test form data collection
+        setTimeout(() => {
+            const typeTrainingValue = document.getElementById('type_training_institution')?.value;
+            const educationalValue = document.getElementById('educational_attainment')?.value;
+            console.log('Current form values - type_training_institution:', typeTrainingValue);
+            console.log('Current form values - educational_attainment:', educationalValue);
+        }, 1000);
+    };
 
 function submitForm() {
     const fields = [
@@ -1389,14 +1523,28 @@ let isEditing = false; // Track the editing state
 
 function toggleEdit() {
     const inputs = document.querySelectorAll('#tesdaForm input');
+    const selects = document.querySelectorAll('#tesdaForm select');
     isEditing = !isEditing; // Toggle the editing state
 
     inputs.forEach(input => {
         input.readOnly = !isEditing; // Set readonly based on editing state
     });
 
+    selects.forEach(select => {
+        select.disabled = !isEditing; // Set disabled for select fields
+    });
+
     // Update button text based on the current state
-    document.getElementById('editToggle').textContent = isEditing ? 'Save Changes' : 'Edit Form';
+    const editButton = document.getElementById('editToggle');
+    if (isEditing) {
+        editButton.textContent = 'Save Changes';
+        editButton.style.backgroundColor = '#28a745'; // Green for save
+    } else {
+        editButton.textContent = 'Edit Form';
+        editButton.style.backgroundColor = '#ff0000'; // Red for edit
+        // Save changes to Firebase when switching back to readonly
+        saveChangesToFirebase();
+    }
 }
 
 function openModal() {
@@ -1477,7 +1625,7 @@ document.getElementById('importButton').addEventListener('click', async function
             "type_training_institution": getValue('type_training_institution'),
             "email": getValue('email'),
             "contact_number": getValue('contact'),
-            "educational_attainment": getValue('educational_attainment') || "Bachelor's Degree",
+            "educational_attainment": getValue('educational_attainment'),
             "training_hours": getValue('training_hours'),
             "years_of_experience": getValue('years_of_experience'),
             "sector": getValue('sector'),
@@ -1492,8 +1640,7 @@ document.getElementById('importButton').addEventListener('click', async function
             "assessor1": getValue('assessor1'),
             "assessor2": getValue('assessor2'),
             "assessor3": getValue('assessor3'),
-            // Remove the conflicting 'status' field since it's handled by applicationStatus
-            "applicationStatus": getValue('status') || 'Pending', // Renamed from 'status' to 'applicationStatus'
+            "applicationStatus": getValue('status') || 'Pending',
             "importDate": new Date().toISOString(),
             "province": getValue('province'),
             "region": getValue('region'),
@@ -1525,7 +1672,7 @@ document.getElementById('importButton').addEventListener('click', async function
             cancelButtonText: 'Stay Here'
         }).then((result) => {
             if (result.isConfirmed) {
-    window.location.href = 'admindash/nttcregistry.html';
+    window.location.href = '../admindash/nttcregistry.html';
             } else {
                 // Reset button state if staying on page
                 importButton.disabled = false;
@@ -1680,9 +1827,21 @@ async function sendToProvincialOffice() {
         };
 
         const now = new Date();
-        const year = now.getFullYear();
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const yearMonth = `${year}${month}`;
+        const timestamp = now.toISOString(); // e.g., "2024-05-30T12:34:56.789Z"
+        const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+        const ticketNumber = `PO-${now.getTime()}-${random}`;
+
+        // For display
+        const formattedDate = now.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        });
+        const formattedTime = now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
 
         // Initialize Firebase app if not already initialized
         if (!window.firebaseApp) {
@@ -1702,50 +1861,6 @@ async function sendToProvincialOffice() {
         if (!window.firestore) {
             window.firestore = getFirestore(window.firebaseApp);
         }
-
-        // --- Ticket Number Generation ---
-        // Query for all ticket numbers for the current month, then find the max series in JS
-        const applicationsCollection = collection(window.firestore, 'applications');
-        const ticketPrefix = `PO-${yearMonth}-`;
-        // Calculate next month's prefix for upper bound
-        let nextMonth = now.getMonth() + 2;
-        let nextYear = year;
-        if (nextMonth > 12) { nextMonth = 1; nextYear++; }
-        const nextMonthStr = nextMonth.toString().padStart(2, '0');
-        const nextMonthPrefix = `PO-${nextYear}${nextMonthStr}-`;
-        const ticketQuery = query(
-            applicationsCollection,
-            where('ticketNumber', '>=', ticketPrefix),
-            where('ticketNumber', '<', nextMonthPrefix)
-        );
-        let nextSeries = 1;
-        try {
-            const snapshot = await getDocs(ticketQuery);
-            let maxSeries = 0;
-            snapshot.forEach(docSnap => {
-                const ticket = docSnap.data().ticketNumber;
-                const match = ticket && ticket.match(/-(\d{3})$/);
-                const series = match ? parseInt(match[1], 10) : 0;
-                if (series > maxSeries) maxSeries = series;
-            });
-            nextSeries = maxSeries + 1;
-        } catch (err) {
-            nextSeries = 1;
-        }
-        const seriesStr = nextSeries.toString().padStart(3, '0');
-        const ticketNumber = `PO-${yearMonth}-${seriesStr}`;
-
-        // For display
-        const formattedDate = now.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        });
-        const formattedTime = now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        });
 
         // Collect educational background data directly from the table
         const educationTable = document.querySelector('.form-section:nth-of-type(4) table');
@@ -1983,6 +2098,7 @@ async function sendToProvincialOffice() {
         };
 
         // Save to Firestore
+        const applicationsCollection = collection(window.firestore, 'applications');
         await addDoc(applicationsCollection, applicationData);
 
         // Hide loading modal
@@ -2003,6 +2119,682 @@ async function sendToProvincialOffice() {
         document.getElementById('loadingModal').style.display = 'none';
         alert(`Error sending application: ${error.message}`);
     }
+}
+
+async function saveChangesToFirebase() {
+    try {
+        // Show loading indicator
+        const editButton = document.getElementById('editToggle');
+        const originalText = editButton.textContent;
+        editButton.textContent = 'Saving...';
+        editButton.disabled = true;
+
+        // Helper function to safely get element value
+        const getValue = (id) => {
+            const element = document.getElementById(id);
+            return element ? element.value : '';
+        };
+
+        // Get the ticket number from localStorage or URL
+        const ticketNumber = localStorage.getItem('lastTicketNumber') || 
+                           new URLSearchParams(window.location.search).get('ticketNumber');
+
+        if (!ticketNumber) {
+            throw new Error('No ticket number found. Cannot update application.');
+        }
+
+        // Initialize Firebase if not already done
+        if (!window.firebaseApp) {
+            const firebaseConfig = {
+                apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
+                authDomain: "r7nttconaf.firebaseapp.com",
+                projectId: "r7nttconaf",
+                storageBucket: "r7nttconaf.firebasestorage.app",
+                messagingSenderId: "521822609098",
+                appId: "1:521822609098:web:e8ee10f63098924bb35e33",
+                measurementId: "G-0VPXC641LT"
+            };
+            window.firebaseApp = initializeApp(firebaseConfig);
+        }
+
+        if (!window.firestore) {
+            window.firestore = getFirestore(window.firebaseApp);
+        }
+
+        // Collect all form data
+        const updatedData = {
+            // 1. TESDA Section
+            tesdaInfo: {
+                nmisCode: getValue('nmis-code'),
+                nmisDate: getValue('nmis-date')
+            },
+
+            // 2. Manpower Profile
+            manpowerProfile: {
+                lastName: getValue('last_name'),
+                firstName: getValue('first_name'),
+                middleInitial: getValue('middle_initial'),
+                extension: getValue('extension'),
+                mailingAddress: getValue('address'),
+                city: getValue('city'),
+                province: getValue('province'),
+                region: getValue('region'),
+                zipCode: getValue('zip-code'),
+                poBox: getValue('po-box'),
+                sex: getValue('sex'),
+                civilStatus: getValue('civil-status'),
+                contact: getValue('contact'),
+                telephone: getValue('telephone'),
+                email: getValue('email'),
+                fax: getValue('fax'),
+                employmentType: getValue('employment-type'),
+                employmentStatus: getValue('employment-status')
+            },
+
+            // 3. Personal Information
+            personalInfo: {
+                birthdate: getValue('birthdate'),
+                birthplace: getValue('birthplace'),
+                citizenship: getValue('citizenship'),
+                religion: getValue('religion'),
+                height: getValue('height'),
+                weight: getValue('weight'),
+                bloodType: getValue('blood-type'),
+                sssNo: getValue('sss'),
+                gsisNo: getValue('gsis'),
+                tinNo: getValue('tin'),
+                distinguishingMarks: getValue('distinguishing-marks')
+            },
+
+            // 4. Educational Background
+            educationalBackground: {
+                schools: collectEducationalData()
+            },
+
+            // 5. Course Title
+            courseInfo: {
+                courseTitle: getValue('course-title'),
+                trainingDuration: getValue('training-duration'),
+                scheduleFrom: getValue('schedule-from'),
+                scheduleTo: getValue('schedule-to'),
+                aptitudeExamDate: getValue('aptitude-exam-date'),
+                aptitudeExamTime: getValue('aptitude-exam-time')
+            },
+
+            // 6. Competency Assessment
+            competencyAssessment: {
+                applicationDate: getValue('application-date'),
+                sectorComponent: getValue('sector-component'),
+                tradeArea: getValue('trade-area'),
+                occupation: getValue('occupation'),
+                classification: getValue('classification'),
+                competency: getValue('competency'),
+                trainingProgram: getValue('training-program'),
+                programSector: getValue('program-sector'),
+                clientType: getValue('client-type')
+            },
+
+            // 7. Working Experience
+            workingExperience: {
+                totalYears: getValue('years_of_experience'),
+                trainingHours: getValue('training_hours'),
+                trainingInstitution: getValue('training_institution'),
+                typeTrainingInstitution: getValue('type_training_institution'),
+                educationalAttainment: getValue('educational_attainment'),
+                experiences: collectExperienceData()
+            },
+
+            // 8. Training/Seminars
+            trainingSeminars: collectTrainingData(),
+
+            // 9. Licenses/Examinations
+            licenses: collectLicenseData(),
+
+            // 10. Competency Assessment Passed
+            competencyAssessmentPassed: collectCompetencyData(),
+
+            // 11. Family Background
+            familyBackground: {
+                spouse: {
+                    name: getValue('spouse-name'),
+                    education: getValue('spouse-education'),
+                    occupation: getValue('spouse-occupation'),
+                    income: getValue('spouse-income')
+                },
+                father: {
+                    name: getValue('father-name'),
+                    education: getValue('father-education'),
+                    occupation: getValue('father-occupation'),
+                    income: getValue('father-income')
+                },
+                mother: {
+                    name: getValue('mother-name'),
+                    education: getValue('mother-education'),
+                    occupation: getValue('mother-occupation'),
+                    income: getValue('mother-income')
+                },
+                guardian: {
+                    name: getValue('guardian-name'),
+                    education: getValue('guardian-education'),
+                    occupation: getValue('guardian-occupation'),
+                    income: getValue('guardian-income')
+                },
+                dependents: getValue('dependents'),
+                dependentAge: getValue('dependent-age')
+            },
+
+            // 12. NTTC Application
+            nttcApplication: {
+                sector: getValue('sector'),
+                qualification: getValue('qualification'),
+                nttcstatus: getValue('nttcstatus'),
+                ncCertNumber: getValue('nc_cert_number'),
+                ncDateIssuance: getValue('nc_date_issuance'),
+                ncValidity: getValue('nc_validity'),
+                tmCertNumber: getValue('tm_cert_number_actual'),
+                tmDateIssuance: getValue('tm_date_issuance'),
+                tmValidity: getValue('tm_validity'),
+                assessor1: getValue('assessor1'),
+                assessor2: getValue('assessor2'),
+                assessor3: getValue('assessor3')
+            },
+
+            // Add update timestamp
+            lastUpdated: new Date().toISOString()
+        };
+
+        // Find and update the document in Firestore
+        const applicationsCollection = collection(window.firestore, 'applications');
+        
+        // Query to find the document with matching ticket number
+        const q = query(applicationsCollection, where("ticketNumber", "==", ticketNumber));
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            throw new Error('Application not found in database.');
+        }
+
+        // Update the first matching document
+        const docRef = querySnapshot.docs[0].ref;
+        await updateDoc(docRef, updatedData);
+
+        // Show success message
+        Swal.fire({
+            title: 'Success!',
+            text: 'Application updated successfully in Firebase.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+
+        console.log('Application updated successfully:', ticketNumber);
+
+    } catch (error) {
+        console.error('Error updating application:', error);
+        
+        // Show error message
+        Swal.fire({
+            title: 'Error!',
+            text: error.message || 'Failed to update application. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    } finally {
+        // Reset button state
+        const editButton = document.getElementById('editToggle');
+        editButton.disabled = false;
+        editButton.textContent = 'Edit Form';
+        editButton.style.backgroundColor = '#ff0000';
+    }
+}
+
+// Helper functions to collect table data
+function collectEducationalData() {
+    const educationTable = document.querySelector('.form-section:nth-of-type(4) table');
+    const educationRows = educationTable ? educationTable.querySelectorAll('tbody tr') : [];
+    const educationData = [];
+    
+    for (let i = 0; i < educationRows.length; i++) {
+        const row = educationRows[i];
+        const inputs = row.querySelectorAll('input');
+        if (inputs.length >= 4) {
+            educationData.push({
+                name: inputs[0].value || 'N/A',
+                level: inputs[1].value || 'N/A',
+                year: inputs[2].value || 'N/A',
+                degree: inputs[3].value || 'N/A'
+            });
+        }
+    }
+    return educationData;
+}
+
+function collectExperienceData() {
+    const experienceTable = document.querySelector('.form-section:nth-of-type(7) table');
+    const experienceRows = experienceTable ? experienceTable.querySelectorAll('tbody tr') : [];
+    const experienceData = [];
+    
+    for (let i = 0; i < experienceRows.length; i++) {
+        const row = experienceRows[i];
+        const inputs = row.querySelectorAll('input');
+        if (inputs.length >= 5) {
+            experienceData.push({
+                company: inputs[0].value || 'N/A',
+                position: inputs[1].value || 'N/A',
+                dates: inputs[2].value || 'N/A',
+                salary: inputs[3].value || 'N/A',
+                yearsOfExperience: inputs[4].value || 'N/A'
+            });
+        }
+    }
+    return experienceData;
+}
+
+function collectTrainingData() {
+    const trainingTable = document.querySelector('.form-section:nth-of-type(8) table');
+    const trainingRows = trainingTable ? trainingTable.querySelectorAll('tbody tr') : [];
+    const trainingData = [];
+    
+    for (let i = 0; i < trainingRows.length; i++) {
+        const row = trainingRows[i];
+        const inputs = row.querySelectorAll('input');
+        if (inputs.length >= 4) {
+            trainingData.push({
+                title: inputs[0].value || 'N/A',
+                venue: inputs[1].value || 'N/A',
+                dates: inputs[2].value || 'N/A',
+                hours: inputs[3].value || 'N/A'
+            });
+        }
+    }
+    return trainingData;
+}
+
+function collectLicenseData() {
+    const licenseTable = document.querySelector('.form-section:nth-of-type(9) table');
+    const licenseRows = licenseTable ? licenseTable.querySelectorAll('tbody tr') : [];
+    const licenseData = [];
+    
+    for (let i = 0; i < licenseRows.length; i++) {
+        const row = licenseRows[i];
+        const inputs = row.querySelectorAll('input');
+        if (inputs.length >= 4) {
+            licenseData.push({
+                title: inputs[0].value || 'N/A',
+                year: inputs[1].value || 'N/A',
+                rating: inputs[2].value || 'N/A',
+                expiry: inputs[3].value || 'N/A'
+            });
+        }
+    }
+    return licenseData;
+}
+
+function collectCompetencyData() {
+    const competencyTable = document.querySelector('.form-section:nth-of-type(10) table');
+    const competencyRows = competencyTable ? competencyTable.querySelectorAll('tbody tr') : [];
+    const competencyData = [];
+    
+    for (let i = 0; i < competencyRows.length; i++) {
+        const row = competencyRows[i];
+        const inputs = row.querySelectorAll('input');
+        if (inputs.length >= 6) {
+            competencyData.push({
+                sector: inputs[0].value || 'N/A',
+                tradeArea: inputs[1].value || 'N/A',
+                occupation: inputs[2].value || 'N/A',
+                classificationLevel: inputs[3].value || 'N/A',
+                competency: inputs[4].value || 'N/A',
+                specialization: inputs[5].value || 'N/A'
+            });
+        }
+    }
+    return competencyData;
+}
+
+async function loadDataFromFirebase(ticketNumber) {
+    try {
+        // Initialize Firebase if not already done
+        if (!window.firebaseApp) {
+            const firebaseConfig = {
+                apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
+                authDomain: "r7nttconaf.firebaseapp.com",
+                projectId: "r7nttconaf",
+                storageBucket: "r7nttconaf.firebasestorage.app",
+                messagingSenderId: "521822609098",
+                appId: "1:521822609098:web:e8ee10f63098924bb35e33",
+                measurementId: "G-0VPXC641LT"
+            };
+            window.firebaseApp = initializeApp(firebaseConfig);
+        }
+
+        if (!window.firestore) {
+            window.firestore = getFirestore(window.firebaseApp);
+        }
+
+        // Query Firestore for the application data
+        const applicationsCollection = collection(window.firestore, 'applications');
+        const q = query(applicationsCollection, where("ticketNumber", "==", ticketNumber));
+        console.log('Searching for ticket number:', ticketNumber);
+        const querySnapshot = await getDocs(q);
+        
+        console.log('Query result:', querySnapshot.size, 'documents found');
+        
+        if (querySnapshot.empty) {
+            throw new Error('Application not found in database.');
+        }
+
+        const applicationData = querySnapshot.docs[0].data();
+        console.log('Loaded application data from Firebase:', applicationData);
+        console.log('Working experience data:', applicationData.workingExperience);
+
+        // Populate form with Firebase data
+        populateFormFromFirebase(applicationData);
+
+    } catch (error) {
+        console.error('Error loading data from Firebase:', error);
+        throw error;
+    }
+}
+
+function populateFormFromFirebase(data) {
+    // Helper function to safely set element value
+    const setValue = (id, value) => {
+        const element = document.getElementById(id);
+        if (element && value) {
+            console.log(`Setting ${id} to:`, value);
+            element.value = value;
+            // For select elements, ensure they're properly enabled/disabled
+            if (element.tagName === 'SELECT') {
+                element.disabled = false; // Temporarily enable to set value
+                element.value = value;
+                element.disabled = true; // Disable again for readonly mode
+            }
+        } else if (!element) {
+            console.warn(`Element with id '${id}' not found`);
+        } else if (!value) {
+            console.log(`No value provided for ${id}`);
+        }
+    };
+
+    // 1. TESDA Section
+    if (data.tesdaInfo) {
+        setValue('nmis-code', data.tesdaInfo.nmisCode);
+        setValue('nmis-date', data.tesdaInfo.nmisDate);
+    }
+
+    // 2. Manpower Profile
+    if (data.manpowerProfile) {
+        setValue('last_name', data.manpowerProfile.lastName);
+        setValue('first_name', data.manpowerProfile.firstName);
+        setValue('middle_initial', data.manpowerProfile.middleInitial);
+        setValue('extension', data.manpowerProfile.extension);
+        setValue('address', data.manpowerProfile.mailingAddress);
+        setValue('city', data.manpowerProfile.city);
+        setValue('province', data.manpowerProfile.province);
+        setValue('region', data.manpowerProfile.region);
+        setValue('zip-code', data.manpowerProfile.zipCode);
+        setValue('po-box', data.manpowerProfile.poBox);
+        setValue('sex', data.manpowerProfile.sex);
+        setValue('civil-status', data.manpowerProfile.civilStatus);
+        setValue('contact', data.manpowerProfile.contact);
+        setValue('telephone', data.manpowerProfile.telephone);
+        setValue('email', data.manpowerProfile.email);
+        setValue('fax', data.manpowerProfile.fax);
+        setValue('employment-type', data.manpowerProfile.employmentType);
+        setValue('employment-status', data.manpowerProfile.employmentStatus);
+    }
+
+    // 3. Personal Information
+    if (data.personalInfo) {
+        setValue('birthdate', data.personalInfo.birthdate);
+        setValue('birthplace', data.personalInfo.birthplace);
+        setValue('citizenship', data.personalInfo.citizenship);
+        setValue('religion', data.personalInfo.religion);
+        setValue('height', data.personalInfo.height);
+        setValue('weight', data.personalInfo.weight);
+        setValue('blood-type', data.personalInfo.bloodType);
+        setValue('sss', data.personalInfo.sssNo);
+        setValue('gsis', data.personalInfo.gsisNo);
+        setValue('tin', data.personalInfo.tinNo);
+        setValue('distinguishing-marks', data.personalInfo.distinguishingMarks);
+    }
+
+    // 4. Educational Background
+    if (data.educationalBackground && data.educationalBackground.schools) {
+        const schoolInputs = document.querySelectorAll('input[name="school[]"]');
+        const educLevelInputs = document.querySelectorAll('input[name="educational-level[]"]');
+        const schoolYearInputs = document.querySelectorAll('input[name="school-year[]"]');
+        const degreeInputs = document.querySelectorAll('input[name="degree[]"]');
+
+        data.educationalBackground.schools.forEach((school, index) => {
+            if (schoolInputs[index]) schoolInputs[index].value = school.name || 'N/A';
+            if (educLevelInputs[index]) educLevelInputs[index].value = school.level || 'N/A';
+            if (schoolYearInputs[index]) schoolYearInputs[index].value = school.year || 'N/A';
+            if (degreeInputs[index]) degreeInputs[index].value = school.degree || 'N/A';
+        });
+    }
+
+    // 5. Course Title
+    if (data.courseInfo) {
+        setValue('course-title', data.courseInfo.courseTitle);
+        setValue('training-duration', data.courseInfo.trainingDuration);
+        setValue('schedule-from', data.courseInfo.scheduleFrom);
+        setValue('schedule-to', data.courseInfo.scheduleTo);
+        setValue('aptitude-exam-date', data.courseInfo.aptitudeExamDate);
+        setValue('aptitude-exam-time', data.courseInfo.aptitudeExamTime);
+    }
+
+    // 6. Competency Assessment
+    if (data.competencyAssessment) {
+        setValue('application-date', data.competencyAssessment.applicationDate);
+        setValue('sector-component', data.competencyAssessment.sectorComponent);
+        setValue('trade-area', data.competencyAssessment.tradeArea);
+        setValue('occupation', data.competencyAssessment.occupation);
+        setValue('classification', data.competencyAssessment.classification);
+        setValue('competency', data.competencyAssessment.competency);
+        setValue('training-program', data.competencyAssessment.trainingProgram);
+        setValue('program-sector', data.competencyAssessment.programSector);
+        setValue('client-type', data.competencyAssessment.clientType);
+    }
+
+    // 7. Working Experience
+    if (data.workingExperience) {
+        console.log('Loading working experience data:', data.workingExperience);
+        setValue('years_of_experience', data.workingExperience.totalYears);
+        setValue('training_hours', data.workingExperience.trainingHours);
+        setValue('training_institution', data.workingExperience.trainingInstitution);
+        
+        // Handle select fields properly
+        const typeTrainingInstitutionInput = document.getElementById('type_training_institution');
+        const educationalAttainmentInput = document.getElementById('educational_attainment');
+        
+        if (typeTrainingInstitutionInput && data.workingExperience.typeTrainingInstitution) {
+            typeTrainingInstitutionInput.disabled = false; // Temporarily enable
+            typeTrainingInstitutionInput.value = data.workingExperience.typeTrainingInstitution;
+            typeTrainingInstitutionInput.disabled = true; // Disable again
+        }
+        
+        if (educationalAttainmentInput && data.workingExperience.educationalAttainment) {
+            educationalAttainmentInput.disabled = false; // Temporarily enable
+            educationalAttainmentInput.value = data.workingExperience.educationalAttainment;
+            educationalAttainmentInput.disabled = true; // Disable again
+        }
+
+        // Populate experience table
+        if (data.workingExperience.experiences) {
+            const companyInputs = document.querySelectorAll('input[name="company[]"]');
+            const positionInputs = document.querySelectorAll('input[name="position[]"]');
+            const datesInputs = document.querySelectorAll('input[name="dates[]"]');
+            const salaryInputs = document.querySelectorAll('input[name="salary[]"]');
+            const expYearsInputs = document.querySelectorAll('input[name="years-of-experience[]"]');
+
+            data.workingExperience.experiences.forEach((exp, index) => {
+                if (companyInputs[index]) companyInputs[index].value = exp.company || 'N/A';
+                if (positionInputs[index]) positionInputs[index].value = exp.position || 'N/A';
+                if (datesInputs[index]) datesInputs[index].value = exp.dates || 'N/A';
+                if (salaryInputs[index]) salaryInputs[index].value = exp.salary || 'N/A';
+                if (expYearsInputs[index]) expYearsInputs[index].value = exp.yearsOfExperience || 'N/A';
+            });
+        }
+    }
+
+    // 8. Training/Seminars
+    if (data.trainingSeminars) {
+        const trainingTitleInputs = document.querySelectorAll('input[name="training-title[]"]');
+        const trainingVenueInputs = document.querySelectorAll('input[name="training-venue[]"]');
+        const trainingDatesInputs = document.querySelectorAll('input[name="training-dates[]"]');
+        const trainingHoursInputs = document.querySelectorAll('input[name="training-hours[]"]');
+
+        data.trainingSeminars.forEach((training, index) => {
+            if (trainingTitleInputs[index]) trainingTitleInputs[index].value = training.title || 'N/A';
+            if (trainingVenueInputs[index]) trainingVenueInputs[index].value = training.venue || 'N/A';
+            if (trainingDatesInputs[index]) trainingDatesInputs[index].value = training.dates || 'N/A';
+            if (trainingHoursInputs[index]) trainingHoursInputs[index].value = training.hours || 'N/A';
+        });
+    }
+
+    // 9. Licenses/Examinations
+    if (data.licenses) {
+        const licenseTitleInputs = document.querySelectorAll('input[name="license-title[]"]');
+        const licenseYearInputs = document.querySelectorAll('input[name="license-year[]"]');
+        const licenseRatingInputs = document.querySelectorAll('input[name="license-rating[]"]');
+        const licenseExpiryInputs = document.querySelectorAll('input[name="license-expiry[]"]');
+
+        data.licenses.forEach((license, index) => {
+            if (licenseTitleInputs[index]) licenseTitleInputs[index].value = license.title || 'N/A';
+            if (licenseYearInputs[index]) licenseYearInputs[index].value = license.year || 'N/A';
+            if (licenseRatingInputs[index]) licenseRatingInputs[index].value = license.rating || 'N/A';
+            if (licenseExpiryInputs[index]) licenseExpiryInputs[index].value = license.expiry || 'N/A';
+        });
+    }
+
+    // 10. Competency Assessment Passed
+    if (data.competencyAssessmentPassed) {
+        const compSectorInputs = document.querySelectorAll('input[name="competency-sector[]"]');
+        const compTradeInputs = document.querySelectorAll('input[name="competency-trade[]"]');
+        const compOccupationInputs = document.querySelectorAll('input[name="competency-occupation[]"]');
+        const classificationLevelInputs = document.querySelectorAll('input[name="classification-level[]"]');
+        const competencyInputs = document.querySelectorAll('input[name="competency[]"]');
+        const specializationInputs = document.querySelectorAll('input[name="specialization-description[]"]');
+
+        data.competencyAssessmentPassed.forEach((comp, index) => {
+            if (compSectorInputs[index]) compSectorInputs[index].value = comp.sector || 'N/A';
+            if (compTradeInputs[index]) compTradeInputs[index].value = comp.tradeArea || 'N/A';
+            if (compOccupationInputs[index]) compOccupationInputs[index].value = comp.occupation || 'N/A';
+            if (classificationLevelInputs[index]) classificationLevelInputs[index].value = comp.classificationLevel || 'N/A';
+            if (competencyInputs[index]) competencyInputs[index].value = comp.competency || 'N/A';
+            if (specializationInputs[index]) specializationInputs[index].value = comp.specialization || 'N/A';
+        });
+    }
+
+    // 11. Family Background
+    if (data.familyBackground) {
+        setValue('spouse-name', data.familyBackground.spouse?.name);
+        setValue('spouse-education', data.familyBackground.spouse?.education);
+        setValue('spouse-occupation', data.familyBackground.spouse?.occupation);
+        setValue('spouse-income', data.familyBackground.spouse?.income);
+        setValue('father-name', data.familyBackground.father?.name);
+        setValue('father-education', data.familyBackground.father?.education);
+        setValue('father-occupation', data.familyBackground.father?.occupation);
+        setValue('father-income', data.familyBackground.father?.income);
+        setValue('mother-name', data.familyBackground.mother?.name);
+        setValue('mother-education', data.familyBackground.mother?.education);
+        setValue('mother-occupation', data.familyBackground.mother?.occupation);
+        setValue('mother-income', data.familyBackground.mother?.income);
+        setValue('guardian-name', data.familyBackground.guardian?.name);
+        setValue('guardian-education', data.familyBackground.guardian?.education);
+        setValue('guardian-occupation', data.familyBackground.guardian?.occupation);
+        setValue('guardian-income', data.familyBackground.guardian?.income);
+        setValue('dependents', data.familyBackground.dependents);
+        setValue('dependent-age', data.familyBackground.dependentAge);
+    }
+
+    // 12. NTTC Application
+    if (data.nttcApplication) {
+        setValue('sector', data.nttcApplication.sector);
+        setValue('qualification', data.nttcApplication.qualification);
+        setValue('nttcstatus', data.nttcApplication.nttcstatus);
+        setValue('nc_cert_number', data.nttcApplication.ncCertNumber);
+        setValue('nc_date_issuance', data.nttcApplication.ncDateIssuance);
+        setValue('nc_validity', data.nttcApplication.ncValidity);
+        setValue('tm_cert_number_actual', data.nttcApplication.tmCertNumber);
+        setValue('tm_date_issuance', data.nttcApplication.tmDateIssuance);
+        setValue('tm_validity', data.nttcApplication.tmValidity);
+        setValue('assessor1', data.nttcApplication.assessor1);
+        setValue('assessor2', data.nttcApplication.assessor2);
+        setValue('assessor3', data.nttcApplication.assessor3);
+    }
+
+            console.log('Form populated from Firebase data successfully');
+        
+        // Debug: Check if working experience fields exist
+        const yearsOfExpElement = document.getElementById('years_of_experience');
+        const trainingHoursElement = document.getElementById('training_hours');
+        const trainingInstitutionElement = document.getElementById('training_institution');
+        const typeTrainingInstitutionElement = document.getElementById('type_training_institution');
+        const educationalAttainmentElement = document.getElementById('educational_attainment');
+        
+        console.log('Working experience elements found:', {
+            yearsOfExp: !!yearsOfExpElement,
+            trainingHours: !!trainingHoursElement,
+            trainingInstitution: !!trainingInstitutionElement,
+            typeTrainingInstitution: !!typeTrainingInstitutionElement,
+            educationalAttainment: !!educationalAttainmentElement
+        });
+        
+        // Test function for debugging
+        window.testWorkingExperienceFields = function() {
+            console.log('Testing working experience fields...');
+            const testData = {
+                workingExperience: {
+                    totalYears: '5',
+                    trainingHours: '120',
+                    trainingInstitution: 'Test Institution',
+                    typeTrainingInstitution: 'private',
+                    educationalAttainment: 'college'
+                }
+            };
+            populateFormFromFirebase(testData);
+        };
+        
+        // Test function for URL parameters
+        window.testURLParameters = function() {
+            console.log('Testing URL parameters...');
+            const testParams = new URLSearchParams();
+            testParams.set('years_of_experience', '5');
+            testParams.set('training_hours', '120');
+            testParams.set('training_institution', 'Test Institution');
+            testParams.set('type_training_institution', 'private');
+            testParams.set('educational_attainment', 'college');
+            populateFormFromParams(testParams);
+        };
+        
+        // Function to check current form values
+        window.checkFormValues = function() {
+            console.log('Current form values:');
+            console.log('years_of_experience:', document.getElementById('years_of_experience')?.value);
+            console.log('training_hours:', document.getElementById('training_hours')?.value);
+            console.log('training_institution:', document.getElementById('training_institution')?.value);
+            console.log('type_training_institution:', document.getElementById('type_training_institution')?.value);
+            console.log('educational_attainment:', document.getElementById('educational_attainment')?.value);
+        };
+        
+        // Function to test Firebase connection
+        window.testFirebaseConnection = async function() {
+            try {
+                console.log('Testing Firebase connection...');
+                const ticketNumber = localStorage.getItem('lastTicketNumber');
+                console.log('Last ticket number:', ticketNumber);
+                
+                if (ticketNumber) {
+                    await loadDataFromFirebase(ticketNumber);
+                } else {
+                    console.log('No ticket number found in localStorage');
+                }
+            } catch (error) {
+                console.error('Firebase connection test failed:', error);
+            }
+        };
 }
 
 function closeTicketModal() {
@@ -2040,6 +2832,52 @@ window.onclick = function(event) {
                 closeSuccessModal();
             }
         }
+    </script>
+
+    <script>
+    // ... existing code ...
+    // --- PATCH: Ensure working experience fields are populated after DOM is loaded ---
+    document.addEventListener('DOMContentLoaded', function() {
+        // Helper to set value and log if not found
+        function setFieldValue(id, value) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.value = value || '';
+                // For select, ensure correct option is selected
+                if (el.tagName === 'SELECT' && value) {
+                    el.disabled = false;
+                    el.value = value;
+                    el.disabled = true;
+                }
+                console.log(`Set #${id} to`, value);
+            } else {
+                console.warn(`Element #${id} not found in DOM`);
+            }
+        }
+
+        // Patch Firestore population logic
+        const origPopulateFormFromFirebase = window.populateFormFromFirebase;
+        window.populateFormFromFirebase = function(data) {
+            // Call original
+            if (origPopulateFormFromFirebase) origPopulateFormFromFirebase(data);
+            // Patch: Working Experience fields
+            if (data && data.workingExperience) {
+                setFieldValue('years_of_experience', data.workingExperience.totalYears);
+                setFieldValue('training_hours', data.workingExperience.trainingHours);
+                setFieldValue('training_institution', data.workingExperience.trainingInstitution);
+                setFieldValue('type_training_institution', data.workingExperience.typeTrainingInstitution);
+                setFieldValue('educational_attainment', data.workingExperience.educationalAttainment);
+            } else {
+                console.warn('No workingExperience data found in Firestore document');
+            }
+        };
+
+        // If data is already loaded (e.g. from Firestore), re-populate
+        if (window.lastLoadedFirebaseData) {
+            window.populateFormFromFirebase(window.lastLoadedFirebaseData);
+        }
+    });
+    // ... existing code ...
     </script>
 </body>
 </html>

@@ -2833,5 +2833,51 @@ window.onclick = function(event) {
             }
         }
     </script>
+
+    <script>
+    // ... existing code ...
+    // --- PATCH: Ensure working experience fields are populated after DOM is loaded ---
+    document.addEventListener('DOMContentLoaded', function() {
+        // Helper to set value and log if not found
+        function setFieldValue(id, value) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.value = value || '';
+                // For select, ensure correct option is selected
+                if (el.tagName === 'SELECT' && value) {
+                    el.disabled = false;
+                    el.value = value;
+                    el.disabled = true;
+                }
+                console.log(`Set #${id} to`, value);
+            } else {
+                console.warn(`Element #${id} not found in DOM`);
+            }
+        }
+
+        // Patch Firestore population logic
+        const origPopulateFormFromFirebase = window.populateFormFromFirebase;
+        window.populateFormFromFirebase = function(data) {
+            // Call original
+            if (origPopulateFormFromFirebase) origPopulateFormFromFirebase(data);
+            // Patch: Working Experience fields
+            if (data && data.workingExperience) {
+                setFieldValue('years_of_experience', data.workingExperience.totalYears);
+                setFieldValue('training_hours', data.workingExperience.trainingHours);
+                setFieldValue('training_institution', data.workingExperience.trainingInstitution);
+                setFieldValue('type_training_institution', data.workingExperience.typeTrainingInstitution);
+                setFieldValue('educational_attainment', data.workingExperience.educationalAttainment);
+            } else {
+                console.warn('No workingExperience data found in Firestore document');
+            }
+        };
+
+        // If data is already loaded (e.g. from Firestore), re-populate
+        if (window.lastLoadedFirebaseData) {
+            window.populateFormFromFirebase(window.lastLoadedFirebaseData);
+        }
+    });
+    // ... existing code ...
+    </script>
 </body>
 </html>
