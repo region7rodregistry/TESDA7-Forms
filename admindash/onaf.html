@@ -983,6 +983,7 @@
                 <div class="header-title">
                     <h1>ONAF Database</h1>
                     <span>National TVET Trainers Certification</span>
+                    <span id="userProvinceDisplay" style="font-size: 0.8rem; color: var(--accent-color); margin-top: 4px;"></span>
                 </div>
             </div>
             <div class="header-buttons">
@@ -1015,6 +1016,7 @@
                     <button class="filter-btn" data-filter="all">All</button>  
                 </div>
             </div>
+            <div id="provinceFilterInfo" style="margin-top: 1rem; padding-left: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-color);"></div>
         </div>
 
         <div id="loadingSpinner" class="loading-spinner"></div>
@@ -1124,8 +1126,61 @@
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 window.location.href = "../login.html";
+            } else {
+                // Check if user has access to this dashboard
+                const userProvince = getUserProvince();
+                const hasAccess = userProvince !== null || userProvinceMap[user.email] === null;
+                if (!hasAccess) {
+                    // If user doesn't have a province mapping, show access denied
+                    alert('Access denied. You do not have permission to view this dashboard.');
+                    window.location.href = "../login.html";
+                    return;
+                }
+                // Update province display
+                updateProvinceDisplay();
             }
         });
+
+        // User province mapping
+        const userProvinceMap = {
+            'r7po.registry@gmail.com': 'Cebu',
+            'r7po46.registry@gmail.com': 'Negros-Oriental',
+            'admin@tesda.gov.ph': null // Admin can see all provinces
+        };
+
+        // Get current user's province
+        function getUserProvince() {
+            const user = auth.currentUser;
+            if (!user) return null;
+            const province = userProvinceMap[user.email];
+            // If province is null, it means admin access (can see all provinces)
+            const result = province === null ? null : (province || null);
+            console.log(`User: ${user.email}, Province: ${result}`);
+            return result;
+        }
+
+        // Update province display in header
+        function updateProvinceDisplay() {
+            const userProvince = getUserProvince();
+            const provinceDisplay = document.getElementById('userProvinceDisplay');
+            const provinceFilterInfo = document.getElementById('provinceFilterInfo');
+            
+            if (provinceDisplay) {
+                if (userProvince) {
+                    provinceDisplay.textContent = `Viewing: ${userProvince} Province`;
+                } else {
+                    provinceDisplay.textContent = 'Viewing: All Provinces';
+                }
+            }
+            
+            if (provinceFilterInfo) {
+                if (userProvince) {
+                    provinceFilterInfo.innerHTML = `<i>🔍</i> Filtered to show only applications from <strong>${userProvince}</strong> province`;
+                } else {
+                    provinceFilterInfo.innerHTML = `<i>🌍</i> Showing applications from all provinces`;
+                }
+            }
+        }
 
         // DOM elements
         const applicationsGrid = document.getElementById('applicationsGrid');
@@ -1186,6 +1241,7 @@
                 // --- End duplicate detection ---
 
                 updateNotificationBadges(data);
+                updateProvinceDisplay(); // Update province display when data loads
                 const filteredApplications = filterApplications(data, searchInput.value);
                 renderApplications(filteredApplications);
             }, (error) => {
@@ -1197,7 +1253,8 @@
         fetchApplications();
 
         function updateNotificationBadges(applications) {
-            // Count applications by status
+            // Count applications by status for user's province only
+            const userProvince = getUserProvince();
             const counts = {
                 pending: 0,
                 completed: 0,
@@ -1205,6 +1262,14 @@
                 all: 0
             };
             Object.values(applications).forEach(app => {
+                // Only count applications from user's province
+                if (userProvince) {
+                    const applicationProvince = app.manpowerProfile?.province || '';
+                    if (applicationProvince !== userProvince) {
+                        return; // Skip applications from other provinces
+                    }
+                }
+                
                 const status = app.status || 'pending';
                 counts[status]++;
                 counts.all++;
@@ -1215,7 +1280,20 @@
         }
 
         function filterApplications(applications, searchTerm) {
-            return Object.entries(applications).filter(([key, data]) => {
+            const userProvince = getUserProvince();
+            let filteredCount = 0;
+            let totalCount = 0;
+            
+            const filtered = Object.entries(applications).filter(([key, data]) => {
+                totalCount++;
+                // First filter by user's province
+                if (userProvince) {
+                    const applicationProvince = data.manpowerProfile?.province || '';
+                    if (applicationProvince !== userProvince) {
+                        return false;
+                    }
+                }
+                
                 const searchString = searchTerm.toLowerCase();
                 const firstName = data.manpowerProfile?.firstName || '';
                 const lastName = data.manpowerProfile?.lastName || '';
@@ -1223,15 +1301,22 @@
                 const ticketNumber = (data.ticketNumber || '').toLowerCase();
                 const status = (data.status || 'pending').toLowerCase();
 
-                // First check if it matches the current filter
+                // Then check if it matches the current filter
                 if (currentFilter !== 'all') {
                     if (currentFilter === 'spam' && status !== 'spam') return false;
                     if (currentFilter === 'pending' && status !== 'pending') return false;
                     if (currentFilter === 'completed' && status !== 'completed') return false;
                 }
                 // Then check if it matches the search term
-                return fullName.includes(searchString) || ticketNumber.includes(searchString);
+                const matchesSearch = fullName.includes(searchString) || ticketNumber.includes(searchString);
+                if (matchesSearch) {
+                    filteredCount++;
+                }
+                return matchesSearch;
             });
+            
+            console.log(`Filtered ${filteredCount} out of ${totalCount} applications for province: ${userProvince || 'All'}`);
+            return filtered;
         }
 
         function renderApplications(applications) {
