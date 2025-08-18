@@ -178,8 +178,12 @@
             // Firebase authentication
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // Login successful, redirect
-                    window.location.href = "admindash/onaf.html";
+                    // Login successful, redirect based on email
+                    if (email === "region7@tesda.gov.ph") {
+                        window.location.href = "r7admindash/index.html";
+                    } else {
+                        window.location.href = "admindash/onaf.html";
+                    }
                 })
                 .catch((error) => {
                     // Show error message

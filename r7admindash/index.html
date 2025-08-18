@@ -1368,14 +1368,13 @@
             <!-- Sorting Controls -->
             <div class="sorting-section">
                 <div class="sort-controls">
-                    <label for="sortBy" class="sort-label">Sort by:</label>
+                                         <label for="sortBy" class="sort-label">Filter by Province:</label>
                     <select id="sortBy" class="sort-select">
-                        <option value="timestamp">Date Received</option>
-                        <option value="name">Applicant Name</option>
-                        <option value="ticketNumber">Ticket Number</option>
-                        <option value="sector">Sector</option>
-                        <option value="qualification">Qualification</option>
-                        <option value="status">Status</option>
+                        <option value="">All Provinces</option>
+                        <option value="Bohol">Bohol</option>
+                        <option value="Cebu">Cebu</option>
+                        <option value="Negros-Oriental">Negros Oriental</option>
+                        <option value="Siquijor">Siquijor</option>
                     </select>
                     
                     <label for="sortOrder" class="sort-label">Order:</label>
@@ -1384,10 +1383,10 @@
                         <option value="asc">Oldest First</option>
                     </select>
                     
-                    <button id="applySort" class="sort-btn">
-                        <span>🔄</span>
-                        Apply Sort
-                    </button>
+                                         <button id="applySort" class="sort-btn">
+                         <span>🔍</span>
+                         Filter by Province
+                     </button>
                 </div>
                 
                 <div class="quick-sort-buttons">
@@ -1546,28 +1545,32 @@
             return result;
         }
 
-        // Update province display in header
-        function updateProvinceDisplay() {
-            const userProvince = getUserProvince();
-            const provinceDisplay = document.getElementById('userProvinceDisplay');
-            const provinceFilterInfo = document.getElementById('provinceFilterInfo');
-            
-            if (provinceDisplay) {
-                if (userProvince) {
-                    provinceDisplay.textContent = `Viewing: ${userProvince} Province`;
-                } else {
-                    provinceDisplay.textContent = 'Viewing: All Provinces';
-                }
-            }
-            
-            if (provinceFilterInfo) {
-                if (userProvince) {
-                    provinceFilterInfo.innerHTML = `<i>🔍</i> Filtered to show only applications from <strong>${userProvince}</strong> province`;
-                } else {
-                    provinceFilterInfo.innerHTML = `<i>🌍</i> Showing applications from all provinces`;
-                }
-            }
-        }
+                 // Update province display in header
+         function updateProvinceDisplay() {
+             const userProvince = getUserProvince();
+             const provinceDisplay = document.getElementById('userProvinceDisplay');
+             const provinceFilterInfo = document.getElementById('provinceFilterInfo');
+             
+             if (provinceDisplay) {
+                 if (userProvince) {
+                     provinceDisplay.textContent = `Viewing: ${userProvince} Province`;
+                 } else {
+                     provinceDisplay.textContent = 'Viewing: All Provinces';
+                 }
+             }
+             
+             if (provinceFilterInfo) {
+                 let filterMessage = '';
+                 if (selectedProvince && selectedProvince !== '') {
+                     filterMessage = `<i>🔍</i> Filtered to show only applications from <strong>${selectedProvince}</strong> province`;
+                 } else if (userProvince) {
+                     filterMessage = `<i>🔍</i> Filtered to show only applications from <strong>${userProvince}</strong> province`;
+                 } else {
+                     filterMessage = `<i>🌍</i> Showing applications from all provinces`;
+                 }
+                 provinceFilterInfo.innerHTML = filterMessage;
+             }
+         }
 
         // DOM elements
         const applicationsGrid = document.getElementById('applicationsGrid');
@@ -1580,10 +1583,11 @@
         const itemsPerPage = 10;
         let totalPages = 1;
         
-        // Sorting variables
-        let currentSortBy = 'timestamp';
-        let currentSortOrder = 'desc';
-        let allApplications = [];
+                 // Sorting variables
+         let currentSortBy = 'timestamp';
+         let currentSortOrder = 'desc';
+         let allApplications = [];
+         let selectedProvince = ''; // Add variable to track selected province
 
         // Fetch and listen to Firestore data
         function fetchApplications() {
@@ -1677,50 +1681,61 @@
             document.getElementById('totalStatCount').textContent = counts.all;
         }
 
-        function filterApplications(applications, searchTerm) {
-            const userProvince = getUserProvince();
-            let filteredCount = 0;
-            let totalCount = 0;
-            
-            const filtered = Object.entries(applications).filter(([key, data]) => {
-                totalCount++;
-                // First filter by user's province
-                if (userProvince) {
-                    const applicationProvince = data.manpowerProfile?.province || '';
-                    if (applicationProvince !== userProvince) {
-                        return false;
-                    }
-                }
-                
-                const searchString = searchTerm.toLowerCase();
-                const firstName = data.manpowerProfile?.firstName || '';
-                const lastName = data.manpowerProfile?.lastName || '';
-                const fullName = `${firstName} ${lastName}`.toLowerCase();
-                const ticketNumber = (data.ticketNumber || '').toLowerCase();
-                const status = (data.status || 'pending').toLowerCase();
+                 function filterApplications(applications, searchTerm) {
+             const userProvince = getUserProvince();
+             let filteredCount = 0;
+             let totalCount = 0;
+             
+             const filtered = Object.entries(applications).filter(([key, data]) => {
+                 totalCount++;
+                 
+                 // First filter by user's province (if user has province restriction)
+                 if (userProvince) {
+                     const applicationProvince = data.manpowerProfile?.province || '';
+                     if (applicationProvince !== userProvince) {
+                         return false;
+                     }
+                 }
+                 
+                 // Then filter by selected province (if a province is selected in dropdown)
+                 if (selectedProvince && selectedProvince !== '') {
+                     const applicationProvince = data.manpowerProfile?.province || '';
+                     if (applicationProvince !== selectedProvince) {
+                         return false;
+                     }
+                 }
+                 
+                 const searchString = searchTerm.toLowerCase();
+                 const firstName = data.manpowerProfile?.firstName || '';
+                 const lastName = data.manpowerProfile?.lastName || '';
+                 const fullName = `${firstName} ${lastName}`.toLowerCase();
+                 const ticketNumber = (data.ticketNumber || '').toLowerCase();
+                 const status = (data.status || 'pending').toLowerCase();
 
-                // Then check if it matches the current filter
-                if (currentFilter !== 'all') {
-                    if (currentFilter === 'spam' && status !== 'spam') return false;
-                    if (currentFilter === 'pending' && status !== 'pending') return false;
-                    if (currentFilter === 'completed' && status !== 'completed') return false;
-                }
-                // Then check if it matches the search term
-                const matchesSearch = fullName.includes(searchString) || ticketNumber.includes(searchString);
-                if (matchesSearch) {
-                    filteredCount++;
-                }
-                return matchesSearch;
-            });
-            
-            console.log(`Filtered ${filteredCount} out of ${totalCount} applications for province: ${userProvince || 'All'}`);
-            
-            // Store filtered applications for sorting
-            allApplications = filtered;
-            
-            // Apply sorting
-            return sortApplications(filtered);
-        }
+                 // Then check if it matches the current filter
+                 if (currentFilter !== 'all') {
+                     if (currentFilter === 'spam' && status !== 'spam') return false;
+                     if (currentFilter === 'pending' && status !== 'pending') return false;
+                     if (currentFilter === 'completed' && status !== 'completed') return false;
+                 }
+                 
+                 // Then check if it matches the search term
+                 const matchesSearch = fullName.includes(searchString) || ticketNumber.includes(searchString);
+                 if (matchesSearch) {
+                     filteredCount++;
+                 }
+                 return matchesSearch;
+             });
+             
+             const effectiveProvince = selectedProvince || userProvince || 'All';
+             console.log(`Filtered ${filteredCount} out of ${totalCount} applications for province: ${effectiveProvince}`);
+             
+             // Store filtered applications for sorting
+             allApplications = filtered;
+             
+             // Apply sorting
+             return sortApplications(filtered);
+         }
 
         function renderApplications(applications) {
             applicationsGrid.innerHTML = '';
@@ -2298,45 +2313,54 @@ console.log('Formatted timestamp:', receivedAt);
         const applySortBtn = document.getElementById('applySort');
         const quickSortBtns = document.querySelectorAll('.quick-sort-btn');
 
-        // Apply sort button
-        if (applySortBtn) {
-            applySortBtn.addEventListener('click', () => {
-                currentSortBy = sortBySelect.value;
-                currentSortOrder = sortOrderSelect.value;
-                currentPage = 1; // Reset to first page when sorting
-                
-                if (lastSnapshot && lastSnapshot.exists()) {
-                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
-                    renderApplications(filteredApplications);
-                }
-            });
-        }
+                 // Apply sort button
+         if (applySortBtn) {
+             applySortBtn.addEventListener('click', () => {
+                 // Check if a province is selected
+                 if (sortBySelect.value && sortBySelect.value !== '') {
+                     selectedProvince = sortBySelect.value;
+                 } else {
+                     selectedProvince = ''; // Clear province filter if empty option is selected
+                 }
+                 
+                 currentSortOrder = sortOrderSelect.value;
+                 currentPage = 1; // Reset to first page when filtering
+                 
+                 if (lastSnapshot && lastSnapshot.exists()) {
+                     const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                     renderApplications(filteredApplications);
+                 }
+             });
+         }
 
-        // Quick sort buttons
-        quickSortBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all quick sort buttons
-                quickSortBtns.forEach(b => b.classList.remove('active'));
-                
-                // Add active class to clicked button
-                btn.classList.add('active');
-                
-                // Update sort parameters
-                currentSortBy = btn.dataset.sort;
-                currentSortOrder = btn.dataset.order;
-                
-                // Update select dropdowns to match
-                if (sortBySelect) sortBySelect.value = currentSortBy;
-                if (sortOrderSelect) sortOrderSelect.value = currentSortOrder;
-                
-                currentPage = 1; // Reset to first page when sorting
-                
-                if (lastSnapshot && lastSnapshot.exists()) {
-                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
-                    renderApplications(filteredApplications);
-                }
-            });
-        });
+                 // Quick sort buttons
+         quickSortBtns.forEach(btn => {
+             btn.addEventListener('click', () => {
+                 // Remove active class from all quick sort buttons
+                 quickSortBtns.forEach(b => b.classList.remove('active'));
+                 
+                 // Add active class to clicked button
+                 btn.classList.add('active');
+                 
+                 // Update sort parameters
+                 currentSortBy = btn.dataset.sort;
+                 currentSortOrder = btn.dataset.order;
+                 
+                 // Clear province filter when using quick sort
+                 selectedProvince = '';
+                 
+                 // Update select dropdowns to match
+                 if (sortBySelect) sortBySelect.value = '';
+                 if (sortOrderSelect) sortOrderSelect.value = currentSortOrder;
+                 
+                 currentPage = 1; // Reset to first page when sorting
+                 
+                 if (lastSnapshot && lastSnapshot.exists()) {
+                     const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                     renderApplications(filteredApplications);
+                 }
+             });
+         });
 
         // (Optional) Make logout button sign out the user
         document.querySelectorAll('.logout').forEach(btn => {
