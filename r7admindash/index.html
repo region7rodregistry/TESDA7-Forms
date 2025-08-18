@@ -306,45 +306,32 @@
             color: rgba(255,255,255,0.6);
         }
 
-        .receive-btn {
-            background: rgba(40, 167, 69, 0.2);
-            color: #28a745;
-            border: 1px solid #28a745;
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .receive-btn:hover {
-            background: #28a745;
-            color: white;
-        }
-
-        .receive-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .button-group {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
         }
 
-        .view-btn {
-            background: rgba(0, 168, 255, 0.2);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
+        /* Base button styles for all buttons */
+        .view-btn, .complete-btn, .pend-btn, .delete-btn {
             padding: 0.5rem 1rem;
+            min-height: 40px;
             border-radius: 15px;
             cursor: pointer;
             font-size: 0.9rem;
             flex: 1;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid;
+        }
+
+        /* Individual button colors and hover effects */
+        .view-btn {
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--accent-color);
+            border-color: var(--accent-color);
         }
 
         .view-btn:hover {
@@ -352,25 +339,10 @@
             color: white;
         }
 
-        .receive-btn {
-            flex: 1;
-        }
-
-        .delete-btn {
-            background: rgba(220, 53, 70, 0.2);
-            color: #dc3545;
-            border: 1px solid #dc3545;
-        }
-
-        .delete-btn:hover {
-            background: #dc3545;
-            color: white;
-        }
-
         .complete-btn {
             background: rgba(40, 167, 69, 0.2);
             color: #28a745;
-            border: 1px solid #28a745;
+            border-color: #28a745;
         }
 
         .complete-btn:hover {
@@ -378,14 +350,26 @@
             color: white;
         }
 
-        .view-btn, .complete-btn {
-            padding: 0.5rem 1rem;
-            min-height: 40px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        .pend-btn {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .pend-btn:hover {
+            background: #ffc107;
+            color: white;
+        }
+
+        .delete-btn {
+            background: rgba(220, 53, 70, 0.2);
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: #dc3545;
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -538,7 +522,7 @@
                 gap: 0.5rem;
             }
 
-            .view-btn, .receive-btn {
+            .view-btn, .complete-btn, .pend-btn, .delete-btn {
                 width: 100%;
                 padding: 0.8rem;
             }
@@ -1275,16 +1259,14 @@
             <div class="header-left">
                 <img src="../icons/tlogo.png" alt="Company Logo" class="logo">
                 <div class="header-title">
-                    <h1>ONAF Database</h1>
+                    <h1>Online NTTC Application Form - Database</h1>
                     <span>National TVET Trainers Certification</span>
+                    <span>Administrator Dashboard</span>
                     <span id="userProvinceDisplay" style="font-size: 0.8rem; color: var(--accent-color); margin-top: 4px;"></span>
                 </div>
             </div>
             <div class="header-buttons">
-                <a href="#" class="header-btn">
-                    <i>📊</i>
-                    Dashboard
-                </a>
+                
                 <a href="#" class="header-btn">
                     <i>📈</i>
                     Issuances
@@ -1445,6 +1427,10 @@
 
         // Make functions globally accessible for onclick attributes
         window.markAsCompleted = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+        
+        window.markAsPending = function(key) {
             // This will be replaced by the actual implementation below
         };
         
@@ -1842,12 +1828,24 @@ console.log('Formatted timestamp:', receivedAt);
 
             // Create button HTML based on status
             let buttonHTML = '';
-            if (status === 'spam' || status === 'completed') {
+            if (status === 'spam') {
                 buttonHTML = `
                     <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
                         🧿 View PDF
                     </button>
-                    <button class="receive-btn delete-btn" data-key="${key}" onclick="deleteApplication('${key}')">
+                    <button class="pend-btn" data-key="${key}" onclick="markAsPending('${key}', event)">
+                        📋 Pend
+                    </button>
+                    <button class="delete-btn" data-key="${key}" onclick="deleteApplication('${key}')">
+                        🗑️ Delete
+                    </button>
+                `;
+            } else if (status === 'completed') {
+                buttonHTML = `
+                    <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
+                        🧿 View PDF
+                    </button>
+                    <button class="delete-btn" data-key="${key}" onclick="deleteApplication('${key}')">
                         🗑️ Delete
                     </button>
                 `;
@@ -1856,7 +1854,7 @@ console.log('Formatted timestamp:', receivedAt);
                     <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
                         🧿 View PDF
                     </button>
-                    <button class="receive-btn complete-btn" data-key="${key}" onclick="markAsCompleted('${key}')">
+                    <button class="complete-btn" data-key="${key}" onclick="markAsCompleted('${key}', event)">
                         ✅ Mark as Complete
                     </button>
                 `;
@@ -1989,10 +1987,15 @@ console.log('Formatted timestamp:', receivedAt);
         }
 
         // Function to mark application as completed
-        window.markAsCompleted = function(key) {
+        window.markAsCompleted = function(key, event) {
             try {
                 // Show loading state on the button
-                const button = event.target;
+                const button = event ? event.target : null;
+                if (!button) {
+                    console.error('Button element not found');
+                    return;
+                }
+                
                 const originalText = button.innerHTML;
                 button.innerHTML = '⏳ Processing...';
                 button.disabled = true;
@@ -2011,13 +2014,72 @@ console.log('Formatted timestamp:', receivedAt);
                 console.error('Error in markAsCompleted function:', error);
                 
                 // Reset button state if available
-                if (event && event.target) {
-                    event.target.innerHTML = '✅ Mark as Complete';
-                    event.target.disabled = false;
+                if (button) {
+                    button.innerHTML = '✅ Mark as Complete';
+                    button.disabled = false;
                 }
                 
                 // Hide modal if it was shown
                 hideCompletionModal();
+                
+                // Show error message
+                alert('An unexpected error occurred. Please try again.');
+            }
+        };
+
+        // Function to mark application as pending
+        window.markAsPending = function(key, event) {
+            try {
+                // Show loading state on the button
+                const button = event ? event.target : null;
+                if (!button) {
+                    console.error('Button element not found');
+                    return;
+                }
+                
+                const originalText = button.innerHTML;
+                button.innerHTML = '⏳ Processing...';
+                button.disabled = true;
+                
+                // Update the application status to pending immediately
+                const docRef = doc(db, 'applications', key);
+                updateDoc(docRef, {
+                    status: 'pending',
+                    pendingAt: new Date().toISOString(),
+                    pendingBy: 'admin'
+                })
+                .then(() => {
+                    console.log('Application marked as pending successfully');
+                    
+                    // Reset button state
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    
+                    // Show success message
+                    alert('Application has been moved to pending status successfully!');
+                    
+                    // The onSnapshot listener will automatically update the UI
+                    // and move the application to the pending tab
+                })
+                .catch((error) => {
+                    console.error('Error updating application:', error);
+                    
+                    // Reset button state
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    
+                    // Show error message
+                    alert('Error updating application. Please try again.');
+                });
+                
+            } catch (error) {
+                console.error('Error in markAsPending function:', error);
+                
+                // Reset button state if available
+                if (button) {
+                    button.innerHTML = '📋 Pend';
+                    button.disabled = false;
+                }
                 
                 // Show error message
                 alert('An unexpected error occurred. Please try again.');
