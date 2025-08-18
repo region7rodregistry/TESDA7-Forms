@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icons/nttcmis.png">
+    <title>ONAF Database</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #000428, #004e92);
+            --card-gradient: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            --text-color: #ffffff;
+            --accent-color: #00a8ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 2000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--accent-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title span {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 4px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .header-btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        .header-btn.logout {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+        }
+
+        .header-btn.logout:hover {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        .search-section {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 0 0 10px 10px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+            align-items: left;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .logout-btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 0, 0, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        input[type="search"] {
+            max-width: 400px;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            width: 100%;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        input[type="search"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+        }
+
+        input[type="search"]::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .application-card {
+            background: var(--card-gradient);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ticket-number {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-group {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: white;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(24, 226, 72, 0.678);
+            color: #f0f8f2fd;
+        }
+
+        .status-rejected {
+            background: rgba(220, 53, 70, 0.384);
+            color: #dc3545;
+        }
+
+        .status-spam {
+            background: rgba(243, 0, 0, 0.644);
+            color: #ffffff;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .receive-btn {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .receive-btn:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .receive-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .view-btn {
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .receive-btn {
+            flex: 1;
+        }
+
+        .delete-btn {
+            background: rgba(220, 53, 70, 0.2);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .complete-btn {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .complete-btn:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .view-btn, .complete-btn {
+            padding: 0.5rem 1rem;
+            min-height: 40px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-left {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .search-section {
+                padding: 1rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .filter-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            input[type="search"] {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            /* Statistics Cards Mobile Styles */
+            .stats-section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .stat-card {
+                padding: 1.2rem;
+            }
+
+            .stat-header {
+                gap: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .stat-icon {
+                font-size: 1.5rem;
+                width: 40px;
+                height: 40px;
+            }
+
+            .stat-title {
+                font-size: 0.85rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .change-text {
+                font-size: 0.75rem;
+            }
+
+            /* Sorting Controls Mobile Styles */
+            .sorting-section {
+                padding: 1rem;
+            }
+
+            .sort-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+
+            .sort-select {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .sort-btn {
+                padding: 0.8rem;
+                justify-content: center;
+            }
+
+            .quick-sort-buttons {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .quick-sort-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .application-card {
+                padding: 1.2rem;
+            }
+
+            .info-group {
+                margin-bottom: 0.8rem;
+            }
+
+            .info-label {
+                font-size: 0.8rem;
+            }
+
+            .info-value {
+                font-size: 0.9rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .view-btn, .receive-btn {
+                width: 100%;
+                padding: 0.8rem;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+
+            .pagination-btn, .page-number {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .page-numbers {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .completion-modal-content {
+                width: 90%;
+                max-width: 300px;
+                padding: 1.5rem;
+            }
+
+            .completion-modal h2 {
+                font-size: 1.5rem;
+            }
+
+            .completion-modal p {
+                font-size: 1rem;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modal-btn {
+                width: 100%;
+                padding: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1rem;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .filter-buttons {
+                gap: 0.3rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .application-card {
+                padding: 1rem;
+            }
+
+            .ticket-number {
+                font-size: 1rem;
+            }
+
+            .status-badge {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.8rem;
+            }
+
+            .timestamp {
+                font-size: 0.7rem;
+            }
+        }
+
+        .completion-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .completion-modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .completion-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 2.5rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-align: center;
+            min-width: 350px;
+            max-width: 450px;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .completion-modal.show .completion-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .completion-modal h2 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .completion-modal p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+        }
+
+        .modal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .modal-btn:hover::before {
+            left: 100%;
+        }
+
+        .modal-btn-confirm {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal-btn-confirm:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .modal-btn-cancel {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .completion-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: celebration 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes celebration {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1);
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            }
+            25% { 
+                transform: translateY(-15px) rotate(-5deg) scale(1.1);
+                filter: drop-shadow(0 8px 16px rgba(255, 215, 0, 0.4));
+            }
+            50% { 
+                transform: translateY(-20px) rotate(0deg) scale(1.2);
+                filter: drop-shadow(0 12px 24px rgba(255, 215, 0, 0.6));
+            }
+            75% { 
+                transform: translateY(-15px) rotate(5deg) scale(1.1);
+                filter: drop-shadow(0 8px 16px rgba(255, 215, 0, 0.4));
+            }
+        }
+
+        /* Success checkmark animation */
+        .success-checkmark {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            animation: checkmarkAppear 0.6s ease-out 0.3s both;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        @keyframes checkmarkAppear {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* Delete warning modal styles */
+        .delete-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .delete-modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 3rem 2.5rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 25px 50px rgba(220, 53, 69, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-align: center;
+            min-width: 350px;
+            max-width: 450px;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .delete-modal.show .delete-modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .delete-modal h2 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #ffe6e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .delete-modal p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .delete-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: warningShake 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes warningShake {
+            0%, 100% { 
+                transform: translateX(0) rotate(0deg) scale(1);
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            }
+            25% { 
+                transform: translateX(-5px) rotate(-2deg) scale(1.05);
+                filter: drop-shadow(0 8px 16px rgba(220, 53, 69, 0.4));
+            }
+            50% { 
+                transform: translateX(5px) rotate(2deg) scale(1.1);
+                filter: drop-shadow(0 12px 24px rgba(220, 53, 69, 0.6));
+            }
+            75% { 
+                transform: translateX(-3px) rotate(-1deg) scale(1.05);
+                filter: drop-shadow(0 8px 16px rgba(220, 53, 69, 0.4));
+            }
+        }
+
+        .modal-btn-delete {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+
+        .modal-btn-delete:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(220, 53, 69, 0.6);
+        }
+
+        /* Add pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-number {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-number.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .page-number:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .notification-badge {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+            min-width: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Statistics Cards Styles */
+        .stats-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-gradient);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), #667eea);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .pending-icon {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .completed-icon {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .spam-icon {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+
+        .total-icon {
+            background: rgba(0, 168, 255, 0.2);
+            color: var(--accent-color);
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .change-indicator {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .change-indicator.positive {
+            color: #28a745;
+        }
+
+        .change-indicator.negative {
+            color: #dc3545;
+        }
+
+        .change-indicator.neutral {
+            color: var(--accent-color);
+        }
+
+        .change-text {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Sorting Controls Styles */
+        .sorting-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sort-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
+        .sort-select {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sort-select option {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .sort-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            background: rgba(0, 168, 255, 0.1);
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quick-sort-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-sort-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .quick-sort-btn:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .quick-sort-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Modal base: always flex, but hidden by opacity and pointer-events */
+        .completion-modal,
+        .delete-modal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Show state: fade in */
+        .completion-modal.show,
+        .delete-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal content: pop in/out animation */
+        .completion-modal-content,
+        .delete-modal-content {
+            opacity: 0;
+            transform: scale(0.85) translateY(30px);
+            transition: opacity 0.4s, transform 0.4s;
+            will-change: opacity, transform;
+        }
+
+        /* When modal is shown, pop in */
+        .completion-modal.show .completion-modal-content,
+        .delete-modal.show .delete-modal-content {
+            animation: modalPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* When modal is hiding, pop out */
+        .completion-modal.hide .completion-modal-content,
+        .delete-modal.hide .delete-modal-content {
+            animation: modalPopOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes modalPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.85) translateY(30px);
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes modalPopOut {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.85) translateY(30px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <img src="../icons/tlogo.png" alt="Company Logo" class="logo">
+                <div class="header-title">
+                    <h1>ONAF Database</h1>
+                    <span>National TVET Trainers Certification</span>
+                    <span id="userProvinceDisplay" style="font-size: 0.8rem; color: var(--accent-color); margin-top: 4px;"></span>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="#" class="header-btn">
+                    <i>📊</i>
+                    Dashboard
+                </a>
+                <a href="#" class="header-btn">
+                    <i>📈</i>
+                    Issuances
+                </a>
+                <a href="#" class="header-btn">
+                    <i>⚙️</i>
+                    Settings
+                </a>
+                <a href="../login.html" class="header-btn logout">
+                    <i>🚪</i>
+                    Logout
+                </a>
+            </div>
+        </header>
+        
+        <div class="search-section">
+            <div class="search-container">
+                <input type="search" id="searchInput" placeholder="Search by ticket number or applicant name...">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="pending">Pending <span class="notification-badge" id="pendingCount">0</span></button>              
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="spam">Spam</button>
+                    <button class="filter-btn" data-filter="all">All</button>  
+                </div>
+            </div>
+            <div id="provinceFilterInfo" style="margin-top: 1rem; padding-left: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-color);"></div>
+        </div>
+
+        <!-- Statistics Cards Section -->
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon pending-icon">📋</div>
+                        <div class="stat-title">Pending Applications</div>
+                    </div>
+                    <div class="stat-number" id="pendingStatCount">0</div>
+                    <div class="stat-change">
+                        <span class="change-indicator positive">↗</span>
+                        <span class="change-text">Active</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon completed-icon">✅</div>
+                        <div class="stat-title">Completed Applications</div>
+                    </div>
+                    <div class="stat-number" id="completedStatCount">0</div>
+                    <div class="stat-change">
+                        <span class="change-indicator positive">↗</span>
+                        <span class="change-text">Processed</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon spam-icon">🚫</div>
+                        <div class="stat-title">Spam Applications</div>
+                    </div>
+                    <div class="stat-number" id="spamStatCount">0</div>
+                    <div class="stat-change">
+                        <span class="change-indicator negative">↘</span>
+                        <span class="change-text">Filtered</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon total-icon">📊</div>
+                        <div class="stat-title">Total Applications</div>
+                    </div>
+                    <div class="stat-number" id="totalStatCount">0</div>
+                    <div class="stat-change">
+                        <span class="change-indicator neutral">→</span>
+                        <span class="change-text">All Time</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sorting Controls -->
+            <div class="sorting-section">
+                <div class="sort-controls">
+                    <label for="sortBy" class="sort-label">Sort by:</label>
+                    <select id="sortBy" class="sort-select">
+                        <option value="timestamp">Date Received</option>
+                        <option value="name">Applicant Name</option>
+                        <option value="ticketNumber">Ticket Number</option>
+                        <option value="sector">Sector</option>
+                        <option value="qualification">Qualification</option>
+                        <option value="status">Status</option>
+                    </select>
+                    
+                    <label for="sortOrder" class="sort-label">Order:</label>
+                    <select id="sortOrder" class="sort-select">
+                        <option value="desc">Newest First</option>
+                        <option value="asc">Oldest First</option>
+                    </select>
+                    
+                    <button id="applySort" class="sort-btn">
+                        <span>🔄</span>
+                        Apply Sort
+                    </button>
+                </div>
+                
+                <div class="quick-sort-buttons">
+                    <button class="quick-sort-btn" data-sort="timestamp" data-order="desc">
+                        📅 Latest
+                    </button>
+                    <button class="quick-sort-btn" data-sort="name" data-order="asc">
+                        👤 A-Z
+                    </button>
+                    <button class="quick-sort-btn" data-sort="status" data-order="asc">
+                        🏷️ Status
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingSpinner" class="loading-spinner"></div>
+        <div id="applicationsGrid" class="applications-grid"></div>
+        <div class="pagination" id="pagination">
+            <button class="pagination-btn" id="prevPage">Previous</button>
+            <div class="page-numbers" id="pageNumbers"></div>
+            <button class="pagination-btn" id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <div class="completion-modal" id="completionModal">
+        <div class="completion-modal-content">
+            <div class="success-checkmark">✓</div>
+            <div class="completion-icon">🎉</div>
+            <h2>Great Job!</h2>
+            <p>Application has been successfully marked as completed.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-confirm" id="modalConfirm">Continue</button>
+                <button class="modal-btn modal-btn-cancel" id="modalCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-modal-content">
+            <div class="delete-icon">⚠️</div>
+            <h2>Warning!</h2>
+            <p>Are you sure you want to delete this application? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-delete" id="deleteConfirm">Delete</button>
+                <button class="modal-btn modal-btn-cancel" id="deleteCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Make functions globally accessible for onclick attributes
+        window.markAsCompleted = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+        
+        window.deleteApplication = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+        
+        window.viewPDF = function(key) {
+            // This will be replaced by the actual implementation below
+        };
+
+        // Utility to show modal with pop-in
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hide');
+                modal.classList.add('show');
+                return true;
+            }
+            return false;
+        }
+
+        // Utility to hide modal with pop-out
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hide');
+                modal.classList.remove('show');
+                // Remove 'hide' after animation completes
+                setTimeout(() => {
+                    modal.classList.remove('hide');
+                }, 350); // match popOut duration
+                return true;
+            }
+            return false;
+        }
+
+        // Modal utility functions with safeguards
+        function showDeleteModal() { return showModal('deleteModal'); }
+        function hideDeleteModal() { return hideModal('deleteModal'); }
+
+        // Modal utility functions with safeguards
+        function showCompletionModal() { return showModal('completionModal'); }
+        function hideCompletionModal() { return hideModal('completionModal'); }
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBknxUstLA8F4YkkNT9rVCoEgTzJBSu24A",
+            authDomain: "r7nttconaf.firebaseapp.com",
+            projectId: "r7nttconaf",
+            storageBucket: "r7nttconaf.firebasestorage.app",
+            messagingSenderId: "521822609098",
+            appId: "1:521822609098:web:e8ee10f63098924bb35e33",
+            measurementId: "G-0VPXC641LT"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const applicationsCol = collection(db, 'applications');
+
+        // Auth check: redirect to login if not authenticated
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "../login.html";
+            } else {
+                // Check if user has access to this dashboard
+                const userProvince = getUserProvince();
+                const hasAccess = userProvince !== null || userProvinceMap[user.email] === null;
+                if (!hasAccess) {
+                    // If user doesn't have a province mapping, show access denied
+                    alert('Access denied. You do not have permission to view this dashboard.');
+                    window.location.href = "../login.html";
+                    return;
+                }
+                // Update province display
+                updateProvinceDisplay();
+            }
+        });
+
+        // User province mapping
+        const userProvinceMap = {
+            'r7po.registry@gmail.com': 'Cebu',
+            'r7po46.registry@gmail.com': 'Negros-Oriental',
+            'r7po12.registry@gmail.com': 'Bohol',
+            'r7po61.registry@gmail.com': 'Siquijor',
+            'region7@tesda.gov.ph': null // Admin can see all provinces
+        };
+
+        // Get current user's province
+        function getUserProvince() {
+            const user = auth.currentUser;
+            if (!user) return null;
+            const province = userProvinceMap[user.email];
+            // If province is null, it means admin access (can see all provinces)
+            const result = province === null ? null : (province || null);
+            console.log(`User: ${user.email}, Province: ${result}`);
+            return result;
+        }
+
+        // Update province display in header
+        function updateProvinceDisplay() {
+            const userProvince = getUserProvince();
+            const provinceDisplay = document.getElementById('userProvinceDisplay');
+            const provinceFilterInfo = document.getElementById('provinceFilterInfo');
+            
+            if (provinceDisplay) {
+                if (userProvince) {
+                    provinceDisplay.textContent = `Viewing: ${userProvince} Province`;
+                } else {
+                    provinceDisplay.textContent = 'Viewing: All Provinces';
+                }
+            }
+            
+            if (provinceFilterInfo) {
+                if (userProvince) {
+                    provinceFilterInfo.innerHTML = `<i>🔍</i> Filtered to show only applications from <strong>${userProvince}</strong> province`;
+                } else {
+                    provinceFilterInfo.innerHTML = `<i>🌍</i> Showing applications from all provinces`;
+                }
+            }
+        }
+
+        // DOM elements
+        const applicationsGrid = document.getElementById('applicationsGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const searchInput = document.getElementById('searchInput');
+        let currentFilter = 'pending';
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let lastSnapshot = null;
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let totalPages = 1;
+        
+        // Sorting variables
+        let currentSortBy = 'timestamp';
+        let currentSortOrder = 'desc';
+        let allApplications = [];
+
+        // Fetch and listen to Firestore data
+        function fetchApplications() {
+            loadingSpinner.style.display = 'block';
+            onSnapshot(applicationsCol, async (snapshot) => {
+                loadingSpinner.style.display = 'none';
+                const data = {};
+                snapshot.forEach(docSnap => {
+                    data[docSnap.id] = docSnap.data();
+                });
+                lastSnapshot = {
+                    val: () => data,
+                    exists: () => Object.keys(data).length > 0
+                };
+
+                // --- Duplicate detection and spam marking logic ---
+                // Group applications by the specified fields
+                const groups = {};
+                Object.entries(data).forEach(([key, app]) => {
+                    const firstName = app.manpowerProfile?.firstName || '';
+                    const lastName = app.manpowerProfile?.lastName || '';
+                    const contact = app.manpowerProfile?.contact || '';
+                    const email = app.manpowerProfile?.email || '';
+                    const sector = app.nttcApplication?.sector || '';
+                    const qualification = app.nttcApplication?.qualification || '';
+                    const groupKey = `${firstName}||${lastName}||${contact}||${email}||${sector}||${qualification}`;
+                    if (!groups[groupKey]) groups[groupKey] = [];
+                    groups[groupKey].push(key);
+                });
+                // For each group with more than one application, mark all as spam
+                for (const group of Object.values(groups)) {
+                    if (group.length > 1) {
+                        for (const key of group) {
+                            const app = data[key];
+                            if (app.status !== 'spam') {
+                                // Update status to spam in Firestore
+                                try {
+                                    const docRef = doc(db, 'applications', key);
+                                    await updateDoc(docRef, { status: 'spam' });
+                                } catch (err) {
+                                    console.error('Error updating status to spam:', err);
+                                }
+                            }
+                        }
+                    }
+                }
+                // --- End duplicate detection ---
+
+                updateNotificationBadges(data);
+                updateProvinceDisplay(); // Update province display when data loads
+                const filteredApplications = filterApplications(data, searchInput.value);
+                renderApplications(filteredApplications);
+            }, (error) => {
+                console.error('Error fetching data:', error);
+                loadingSpinner.style.display = 'none';
+                applicationsGrid.innerHTML = '<div class="no-results">Error loading applications</div>';
+            });
+        }
+        fetchApplications();
+
+        function updateNotificationBadges(applications) {
+            // Count applications by status for user's province only
+            const userProvince = getUserProvince();
+            const counts = {
+                pending: 0,
+                completed: 0,
+                spam: 0,
+                all: 0
+            };
+            Object.values(applications).forEach(app => {
+                // Only count applications from user's province
+                if (userProvince) {
+                    const applicationProvince = app.manpowerProfile?.province || '';
+                    if (applicationProvince !== userProvince) {
+                        return; // Skip applications from other provinces
+                    }
+                }
+                
+                const status = app.status || 'pending';
+                counts[status]++;
+                counts.all++;
+            });
+            
+            // Update notification badges
+            document.getElementById('pendingCount').textContent = counts.pending;
+            
+            // Update statistics cards
+            document.getElementById('pendingStatCount').textContent = counts.pending;
+            document.getElementById('completedStatCount').textContent = counts.completed;
+            document.getElementById('spamStatCount').textContent = counts.spam;
+            document.getElementById('totalStatCount').textContent = counts.all;
+        }
+
+        function filterApplications(applications, searchTerm) {
+            const userProvince = getUserProvince();
+            let filteredCount = 0;
+            let totalCount = 0;
+            
+            const filtered = Object.entries(applications).filter(([key, data]) => {
+                totalCount++;
+                // First filter by user's province
+                if (userProvince) {
+                    const applicationProvince = data.manpowerProfile?.province || '';
+                    if (applicationProvince !== userProvince) {
+                        return false;
+                    }
+                }
+                
+                const searchString = searchTerm.toLowerCase();
+                const firstName = data.manpowerProfile?.firstName || '';
+                const lastName = data.manpowerProfile?.lastName || '';
+                const fullName = `${firstName} ${lastName}`.toLowerCase();
+                const ticketNumber = (data.ticketNumber || '').toLowerCase();
+                const status = (data.status || 'pending').toLowerCase();
+
+                // Then check if it matches the current filter
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'spam' && status !== 'spam') return false;
+                    if (currentFilter === 'pending' && status !== 'pending') return false;
+                    if (currentFilter === 'completed' && status !== 'completed') return false;
+                }
+                // Then check if it matches the search term
+                const matchesSearch = fullName.includes(searchString) || ticketNumber.includes(searchString);
+                if (matchesSearch) {
+                    filteredCount++;
+                }
+                return matchesSearch;
+            });
+            
+            console.log(`Filtered ${filteredCount} out of ${totalCount} applications for province: ${userProvince || 'All'}`);
+            
+            // Store filtered applications for sorting
+            allApplications = filtered;
+            
+            // Apply sorting
+            return sortApplications(filtered);
+        }
+
+        function renderApplications(applications) {
+            applicationsGrid.innerHTML = '';
+
+            if (applications.length === 0) {
+                applicationsGrid.innerHTML = '<div class="no-results">No matching applications found</div>';
+                updatePaginationControls(0);
+                return;
+            }
+
+            // Calculate pagination
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedApplications = applications.slice(startIndex, endIndex);
+
+            paginatedApplications.forEach(([key, data]) => {
+                const card = createApplicationCard(data, key);
+                applicationsGrid.appendChild(card);
+            });
+
+            // Update pagination controls
+            updatePaginationControls(applications.length);
+        }
+
+        function updatePaginationControls(totalItems) {
+            totalPages = Math.ceil(totalItems / itemsPerPage);
+            const pageNumbers = document.getElementById('pageNumbers');
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+
+            // Update page numbers
+            pageNumbers.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-number ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                    renderApplications(filteredApplications);
+                });
+                pageNumbers.appendChild(pageBtn);
+            }
+
+            // Update button states
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        // Update delete and update logic to use Firestore
+        function createApplicationCard(data, key) {
+            console.log('data for key', key, ':', data);
+            console.log('tesdaInfo:', data.tesdaInfo);
+            console.log('timestamp:', data.tesdaInfo?.timestamp);
+            const card = document.createElement('div');
+            card.className = 'application-card';
+
+            // Defensive: fallback to N/A if fields are missing
+            const firstName = data.manpowerProfile?.firstName || 'N/A';
+            const lastName = data.manpowerProfile?.lastName || 'N/A';
+            const contact = data.manpowerProfile?.contact || 'N/A';
+            const email = data.manpowerProfile?.email || 'N/A';
+            const sector = data.nttcApplication?.sector || 'N/A';
+            const qualification = data.nttcApplication?.qualification || 'N/A';
+            const ticketNumber = data.ticketNumber || 'No Ticket Number';
+            const status = data.status || 'pending';
+
+          // Extract and format received timestamp
+          const receivedAtRaw = data?.tesdaInfo?.timestamp ?? data?.timestamp ?? null;
+
+let receivedAt = '';
+
+try {
+    const timestampField = receivedAtRaw;
+    if (timestampField) {
+        let dateObj = null;
+        if (typeof timestampField === 'string') {
+            dateObj = new Date(timestampField);
+        } else if (typeof timestampField === 'object' && typeof timestampField.toDate === 'function') {
+            dateObj = timestampField.toDate();
+        }
+        if (dateObj && !isNaN(dateObj.getTime())) {
+            // Format as 'Month D, YYYY HH:MM AM/PM'
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = dateObj.toLocaleDateString('en-US', options);
+            let hours = dateObj.getHours();
+            const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            receivedAt = `${dateStr} ${hours}:${minutes} ${ampm}`;
+        } else {
+            receivedAt = '';
+        }
+    } else {
+        receivedAt = '';
+    }
+} catch (e) {
+    console.error('Error parsing timestamp:', e);
+    receivedAt = '';
+}
+
+console.log('Formatted timestamp:', receivedAt);
+
+            // Create button HTML based on status
+            let buttonHTML = '';
+            if (status === 'spam' || status === 'completed') {
+                buttonHTML = `
+                    <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
+                        🧿 View PDF
+                    </button>
+                    <button class="receive-btn delete-btn" data-key="${key}" onclick="deleteApplication('${key}')">
+                        🗑️ Delete
+                    </button>
+                `;
+            } else if (status === 'pending') {
+                buttonHTML = `
+                    <button class="view-btn" data-key="${key}" onclick="viewPDF('${key}')">
+                        🧿 View PDF
+                    </button>
+                    <button class="receive-btn complete-btn" data-key="${key}" onclick="markAsCompleted('${key}')">
+                        ✅ Mark as Complete
+                    </button>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="ticket-number" style="display: flex; align-items: center; gap: 0.5rem;">
+                    ${ticketNumber}
+                     <div class="status-badge status-${status}">
+                    ${status.toUpperCase()}
+                </div>
+                 
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Applicant Name</div>
+                    <div class="info-value">${firstName} ${lastName}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Contact</div>
+                    <div class="info-value">${contact}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">${email}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Sector</div>
+                    <div class="info-value">${sector.toUpperCase()}</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Qualification</div>
+                    <div class="info-value">${qualification.toUpperCase()}</div>
+                </div>
+               
+                <div class="button-group">
+                    ${buttonHTML}
+                </div>
+                <div class="timestamp">Received: ${receivedAt}</div>
+            `;
+
+            // Add event listener for the plus button
+            setTimeout(() => {
+                const addBtn = card.querySelector('.add-po-btn');
+                if (addBtn) {
+                    addBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        addBtn.disabled = true;
+                        addBtn.style.opacity = 0.5;
+                        try {
+                            // Get the application data from lastSnapshot
+                            const appData = lastSnapshot.val()[key];
+                            if (!appData) throw new Error('Application data not found');
+                            // Add to 'issuances' collection
+                            const issuancesCol = collection(db, 'issuances');
+                            await updateDoc(doc(db, 'applications', key), { issued: true }); // Optionally mark as issued
+                            await setDoc(doc(issuancesCol, key), appData); // Use the same key for easy lookup
+                            addBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 22 22"><rect x="2" y="2" width="18" height="18" rx="4" fill="#28a745"/><path d="M6 11l4 4 6-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                        } catch (err) {
+                            addBtn.disabled = false;
+                            addBtn.style.opacity = 1;
+                            alert('Failed to add to issuances: ' + err.message);
+                        }
+                    });
+                }
+            }, 0);
+
+            return card;
+        }
+
+        // Function to view PDF
+        window.viewPDF = function(key) {
+            if (lastSnapshot && lastSnapshot.exists()) {
+                const applications = lastSnapshot.val();
+                const applicationData = applications[key];
+                if (applicationData) {
+                    // Use the ticket number from the document, or fallback to the key
+                    const ticketNumber = applicationData.ticketNumber || key;
+                    if (ticketNumber) {
+                        const previewUrl = `preview.html?ticketNumber=${encodeURIComponent(ticketNumber)}`;
+                        window.open(previewUrl, '_blank');
+                    } else {
+                        alert('No ticket number found for this application.');
+                    }
+                } else {
+                    alert('Application data not found. Please try again.');
+                }
+            } else {
+                alert('No application data available. Please refresh the page and try again.');
+            }
+        };
+
+        // Function to delete application
+        window.deleteApplication = function(key) {
+            try {
+                // Store the application key for later use
+                window.pendingDeleteKey = key;
+                
+                // Show the delete warning modal
+                const modalShown = showDeleteModal();
+                
+                if (!modalShown) {
+                    // Fallback to confirm if modal fails
+                    if (confirm('Are you sure you want to delete this application? This action cannot be undone.')) {
+                        performDelete(key);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error in deleteApplication function:', error);
+                
+                // Fallback to confirm if there's an error
+                if (confirm('Are you sure you want to delete this application? This action cannot be undone.')) {
+                    performDelete(key);
+                }
+            }
+        };
+
+        // Function to perform the actual deletion
+        function performDelete(key) {
+            const docRef = doc(db, 'applications', key);
+            deleteDoc(docRef)
+                .then(() => {
+                    console.log('Application deleted successfully');
+                    // The onSnapshot listener will automatically update the UI
+                })
+                .catch((error) => {
+                    console.error('Error deleting application:', error);
+                    alert('Error deleting application. Please try again.');
+                });
+        }
+
+        // Function to mark application as completed
+        window.markAsCompleted = function(key) {
+            try {
+                // Show loading state on the button
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '⏳ Processing...';
+                button.disabled = true;
+                
+                // Show modal immediately for better user feedback
+                const modalShown = showCompletionModal();
+                
+                // Store the application key for later use
+                window.pendingCompletionKey = key;
+                
+                // Reset button state immediately since we're waiting for user confirmation
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+            } catch (error) {
+                console.error('Error in markAsCompleted function:', error);
+                
+                // Reset button state if available
+                if (event && event.target) {
+                    event.target.innerHTML = '✅ Mark as Complete';
+                    event.target.disabled = false;
+                }
+                
+                // Hide modal if it was shown
+                hideCompletionModal();
+                
+                // Show error message
+                alert('An unexpected error occurred. Please try again.');
+            }
+        };
+
+        // Modal event listeners with safeguards
+        const modalConfirm = document.getElementById('modalConfirm');
+        const modalCancel = document.getElementById('modalCancel');
+        const completionModal = document.getElementById('completionModal');
+        const deleteConfirm = document.getElementById('deleteConfirm');
+        const deleteCancel = document.getElementById('deleteCancel');
+        const deleteModal = document.getElementById('deleteModal');
+
+        if (modalConfirm) {
+            modalConfirm.addEventListener('click', () => {
+                // Complete the application when user presses Continue
+                if (window.pendingCompletionKey) {
+                    const key = window.pendingCompletionKey;
+                    window.pendingCompletionKey = null; // Clear the pending key
+                    
+                    // Show loading state on the Continue button
+                    const confirmButton = event.target;
+                    const originalText = confirmButton.innerHTML;
+                    confirmButton.innerHTML = '⏳ Processing...';
+                    confirmButton.disabled = true;
+                    
+                    const docRef = doc(db, 'applications', key);
+                    updateDoc(docRef, {
+                        status: 'completed',
+                        completedAt: new Date().toISOString(),
+                        completedBy: 'admin'
+                    })
+                    .then(() => {
+                        console.log('Application marked as completed successfully');
+                        
+                        // Reset button state
+                        confirmButton.innerHTML = originalText;
+                        confirmButton.disabled = false;
+                        
+                        // Close the modal
+                        if (completionModal) {
+                            completionModal.classList.remove('show');
+                        }
+                        
+                        // The onSnapshot listener will automatically update the UI
+                        // and move the application to the completed tab
+                    })
+                    .catch((error) => {
+                        console.error('Error updating application:', error);
+                        
+                        // Reset button state
+                        confirmButton.innerHTML = originalText;
+                        confirmButton.disabled = false;
+                        
+                        // Show error message
+                        alert('Error updating application. Please try again.');
+                    });
+                } else {
+                    // No pending completion, just close modal
+                    if (completionModal) {
+                        completionModal.classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        if (modalCancel) {
+            modalCancel.addEventListener('click', () => {
+                // Clear the pending completion key
+                window.pendingCompletionKey = null;
+                
+                if (completionModal) {
+                    completionModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Delete modal event listeners
+        if (deleteConfirm) {
+            deleteConfirm.addEventListener('click', () => {
+                // Delete the application when user presses Delete
+                if (window.pendingDeleteKey) {
+                    const key = window.pendingDeleteKey;
+                    window.pendingDeleteKey = null; // Clear the pending key
+                    
+                    // Show loading state on the Delete button
+                    const deleteButton = event.target;
+                    const originalText = deleteButton.innerHTML;
+                    deleteButton.innerHTML = '⏳ Processing...';
+                    deleteButton.disabled = true;
+                    
+                    performDelete(key);
+                    
+                    // Reset button state
+                    deleteButton.innerHTML = originalText;
+                    deleteButton.disabled = false;
+                    
+                    // Close the modal
+                    if (deleteModal) {
+                        deleteModal.classList.remove('show');
+                    }
+                } else {
+                    // No pending delete, just close modal
+                    if (deleteModal) {
+                        deleteModal.classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        if (deleteCancel) {
+            deleteCancel.addEventListener('click', () => {
+                // Clear the pending delete key
+                window.pendingDeleteKey = null;
+                
+                if (deleteModal) {
+                    deleteModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Close modal when clicking outside
+        if (completionModal) {
+            completionModal.addEventListener('click', (e) => {
+                if (e.target.id === 'completionModal') {
+                    // Clear the pending completion key
+                    window.pendingCompletionKey = null;
+                    e.target.classList.remove('show');
+                }
+            });
+        }
+
+        if (deleteModal) {
+            deleteModal.addEventListener('click', (e) => {
+                if (e.target.id === 'deleteModal') {
+                    // Clear the pending delete key
+                    window.pendingDeleteKey = null;
+                    e.target.classList.remove('show');
+                }
+            });
+        }
+
+        // Add keyboard support for modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (completionModal && completionModal.classList.contains('show')) {
+                    // Clear the pending completion key
+                    window.pendingCompletionKey = null;
+                    completionModal.classList.remove('show');
+                }
+                if (deleteModal && deleteModal.classList.contains('show')) {
+                    // Clear the pending delete key
+                    window.pendingDeleteKey = null;
+                    deleteModal.classList.remove('show');
+                }
+            }
+        });
+
+        // Sorting function
+        function sortApplications(applications) {
+            if (!applications || applications.length === 0) return applications;
+            
+            return applications.sort((a, b) => {
+                const [keyA, dataA] = a;
+                const [keyB, dataB] = b;
+                
+                let valueA, valueB;
+                
+                switch (currentSortBy) {
+                    case 'timestamp':
+                        // Get timestamp values
+                        const timestampA = dataA?.tesdaInfo?.timestamp ?? dataA?.timestamp ?? null;
+                        const timestampB = dataB?.tesdaInfo?.timestamp ?? dataB?.timestamp ?? null;
+                        
+                        // Convert to Date objects for comparison
+                        let dateA = null, dateB = null;
+                        
+                        if (timestampA) {
+                            if (typeof timestampA === 'string') {
+                                dateA = new Date(timestampA);
+                            } else if (typeof timestampA === 'object' && typeof timestampA.toDate === 'function') {
+                                dateA = timestampA.toDate();
+                            }
+                        }
+                        
+                        if (timestampB) {
+                            if (typeof timestampB === 'string') {
+                                dateB = new Date(timestampB);
+                            } else if (typeof timestampB === 'object' && typeof timestampB.toDate === 'function') {
+                                dateB = timestampB.toDate();
+                            }
+                        }
+                        
+                        valueA = dateA ? dateA.getTime() : 0;
+                        valueB = dateB ? dateB.getTime() : 0;
+                        break;
+                        
+                    case 'name':
+                        const firstNameA = dataA.manpowerProfile?.firstName || '';
+                        const lastNameA = dataA.manpowerProfile?.lastName || '';
+                        const firstNameB = dataB.manpowerProfile?.firstName || '';
+                        const lastNameB = dataB.manpowerProfile?.lastName || '';
+                        valueA = `${firstNameA} ${lastNameA}`.toLowerCase();
+                        valueB = `${firstNameB} ${lastNameB}`.toLowerCase();
+                        break;
+                        
+                    case 'ticketNumber':
+                        valueA = (dataA.ticketNumber || '').toLowerCase();
+                        valueB = (dataB.ticketNumber || '').toLowerCase();
+                        break;
+                        
+                    case 'sector':
+                        valueA = (dataA.nttcApplication?.sector || '').toLowerCase();
+                        valueB = (dataB.nttcApplication?.sector || '').toLowerCase();
+                        break;
+                        
+                    case 'qualification':
+                        valueA = (dataA.nttcApplication?.qualification || '').toLowerCase();
+                        valueB = (dataB.nttcApplication?.qualification || '').toLowerCase();
+                        break;
+                        
+                    case 'status':
+                        valueA = (dataA.status || 'pending').toLowerCase();
+                        valueB = (dataB.status || 'pending').toLowerCase();
+                        break;
+                        
+                    default:
+                        return 0;
+                }
+                
+                // Handle string comparison
+                if (typeof valueA === 'string' && typeof valueB === 'string') {
+                    if (currentSortOrder === 'asc') {
+                        return valueA.localeCompare(valueB);
+                    } else {
+                        return valueB.localeCompare(valueA);
+                    }
+                }
+                
+                // Handle number comparison
+                if (currentSortOrder === 'asc') {
+                    return valueA - valueB;
+                } else {
+                    return valueB - valueA;
+                }
+            });
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            if (lastSnapshot && lastSnapshot.exists()) {
+                const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                currentPage = 1; // Reset to first page when searching
+                renderApplications(filteredApplications);
+            }
+        });
+
+        // Filter button functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentFilter = button.dataset.filter;
+                currentPage = 1; // Reset to first page when filtering
+                if (lastSnapshot && lastSnapshot.exists()) {
+                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                    renderApplications(filteredApplications);
+                }
+            });
+        });
+
+        // Pagination functionality
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                renderApplications(filteredApplications);
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                renderApplications(filteredApplications);
+            }
+        });
+
+        // Sorting controls event listeners
+        const sortBySelect = document.getElementById('sortBy');
+        const sortOrderSelect = document.getElementById('sortOrder');
+        const applySortBtn = document.getElementById('applySort');
+        const quickSortBtns = document.querySelectorAll('.quick-sort-btn');
+
+        // Apply sort button
+        if (applySortBtn) {
+            applySortBtn.addEventListener('click', () => {
+                currentSortBy = sortBySelect.value;
+                currentSortOrder = sortOrderSelect.value;
+                currentPage = 1; // Reset to first page when sorting
+                
+                if (lastSnapshot && lastSnapshot.exists()) {
+                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                    renderApplications(filteredApplications);
+                }
+            });
+        }
+
+        // Quick sort buttons
+        quickSortBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all quick sort buttons
+                quickSortBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Update sort parameters
+                currentSortBy = btn.dataset.sort;
+                currentSortOrder = btn.dataset.order;
+                
+                // Update select dropdowns to match
+                if (sortBySelect) sortBySelect.value = currentSortBy;
+                if (sortOrderSelect) sortOrderSelect.value = currentSortOrder;
+                
+                currentPage = 1; // Reset to first page when sorting
+                
+                if (lastSnapshot && lastSnapshot.exists()) {
+                    const filteredApplications = filterApplications(lastSnapshot.val(), searchInput.value);
+                    renderApplications(filteredApplications);
+                }
+            });
+        });
+
+        // (Optional) Make logout button sign out the user
+        document.querySelectorAll('.logout').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                signOut(auth).then(() => {
+                    window.location.href = "../login.html";
+                });
+            });
+        });
+    </script>
+</body>
+</html>
