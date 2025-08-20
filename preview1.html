@@ -2052,11 +2052,16 @@ async function sendToProvincialOffice() {
         // Hide loading modal
         document.getElementById('loadingModal').style.display = 'none';
 
-        // Show success modal
-        const successModal = document.getElementById('successModal');
-        successModal.style.display = 'block';
+        // Persist and show ticket number to the client
+        localStorage.setItem('lastTicketNumber', ticketNumber);
+        const ticketNumberElement = document.getElementById('ticketNumber');
+        if (ticketNumberElement) {
+            ticketNumberElement.textContent = ticketNumber;
+        }
+        const ticketModal = document.getElementById('ticketModal');
+        ticketModal.style.display = 'block';
         setTimeout(() => {
-            successModal.classList.add('show');
+            ticketModal.classList.add('show');
         }, 10);
     } catch (error) {
         console.error('Error sending application:', error);
