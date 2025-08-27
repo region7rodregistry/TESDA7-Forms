@@ -1282,18 +1282,7 @@
             </div>
         </header>
         
-        <div class="search-section">
-            <div class="search-container">
-                <input type="search" id="searchInput" placeholder="Search by ticket number or applicant name...">
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="pending">Pending <span class="notification-badge" id="pendingCount">0</span></button>              
-                    <button class="filter-btn" data-filter="completed">Completed</button>
-                    <button class="filter-btn" data-filter="spam">Spam</button>
-                    <button class="filter-btn" data-filter="all">All</button>  
-                </div>
-            </div>
-            <div id="provinceFilterInfo" style="margin-top: 1rem; padding-left: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-color);"></div>
-        </div>
+        
 
         <!-- Statistics Cards Section -->
         <div class="stats-section">
@@ -1383,6 +1372,18 @@
                     </button>
                 </div>
             </div>
+        </div>
+        <div class="search-section">
+            <div class="search-container">
+                <input type="search" id="searchInput" placeholder="Search by ticket number or applicant name...">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="pending">Pending <span class="notification-badge" id="pendingCount">0</span></button>              
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="spam">Spam</button>
+                    <button class="filter-btn" data-filter="all">All</button>  
+                </div>
+            </div>
+            <div id="provinceFilterInfo" style="margin-top: 1rem; padding-left: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px; border-left: 3px solid var(--accent-color);"></div>
         </div>
 
         <div id="loadingSpinner" class="loading-spinner"></div>
