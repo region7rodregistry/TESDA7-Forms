@@ -366,335 +366,66 @@
     <a href="#" class="logo">NTTC Guide</a>
     
     <div class="container">
-        <div class="card-container">
-            <!-- Card 1 -->
-            <div class="card active" data-index="0">
                 <div class="card-inner">
                     <div class="card-header">
-                        <span class="step-number">STEP 1</span>
-                        <h2 class="card-title-animation">Fill Out the Form</h2>
+                <span class="step-number">USER AGREEMENT</span>
+                <h2 class="card-title-animation">NTTC Form User Agreement</h2>
                     </div>
                     <div class="card-body">
                         <div class="instruction instruction-animation">
-                            <div class="instruction-icon">📝</div>
+                    <div class="instruction-icon">📄</div>
                             <div class="instruction-text">
-                                Carefully input all required details in the NTTC Client Form. Ensure that the information provided is accurate and complete.
-                            </div>
+                        <p><strong>Accuracy of Information</strong></p>
+                        <p>I certify that all information and documents I provide through this form are true, correct, and complete to the best of my knowledge.</p>
+                        <p>I understand that I am solely responsible for the accuracy and authenticity of the information and documents submitted.</p>
+                        <br>
+                        <p><strong>Liability for Falsified Documents</strong></p>
+                        <p>I acknowledge that submitting falsified, tampered, or fraudulent documents is strictly prohibited.</p>
+                        <p>I understand that any attempt to submit false information or documents may result in:</p>
+                        <ul style="margin-left:20px;">
+                            <li>Immediate rejection of my application;</li>
+                            <li>Administrative and/or legal action in accordance with existing laws, rules, and regulations;</li>
+                            <li>Possible disqualification from future applications with TESDA.</li>
+                        </ul>
+                        <br>
+                        <p><strong>Submission to the Provincial Office</strong></p>
+                        <p>I understand that the information and documents I submit through this form will be forwarded to the concerned TESDA Provincial Office for verification and processing.</p>
+                        <p>I consent to the use of my submitted data for official purposes related to NTTC evaluation, validation, and monitoring.</p>
+                        <br>
+                        <p><strong>Agreement to Terms</strong></p>
+                        <p>By ticking the checkbox below and proceeding with the form submission, I signify that I have read, understood, and voluntarily agreed to be bound by this User Agreement.</p>
+                        <div style="margin-top:15px;">
+                            <label style="display:flex;align-items:center;gap:10px;">
+                                <input type="checkbox" id="agreementCheckbox">
+                                <span>I have read and agree to the NTTC Form User Agreement.</span>
+                            </label>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev hidden">Previous</button>
-                        <button class="btn btn-next">Next</button>
                     </div>
                 </div>
             </div>
-
-            <!-- Card 2 -->
-            <div class="card next" data-index="1">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">STEP 2</span>
-                        <h2 class="card-title-animation">Review Your Entries</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">🔍</div>
-                            <div class="instruction-text">
-                                Before submitting, double-check all fields for correctness, especially your name, qualification, certificate details, and contact information. As this will affect your Certificate in the system. The Provincial Office Personnel will not be responsible to any erroneous entry entered in the system.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next">Next</button>
-                    </div>
-                </div>
+            <div class="card-footer" style="justify-content:flex-end;">
+                <button class="btn" id="proceedButton" disabled>Proceed to Form</button>
             </div>
-
-            <!-- Card 3 -->
-            <div class="card next" data-index="2">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">STEP 3</span>
-                        <h2 class="card-title-animation">Submit the Form</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">✅</div>
-                            <div class="instruction-text">
-                                Click the "Submit" button once you have verified your details. This will save your information in the system.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="card next" data-index="3">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">STEP 4</span>
-                        <h2 class="card-title-animation">Send to Provincial Office</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">📤</div>
-                            <div class="instruction-text">
-                                After submission, a review page will appear displaying your entered details. If everything is correct, click "Send to Provincial Office" to officially submit your application for processing.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="card next" data-index="4">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">STEP 5</span>
-                        <h2 class="card-title-animation">Wait for the Ticket Number</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">🎫</div>
-                            <div class="instruction-text">
-                                Once your application is received by the Provincial Office, a Ticket Number will be generated. This will be your reference number for tracking the status of your NTTC application.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="card next" data-index="5">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">STEP 6</span>
-                        <h2 class="card-title-animation">Keep Your Ticket Number</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">📸</div>
-                            <div class="instruction-text">
-                                Take note or screenshot your Ticket Number, as you will need it for follow-ups and status inquiries.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="card next" data-index="6">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">STEP 7</span>
-                        <h2 class="card-title-animation">Monitor Your Application</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">⏳</div>
-                            <div class="instruction-text">
-                                Wait for further updates regarding your NTTC processing status from the Provincial Office.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="card next" data-index="7">
-                <div class="card-inner">
-                    <div class="card-header">
-                        <span class="step-number">FINAL STEP</span>
-                        <h2 class="card-title-animation">For Any Concerns</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="instruction instruction-animation">
-                            <div class="instruction-icon">📞</div>
-                            <div class="instruction-text">
-                                For any concerns or inquiries, please contact the TESDA Provincial Office in your area.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-prev">Previous</button>
-                        <button class="btn btn-next" id="finishButton">Finish</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="progress-container">
-            <div class="progress-dot active" data-index="0"></div>
-            <div class="progress-dot" data-index="1"></div>
-            <div class="progress-dot" data-index="2"></div>
-            <div class="progress-dot" data-index="3"></div>
-            <div class="progress-dot" data-index="4"></div>
-            <div class="progress-dot" data-index="5"></div>
-            <div class="progress-dot" data-index="6"></div>
-            <div class="progress-dot" data-index="7"></div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.card');
-            const nextBtns = document.querySelectorAll('.btn-next');
-            const prevBtns = document.querySelectorAll('.btn-prev');
-            const progressDots = document.querySelectorAll('.progress-dot');
-            let currentIndex = 0;
-
-            // Initialize animations for first card
-            resetAnimations(cards[0]);
-
-            // Next button click event
-            nextBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (currentIndex < cards.length - 1) {
-                        moveToCard(currentIndex + 1);
+            const agreementCheckbox = document.getElementById('agreementCheckbox');
+            const proceedButton = document.getElementById('proceedButton');
+            if (agreementCheckbox && proceedButton) {
+                proceedButton.disabled = !agreementCheckbox.checked;
+                agreementCheckbox.addEventListener('change', function() {
+                    proceedButton.disabled = !agreementCheckbox.checked;
+                });
+                proceedButton.addEventListener('click', function() {
+                    if (agreementCheckbox.checked) {
+                        window.location.href = 'form.html';
                     } else {
-                        // Last card - show completion animation
-                        createConfetti();
-                        setTimeout(() => {
-                            alert('Congratulations! You have completed all the instructions.');
-                        }, 500);
+                        alert('Please check the agreement to proceed to the form.');
                     }
                 });
-            });
-
-            // Previous button click event
-            prevBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (currentIndex > 0) {
-                        moveToCard(currentIndex - 1);
-                    }
-                });
-            });
-
-            // Progress dots click event
-            progressDots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    const index = parseInt(dot.getAttribute('data-index'));
-                    moveToCard(index);
-                });
-            });
-
-            // Function to move to a specific card
-            function moveToCard(index) {
-                // Update classes for all cards
-                cards.forEach(card => {
-                    const cardIndex = parseInt(card.getAttribute('data-index'));
-                    
-                    if (cardIndex === index) {
-                        card.className = 'card active';
-                        setTimeout(() => {
-                            resetAnimations(card);
-                        }, 50);
-                    } else if (cardIndex < index) {
-                        card.className = 'card prev';
-                    } else {
-                        card.className = 'card next';
-                    }
-                });
-
-                // Update progress dots
-                progressDots.forEach((dot, i) => {
-                    if (i === index) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-
-                // Update previous button visibility
-                if (index === 0) {
-                    document.querySelector('.card.active .btn-prev').classList.add('hidden');
-                } else {
-                    document.querySelector('.card.active .btn-prev').classList.remove('hidden');
-                }
-
-                // Update current index
-                currentIndex = index;
             }
-
-            // Reset animations for a card
-            function resetAnimations(card) {
-                const title = card.querySelector('.card-title-animation');
-                const instruction = card.querySelector('.instruction-animation');
-                
-                title.style.animation = 'none';
-                instruction.style.animation = 'none';
-                
-                setTimeout(() => {
-                    title.style.animation = 'title-fade 0.8s ease-in-out forwards';
-                    instruction.style.animation = 'instruction-fade 0.8s ease-in-out forwards';
-                    instruction.style.animationDelay = '0.3s';
-                }, 50);
-            }
-
-            // Create confetti effect
-            function createConfetti() {
-                const container = document.querySelector('.container');
-                const colors = ['#0066cc', '#004080', '#ffffff', '#b8c7ff'];
-                
-                for (let i = 0; i < 100; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    
-                    // Random position
-                    confetti.style.left = Math.random() * 100 + '%';
-                    
-                    // Random delay
-                    confetti.style.animationDelay = Math.random() * 5 + 's';
-                    
-                    // Random size
-                    const size = Math.random() * 10 + 5;
-                    confetti.style.width = size + 'px';
-                    confetti.style.height = size + 'px';
-                    
-                    // Random color
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    // Random shape
-                    const shapes = ['50%', '0%'];
-                    confetti.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
-                    
-                    // Random rotation
-                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    
-                    container.appendChild(confetti);
-                    
-                    // Remove confetti after animation completes
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 5000);
-                }
-            }
-
-            // Add event listener for the Finish button
-            document.getElementById('finishButton').addEventListener('click', function() {
-                window.location.href = 'form.html'; // Redirect to form.html
-            });
         });
     </script>
 </body>
