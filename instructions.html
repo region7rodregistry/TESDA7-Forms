@@ -17,11 +17,13 @@
             background-attachment: fixed;
             color: #fff;
             line-height: 1.6;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px 0; /* breathing room on mobile */
         }
 
         .container {
@@ -30,6 +32,7 @@
             padding: 0 20px;
             position: relative;
             margin: 0 auto;
+            height: 80%;
         }
 
         .card-container {
@@ -167,6 +170,15 @@
             transform: translateY(-1px);
         }
 
+        .btn:disabled,
+        .btn[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(10%);
+            box-shadow: none;
+            transform: none;
+        }
+
         .btn-prev {
             background: linear-gradient(90deg, #333, #555);
         }
@@ -268,97 +280,85 @@
             z-index: 10;
         }
 
+        /* Accessible, larger checkbox styling */
+        label > input[type="checkbox"] {
+            appearance: auto;
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            min-height: 22px;
+            accent-color: #0066cc; /* modern browsers */
+            cursor: pointer;
+        }
+
+        label > input[type="checkbox"]:focus-visible {
+            outline: 3px solid rgba(0, 102, 204, 0.6);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        label > span {
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .card,
+            .btn,
+            .card-title-animation,
+            .instruction-animation,
+            .second-cta .btn::before {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
         @media (max-width: 768px) {
+            html { overflow-x: hidden; }
+            body {
+                display: block; /* allow natural flow */
+                background-attachment: scroll; /* avoid janky fixed bg on mobile */
+                padding: 20px 0 30px;
+            }
             .container {
                 padding: 0 15px;
+                height: auto; /* avoid clipping due to percentage height */
             }
-
             .card-container {
-                height: 400px;
+                height: auto;
+                perspective: none; /* reduce GPU overhead on mobile */
             }
-
             .card-inner {
                 padding: 20px;
             }
-
             .instruction-icon {
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
                 margin-right: 15px;
             }
-
-            .card-header h2 {
-                font-size: 22px;
-            }
-
-            .instruction-text {
-                font-size: 15px;
-            }
-
-            .step-number {
-                font-size: 16px;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-
-            .progress-dot {
-                width: 10px;
-                height: 10px;
-            }
-
-            .logo {
-                top: 20px;
-                left: 20px;
-                font-size: 20px;
-            }
+            .card-header h2 { font-size: 22px; }
+            .instruction-text { font-size: 15px; }
+            .step-number { font-size: 16px; }
+            .btn { padding: 10px 20px; font-size: 14px; min-height: 44px; }
+            .progress-container { display: none; } /* hide dots on single card */
+            .logo { position: static; display: block; margin: 0 0 10px; font-size: 20px; text-align: center; }
+            /* Larger tap targets on mobile */
+            label > input[type="checkbox"] { width: 26px; height: 26px; }
         }
 
         @media (max-width: 480px) {
-            .card-container {
-                height: 450px;
-            }
-
-            .card-inner {
-                padding: 15px;
-            }
-
-            .instruction {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                margin-bottom: 15px;
-            }
-
-            .instruction-icon {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-
-            .card-header h2 {
-                font-size: 20px;
-            }
-
-            .instruction-text {
-                font-size: 14px;
-            }
-
-            .card-footer {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .progress-container {
-                bottom: -40px;
-            }
+            /* Allow the card to grow as content requires on very small screens */
+            .card-container { height: auto; min-height: 0; }
+            .card-inner { padding: 15px; }
+            .instruction { flex-direction: column; align-items: center; text-align: center; margin-bottom: 15px; }
+            .instruction-icon { margin-right: 0; margin-bottom: 10px; }
+            .card-header h2 { font-size: 20px; }
+            .instruction-text { font-size: 14px; }
+            .card-footer { flex-direction: column; gap: 10px; }
+            .btn { width: 100%; text-align: center; min-height: 48px; }
+            .progress-container { display: none; }
         }
     </style>
 </head>
