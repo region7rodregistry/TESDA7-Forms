@@ -1,0 +1,53 @@
+rules_version = '2';
+
+// Firestore Security Rules for project `r7nttconaf`.
+//
+// Why this file exists: the original vanilla site never actually read the `issuances`
+// collection (its `listenToIssuances()` was called but never defined), so the project's
+// rules were only ever configured for `applications`. The Next.js issuances page now
+// genuinely subscribes to `issuances`, so it needs an explicit read rule — otherwise
+// Firestore returns "Missing or insufficient permissions".
+//
+// Deploy:  firebase deploy --only firestore:rules
+// Or paste into Firebase Console → Firestore Database → Rules → Publish.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // The authorized Regional Office + Provincial Office accounts (see lib/roles.ts).
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email in [
+        'region7@tesda.gov.ph',       // Region VII admin (all provinces)
+        'r7po.registry@gmail.com',    // Cebu
+        'r7po12.registry@gmail.com',  // Bohol
+        'r7po46.registry@gmail.com',  // Negros Oriental
+        'r7po61.registry@gmail.com'   // Siquijor
+      ];
+    }
+
+    // Public applicants submit (create) anonymously — matches the unauthenticated
+    // `addDoc(applications)` flow. Only admins can read, edit, or delete.
+    match /applications/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // NTTC issuances registry — copy-on-complete from applications. Admins only.
+    // `allow read` covers both single-doc gets and the collection listen the table uses.
+    match /issuances/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Per-day reference-number counters (`counters/PO-YYYY-MM-DD`). The applicant submit is
+    // UNAUTHENTICATED and must atomically increment the day's counter to mint a sequential
+    // reference (PO-YYYY-MM-DD-NNNN), so anonymous read + write is required here. Writes are
+    // constrained to a single non-negative integer `value`, so abuse is limited to the
+    // sequence number itself — no sensitive data lives in these docs.
+    match /counters/{id} {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(['value'])
+                   && request.resource.data.value is int
+                   && request.resource.data.value >= 0;
+    }
+  }
+}
