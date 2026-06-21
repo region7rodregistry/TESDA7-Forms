@@ -16,7 +16,7 @@ import {
   runTransaction,
   type Unsubscribe,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getDb } from "@/lib/firebase";
 import type { Application, ApplicationStatus } from "@/types/application";
 import { nowTimestampString, ticketDateKey } from "@/lib/dates";
 
@@ -34,7 +34,7 @@ export function subscribeApplications(
   onError?: (err: Error) => void
 ): Unsubscribe {
   return onSnapshot(
-    collection(db, APPLICATIONS),
+    collection(getDb(), APPLICATIONS),
     (snap) => onData(snap.docs.map((d) => withId(d.id, d.data()))),
     (err) => onError?.(err)
   );
@@ -46,7 +46,7 @@ export function subscribeIssuances(
   onError?: (err: Error) => void
 ): Unsubscribe {
   return onSnapshot(
-    collection(db, ISSUANCES),
+    collection(getDb(), ISSUANCES),
     (snap) => onData(snap.docs.map((d) => withId(d.id, d.data()))),
     (err) => onError?.(err)
   );
@@ -56,7 +56,7 @@ export function subscribeIssuances(
 export async function getApplicationByTicket(
   ticketNumber: string
 ): Promise<Application | null> {
-  const q = query(collection(db, APPLICATIONS), where("ticketNumber", "==", ticketNumber));
+  const q = query(collection(getDb(), APPLICATIONS), where("ticketNumber", "==", ticketNumber));
   const snap = await getDocs(q);
   if (snap.empty) return null;
   const d = snap.docs[0];
@@ -65,7 +65,7 @@ export async function getApplicationByTicket(
 
 /** Create a new application document. Returns the new doc id. */
 export async function addApplication(data: Omit<Application, "id">): Promise<string> {
-  const ref = await addDoc(collection(db, APPLICATIONS), data);
+  const ref = await addDoc(collection(getDb(), APPLICATIONS), data);
   return ref.id;
 }
 
@@ -75,7 +75,7 @@ export async function setApplicationStatus(
   status: ApplicationStatus,
   actor = "admin"
 ): Promise<void> {
-  const ref = doc(db, APPLICATIONS, docId);
+  const ref = doc(getDb(), APPLICATIONS, docId);
   const ts = nowTimestampString();
   const patch: Record<string, unknown> = { status };
   if (status === "completed") {
@@ -93,7 +93,7 @@ export async function copyToIssuances(app: Application): Promise<void> {
   if (!app.id) return;
   const { id, ...body } = app;
   void id;
-  await setDoc(doc(db, ISSUANCES, app.id), { ...body, status: "completed" });
+  await setDoc(doc(getDb(), ISSUANCES, app.id), { ...body, status: "completed" });
 }
 
 /**
@@ -106,20 +106,20 @@ export async function completeApplication(app: Application, actor = "admin"): Pr
   const appId = app.id;
   const { id, ...body } = app;
   void id;
-  await runTransaction(db, async (tx) => {
+  await runTransaction(getDb(), async (tx) => {
     const ts = nowTimestampString();
-    tx.update(doc(db, APPLICATIONS, appId), {
+    tx.update(doc(getDb(), APPLICATIONS, appId), {
       status: "completed",
       completedAt: ts,
       completedBy: actor,
     });
-    tx.set(doc(db, ISSUANCES, appId), { ...body, status: "completed" });
+    tx.set(doc(getDb(), ISSUANCES, appId), { ...body, status: "completed" });
   });
 }
 
 /** Soft-delete: move an application to the Deleted/trash state (auto-purged after 30 days). */
 export async function cancelApplication(docId: string, actor = "admin"): Promise<void> {
-  await updateDoc(doc(db, APPLICATIONS, docId), {
+  await updateDoc(doc(getDb(), APPLICATIONS, docId), {
     status: "deleted",
     deletedAt: new Date().toISOString(),
     deletedBy: actor,
@@ -133,14 +133,14 @@ export async function restoreApplication(docId: string, actor = "admin"): Promis
 
 /** Permanently delete a single application document. */
 export async function deleteApplication(docId: string): Promise<void> {
-  await deleteDoc(doc(db, APPLICATIONS, docId));
+  await deleteDoc(doc(getDb(), APPLICATIONS, docId));
 }
 
 /** Permanently delete many applications (used by the 30-day auto-purge). */
 export async function deleteApplications(docIds: string[]): Promise<void> {
   if (docIds.length === 0) return;
-  const batch = writeBatch(db);
-  for (const id of docIds) batch.delete(doc(db, APPLICATIONS, id));
+  const batch = writeBatch(getDb());
+  for (const id of docIds) batch.delete(doc(getDb(), APPLICATIONS, id));
   await batch.commit();
 }
 
@@ -151,14 +151,14 @@ export async function updateApplicationById(
 ): Promise<void> {
   const { id, ...body } = data;
   void id;
-  await updateDoc(doc(db, APPLICATIONS, docId), body as Record<string, unknown>);
+  await updateDoc(doc(getDb(), APPLICATIONS, docId), body as Record<string, unknown>);
 }
 
 /** Batch-mark a set of doc ids as spam (used by duplicate detection). */
 export async function markAsSpam(docIds: string[]): Promise<void> {
   if (docIds.length === 0) return;
-  const batch = writeBatch(db);
-  for (const id of docIds) batch.update(doc(db, APPLICATIONS, id), { status: "spam" });
+  const batch = writeBatch(getDb());
+  for (const id of docIds) batch.update(doc(getDb(), APPLICATIONS, id), { status: "spam" });
   await batch.commit();
 }
 
@@ -179,8 +179,8 @@ export async function markAsSpam(docIds: string[]): Promise<void> {
  */
 export async function nextTicketNumber(date = new Date()): Promise<string> {
   const dayKey = ticketDateKey(date);
-  const counterRef = doc(db, COUNTERS, `PO-${dayKey}`);
-  const next = await runTransaction(db, async (tx) => {
+  const counterRef = doc(getDb(), COUNTERS, `PO-${dayKey}`);
+  const next = await runTransaction(getDb(), async (tx) => {
     const snap = await tx.get(counterRef);
     const current = snap.exists() ? (snap.data().value as number) || 0 : 0;
     const value = current + 1;

@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, LogIn, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { auth } from "@/lib/firebase";
+import { getAuthClient } from "@/lib/firebase";
 import { redirectFor } from "@/lib/roles";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ export default function LoginPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const cred = await signInWithEmailAndPassword(auth, email, password);
+      const cred = await signInWithEmailAndPassword(getAuthClient(), email, password);
       router.replace(redirectFor(cred.user.email));
     } catch (err) {
       const message = err instanceof Error ? err.message : "Login failed.";

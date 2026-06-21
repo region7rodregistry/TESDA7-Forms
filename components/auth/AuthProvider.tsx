@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getAuthClient } from "@/lib/firebase";
 import { roleFor, provinceFor, type Role } from "@/lib/roles";
 
 interface AuthState {
@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
+    const unsub = onAuthStateChanged(getAuthClient(), (u) => {
       setUser(u);
       setLoading(false);
     });
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     role: roleFor(email),
     province: provinceFor(email),
     loading,
-    signOut: () => fbSignOut(auth),
+    signOut: () => fbSignOut(getAuthClient()),
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
