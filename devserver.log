@@ -1064,3 +1064,3314 @@ Import trace:
  GET /issuances 200 in 189ms (next.js: 79ms, application-code: 110ms)
  GET /applications/PO-1781853047181/preview 200 in 89ms (next.js: 59ms, application-code: 30ms)
  GET /r7admindash 200 in 21ms (next.js: 5ms, application-code: 16ms)
+✓ Compiled in 240ms
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 105ms (next.js: 51ms, application-code: 54ms)
+ GET /applications/PO-1781853047181/preview 500 in 76ms (next.js: 63ms, application-code: 13ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 43ms (next.js: 23ms, application-code: 21ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 46ms (next.js: 32ms, application-code: 14ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component Browser]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Client Component SSR]
+    ./app/(admin)/applications/[ticketNumber]/preview/page.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+ GET /applications/PO-1781853047181/preview 500 in 46ms (next.js: 22ms, application-code: 25ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+
+./lib/applications-db.ts:19:1
+Export db doesn't exist in target module
+  [90m17 |[0m   [36mtype[0m [33mUnsubscribe[0m,
+  [90m18 |[0m } [36mfrom[0m [32m"firebase/firestore"[0m;
+[31m[1m>[0m [90m19 |[0m [36mimport[0m { db } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m20 |[0m [36mimport[0m [36mtype[0m { [33mApplication[0m, [33mApplicationStatus[0m } [36mfrom[0m [32m"@/types/application"[0m;
+  [90m21 |[0m [36mimport[0m { nowTimestampString, ticketDateKey } [36mfrom[0m [32m"@/lib/dates"[0m;
+  [90m22 |[0m
+
+The export db was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getDb?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./lib/applications-db.ts [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./lib/applications-db.ts [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+
+ GET /applications/PO-1781853047181/preview 500 in 83ms (next.js: 53ms, application-code: 30ms)
+ GET /r7admindash 500 in 93ms (next.js: 71ms, application-code: 21ms)
+ GET /r7admindash 500 in 73ms (next.js: 59ms, application-code: 14ms)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 69ms (next.js: 56ms, application-code: 13ms)
+ GET /applications/PO-1781853047181/preview 500 in 56ms (next.js: 43ms, application-code: 13ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 26ms (next.js: 16ms, application-code: 10ms)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 43ms (next.js: 35ms, application-code: 8ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /applications/PO-1781853047181/preview 500 in 55ms (next.js: 38ms, application-code: 17ms)
+ GET /r7admindash 500 in 34ms (next.js: 22ms, application-code: 12ms)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 60ms (next.js: 30ms, application-code: 30ms)
+ GET /applications/PO-1781853047181/preview 500 in 45ms (next.js: 36ms, application-code: 10ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 22ms (next.js: 13ms, application-code: 9ms)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 38ms (next.js: 29ms, application-code: 9ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /applications/PO-1781853047181/preview 500 in 44ms (next.js: 30ms, application-code: 14ms)
+ GET /r7admindash 500 in 29ms (next.js: 20ms, application-code: 10ms)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /r7admindash 500 in 55ms (next.js: 46ms, application-code: 9ms)
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Server Component:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  Client Component Browser:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+⨯ ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+
+./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  [90m3 |[0m [36mimport[0m { createContext, useContext, useEffect, useState } [36mfrom[0m [32m"react"[0m;
+  [90m4 |[0m [36mimport[0m { onAuthStateChanged, signOut [36mas[0m fbSignOut, [36mtype[0m [33mUser[0m } [36mfrom[0m [32m"firebase/auth"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { auth } [36mfrom[0m [32m"@/lib/firebase"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m [36mimport[0m { roleFor, provinceFor, [36mtype[0m [33mRole[0m } [36mfrom[0m [32m"@/lib/roles"[0m;
+  [90m7 |[0m
+  [90m8 |[0m [36minterface[0m [33mAuthState[0m {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-ssr] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/r7admindash/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+ GET /applications/PO-1781853047181/preview 500 in 62ms (next.js: 44ms, application-code: 18ms)
+ GET /r7admindash 500 in 37ms (next.js: 25ms, application-code: 13ms)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+[browser] Uncaught Error: ./components/auth/AuthProvider.tsx:5:1
+Export auth doesn't exist in target module
+  3 | import { createContext, useContext, useEffect, useState } from "react";
+  4 | import { onAuthStateChanged, signOut as fbSignOut, type User } from "firebase/auth";
+> 5 | import { auth } from "@/lib/firebase";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { roleFor, provinceFor, type Role } from "@/lib/roles";
+  7 |
+  8 | interface AuthState {
+
+The export auth was not found in module [project]/lib/firebase.ts [app-client] (ecmascript).
+Did you mean to import getAuthClient?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  #1 [Server Component]:
+    ./components/auth/AuthProvider.tsx
+    ./app/layout.tsx
+
+  #2 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component Browser]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #3 [Client Component Browser]:
+    ./components/auth/AuthProvider.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Client Component Browser]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Client Component SSR]
+    ./components/dashboard/ApplicationDashboard.tsx [Server Component]
+    ./app/(admin)/admindash/onaf/page.tsx [Server Component]
+
+  #5 [Client Component SSR]:
+    ./components/auth/AuthProvider.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Client Component SSR]
+    ./components/layout/AdminShell.tsx [Server Component]
+    ./app/(admin)/layout.tsx [Server Component]
+
+
+    at <unknown> (Error: ./components/auth/AuthProvider.tsx:5:1)
+    at <unknown> (Error: (./components/auth/AuthProvider.tsx:5:1)
+ GET /r7admindash 200 in 4.6s (next.js: 482ms, application-code: 4.1s)
+ GET /applications/PO-1781853047181/preview 200 in 6.7s (next.js: 648ms, application-code: 6.0s)
+ GET /r7admindash 200 in 753ms (next.js: 65ms, application-code: 689ms)
+ GET /applications/PO-1781853047181/preview 200 in 389ms (next.js: 67ms, application-code: 322ms)
+ GET /r7admindash 200 in 69ms (next.js: 6ms, application-code: 62ms)
