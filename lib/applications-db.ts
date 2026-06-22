@@ -126,9 +126,23 @@ export async function cancelApplication(docId: string, actor = "admin"): Promise
   });
 }
 
-/** Restore a soft-deleted (or spam) application back to pending. */
+/**
+ * Restore an application back to pending — used by the spam "Mark Pending", the Deleted
+ * "Restore", and the Completed "Mark as Pending" actions. Also removes any `issuances`
+ * mirror (present only if it had been completed), so the invariant "only completed
+ * applications appear in issuances" holds in reverse. Deleting an absent issuances doc is
+ * a harmless no-op, so this is safe for the spam/deleted paths that never had a mirror.
+ */
 export async function restoreApplication(docId: string, actor = "admin"): Promise<void> {
-  await setApplicationStatus(docId, "pending", actor);
+  const ts = nowTimestampString();
+  const batch = writeBatch(getDb());
+  batch.update(doc(getDb(), APPLICATIONS, docId), {
+    status: "pending",
+    pendingAt: ts,
+    pendingBy: actor,
+  });
+  batch.delete(doc(getDb(), ISSUANCES, docId));
+  await batch.commit();
 }
 
 /** Permanently delete a single application document. */

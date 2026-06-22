@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { NttcForm } from "@/components/form/NttcForm";
+import { SiteCredit } from "@/components/site/SiteCredit";
 
 export default function FormPage() {
   return (
-    <div className="min-h-screen bg-muted/40">
+    <div className="flex min-h-screen flex-col bg-muted/40">
       <header className="border-b bg-gradient-to-r from-[#001933] to-[#0a2463] text-white">
         <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-6 sm:px-6">
           <Link href="/instructions" className="inline-flex w-fit items-center gap-1 text-sm text-sky-200 hover:text-white">
@@ -25,9 +26,11 @@ export default function FormPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+      <div className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6">
         <NttcForm />
       </div>
+
+      <SiteCredit />
     </div>
   );
 }

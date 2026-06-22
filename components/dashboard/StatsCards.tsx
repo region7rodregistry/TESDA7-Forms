@@ -10,7 +10,7 @@ interface Props {
 
 export function StatsCards({ counts }: Props) {
   const stats = [
-    { label: "Pending", value: counts.pending, icon: Clock, color: "text-amber-600", bg: "bg-amber-100" },
+    { label: "Pending", value: counts.pending, icon: Clock, color: "text-orange-600", bg: "bg-orange-100" },
     { label: "Completed", value: counts.completed, icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-100" },
     { label: "Spam", value: counts.spam, icon: ShieldAlert, color: "text-rose-600", bg: "bg-rose-100" },
     { label: "Total", value: counts.total, icon: Layers, color: "text-sky-600", bg: "bg-sky-100" },

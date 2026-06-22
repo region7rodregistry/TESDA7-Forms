@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { PROVINCES } from "@/lib/roles";
+import { PROVINCES, normalizeProvince } from "@/lib/roles";
 import type { Application } from "@/types/application";
 
 interface Props {
@@ -14,7 +14,8 @@ interface Props {
 }
 
 export function ProvinceCards({ apps, selected, onSelect }: Props) {
-  const countFor = (p: string) => apps.filter((a) => a.manpowerProfile?.province === p).length;
+  const countFor = (p: string) =>
+    apps.filter((a) => normalizeProvince(a.manpowerProfile?.province) === p).length;
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

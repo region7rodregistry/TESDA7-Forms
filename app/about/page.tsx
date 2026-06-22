@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Building2, MapPin, Landmark } from "lucide-react";
 import { PublicNav } from "@/components/site/PublicNav";
+import { SiteCredit } from "@/components/site/SiteCredit";
 import { Reveal } from "@/components/motion/Reveal";
 
 const units = [
@@ -86,9 +87,7 @@ export default function AboutPage() {
         </Reveal>
       </main>
 
-      <footer className="shrink-0 border-t border-white/10 bg-[rgba(0,25,51,0.92)] py-3 text-center text-xs text-sky-100/60">
-        © {new Date().getFullYear()} TESDA Region VII. All rights reserved.
-      </footer>
+      <SiteCredit />
     </div>
   );
 }

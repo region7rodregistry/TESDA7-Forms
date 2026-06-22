@@ -42,7 +42,7 @@ export function FilterTabs({ value, onChange, counts }: Props) {
               className={cn(
                 "ml-1 px-1.5 py-0 text-[10px]",
                 active && "bg-white/20 text-white",
-                t.key === "pending" && n > 0 && !active && "bg-amber-500 text-white"
+                t.key === "pending" && n > 0 && !active && "bg-orange-500 text-white"
               )}
             >
               {n}

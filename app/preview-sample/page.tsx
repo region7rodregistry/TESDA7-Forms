@@ -6,6 +6,7 @@
 
 import { Printer } from "lucide-react";
 import { ProfileView } from "@/components/profile/ProfileView";
+import { SiteCredit } from "@/components/site/SiteCredit";
 import { Button } from "@/components/ui/button";
 import type { Application } from "@/types/application";
 
@@ -129,6 +130,8 @@ export default function PreviewSamplePage() {
         </Button>
       </div>
       <ProfileView value={SAMPLE} />
+
+      <SiteCredit className="no-print" />
     </div>
   );
 }

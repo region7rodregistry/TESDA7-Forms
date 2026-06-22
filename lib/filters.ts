@@ -1,4 +1,5 @@
 import type { Application, ApplicationStatus } from "@/types/application";
+import { normalizeProvince } from "@/lib/roles";
 
 export type StatusFilter = ApplicationStatus | "all";
 export type SortBy = "latest" | "oldest" | "name" | "status";
@@ -22,7 +23,8 @@ export function filterApplications(
   const { province, status = "all", search = "" } = opts;
   const q = search.trim().toLowerCase();
   return apps.filter((app) => {
-    if (province && app.manpowerProfile?.province !== province) return false;
+    if (province && normalizeProvince(app.manpowerProfile?.province) !== normalizeProvince(province))
+      return false;
     const s = statusOf(app);
     if (status === "all") {
       if (s === "deleted") return false; // trash is excluded from "All"

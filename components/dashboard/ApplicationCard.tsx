@@ -78,6 +78,11 @@ export function ApplicationCard({
               <RotateCcw className="size-4" /> Mark Pending
             </Button>
           )}
+          {status === "completed" && (
+            <Button size="sm" variant="secondary" onClick={() => onRestore(app)}>
+              <RotateCcw className="size-4" /> Mark as Pending
+            </Button>
+          )}
 
           {/* Active items (not yet trashed): Cancel = soft-delete into the Deleted tab. */}
           {status !== "deleted" && (

@@ -6,14 +6,16 @@ import { motion } from "framer-motion";
 import { FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { SiteCredit } from "@/components/site/SiteCredit";
 
 export default function InstructionsPage() {
   const [agreed, setAgreed] = useState(false);
   const router = useRouter();
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-tesda-panel px-4 py-10">
-      <motion.div
+    <main className="flex min-h-screen flex-col bg-tesda-panel">
+      <div className="flex flex-1 items-center justify-center px-4 py-10">
+        <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.175, 0.885, 0.32, 1.275] }}
@@ -88,7 +90,10 @@ export default function InstructionsPage() {
             Proceed to Form <ArrowRight className="ml-1 size-4" />
           </Button>
         </div>
-      </motion.div>
+        </motion.div>
+      </div>
+
+      <SiteCredit />
     </main>
   );
 }

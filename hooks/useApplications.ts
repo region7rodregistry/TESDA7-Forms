@@ -6,6 +6,7 @@ import type { Application } from "@/types/application";
 import { subscribeApplications, markAsSpam, deleteApplications } from "@/lib/applications-db";
 import { findDuplicateIds } from "@/lib/duplicates";
 import { findExpiredDeletedIds } from "@/lib/retention";
+import { normalizeProvince } from "@/lib/roles";
 
 /**
  * Live subscription to the applications collection with automatic duplicate→spam
@@ -53,8 +54,16 @@ export function useApplications(province?: string | null) {
     return () => unsub();
   }, []);
 
+  // Province match is normalized (case/format-insensitive) so free-text entries like
+  // "negros oriental" / "NEGROS ORIENTAL" still scope to the right PO — matching how the
+  // Issuances tab already filters. Without this, variant spellings are silently hidden.
   const applications = useMemo(
-    () => (province ? all.filter((a) => a.manpowerProfile?.province === province) : all),
+    () =>
+      province
+        ? all.filter(
+            (a) => normalizeProvince(a.manpowerProfile?.province) === normalizeProvince(province)
+          )
+        : all,
     [all, province]
   );
 

@@ -19,6 +19,7 @@ import {
   deleteApplication,
 } from "@/lib/applications-db";
 import { RETENTION_DAYS } from "@/lib/retention";
+import { normalizeProvince } from "@/lib/roles";
 import type { Application } from "@/types/application";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { SearchBar } from "@/components/dashboard/SearchBar";
@@ -59,7 +60,9 @@ export function ApplicationDashboard({ variant }: { variant: "focal" | "r7" }) {
   const scoped = useMemo(
     () =>
       variant === "r7" && provinceFilter
-        ? applications.filter((a) => a.manpowerProfile?.province === provinceFilter)
+        ? applications.filter(
+            (a) => normalizeProvince(a.manpowerProfile?.province) === provinceFilter
+          )
         : applications,
     [applications, provinceFilter, variant]
   );

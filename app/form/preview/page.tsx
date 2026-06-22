@@ -10,6 +10,7 @@ import { useFormStore } from "@/hooks/useFormStore";
 import { addApplication, nextTicketNumber } from "@/lib/applications-db";
 import { nowTimestampString } from "@/lib/dates";
 import { ProfileView } from "@/components/profile/ProfileView";
+import { SiteCredit } from "@/components/site/SiteCredit";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -93,6 +94,8 @@ export default function FormPreviewPage() {
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
         <ProfileView value={draft} />
       </div>
+
+      <SiteCredit className="no-print" />
 
       <Dialog open={!!ticket} onOpenChange={() => {}}>
         <DialogContent className="sm:max-w-md" showCloseButton={false}>

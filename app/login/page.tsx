@@ -13,6 +13,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SiteCredit } from "@/components/site/SiteCredit";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -41,8 +42,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-black via-blue-900 to-white p-4">
-      <motion.div
+    <main className="flex min-h-screen flex-col bg-gradient-to-br from-black via-blue-900 to-white">
+      <div className="flex flex-1 items-center justify-center p-4">
+        <motion.div
         initial={{ opacity: 0, scale: 0.92, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
@@ -133,7 +135,10 @@ export default function LoginPage() {
         <p className="mt-8 text-center text-sm text-white/70">
           © {new Date().getFullYear()} NTTC PO Focal. All rights reserved.
         </p>
-      </motion.div>
+        </motion.div>
+      </div>
+
+      <SiteCredit />
     </main>
   );
 }

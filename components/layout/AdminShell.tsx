@@ -3,10 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, FileSpreadsheet, BookMarked, LogOut, MapPin } from "lucide-react";
+import { LayoutDashboard, FileSpreadsheet, BookMarked, ChartPie, LogOut, MapPin } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { SiteCredit } from "@/components/site/SiteCredit";
 import { cn } from "@/lib/utils";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -17,6 +18,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const dashboardHref = role === "r7admin" ? "/r7admindash" : "/admindash/onaf";
   const nav = [
     { label: "Dashboard", href: dashboardHref, icon: LayoutDashboard },
+    { label: "Statistics", href: "/statistics", icon: ChartPie },
     { label: "Issuances", href: "/issuances", icon: FileSpreadsheet },
     { label: "Registry", href: "/nttc-registry", icon: BookMarked },
   ];
@@ -81,6 +83,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       </header>
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6">{children}</main>
+
+      <SiteCredit className="no-print" />
     </div>
   );
 }
